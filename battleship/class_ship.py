@@ -6,18 +6,58 @@
 
 class Ship:
     def __init__(self, length, front, back):
+        
         self.health=length
         self.length=length
         self.front=front
         self.back=back
-        self.array=[6]
-        if self.length == 1:
-            {}
+        
+        self.hit_array=[False*(self.length)]
+        self.board_array=[None*(self.length)]
+        
+     
+        if self.front[0] == self.back[0]:
+            
+            self.orientation="h"
+
         else:
-           {}
+            self.orientation="v"
+            self.hitarray=[False]
+
+
+        if self.orientation == "h":
+            int(self.front[1])
+            int(self.back[1])
+
+            for i in range(0,self.length):
+                
+                if i ==0:
+                    self.board_array[i]=self.front
+                
+                if i == self.length:
+                    self.board_array[i]=self.back
+                
+                else:
+
+
+
+
+
+  
+
+
+
+
+    #def isHit(self, location):
+     
+
+     
     
-    def hit(self):
+    def hit(self,location):
         self.health=self.health-1
+        for i in range(0,self.length):
+            
+
     
     def isFloating(self):
         if self.health>0:
@@ -34,8 +74,10 @@ class Ship:
     def getlocation(self):
         print("(Front,Back) of Ship: ", "(",self.front, ",", self.back,")")
 
-    def isHit(self):
-        {}
+
+
+
+
 
 
 
@@ -44,3 +86,8 @@ print(Barco.health)
 Barco.hit()
 print(Barco.health)
 Barco.getlocation()
+print(Barco.array[0])
+print(Barco.array)
+print(Barco.front[1],Barco.front[0],Barco.back[1], Barco.front)
+
+
