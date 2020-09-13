@@ -54,7 +54,7 @@ class Game:
 				break
 				
 			#players switch
-			self.aTerminal.printSwitchPrompt(p2)
+			self.aTerminal.printSwitchPrompt(self.p2)
 			
 			
 			#board of player two is shown and chooses target area to hit
