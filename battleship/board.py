@@ -2,11 +2,22 @@ from class_ship import Ship
 
 class board:
 
+<<<<<<< HEAD
     """
     """
 
     # Creates a 9x9 board of O's.
 
+||||||| merged common ancestors
+    #creating 9 by 9 board of O's
+=======
+    """
+
+
+    """
+
+    #creating 9 by 9 board of O's
+>>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
     def __init__(self):
         self.board = []
         for i in range(0, 9):
@@ -73,6 +84,84 @@ def convert_loc(loc):
 
     row = int(loc[1]) -1
 
+<<<<<<< HEAD
+    coverted = (row,col)
+||||||| merged common ancestors
+    #setup function that places the ships and places them on the board
+    def setUp():
+        for ship in range(0, 9):
+            if (set_ships(ship) == true):
+                board.append(["S"])
+=======
+    #setup function that places the ships and places them on the board
+    def setUp(self, ship):
+        """
+        Takes a ship and places it on the board
+
+
+        """    
+
+        for loc in ship.get_location_array():
+            cLoc = convert_loc(loc)
+            self.board[cLoc[0]][cLoc[1]] = "S"           
+>>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
+
+<<<<<<< HEAD
+    return coverted
+||||||| merged common ancestors
+    #update function
+    def update():
+        for ship in range(0, 9):
+            if (hit(ship) == true):
+                board.append(["X"])
+            else
+                board.append(["*"])
+=======
+    #update function
+    def update(self, loc):
+        
+        success = True
+
+        cLoc = convert_loc(loc)
+        current_value = self.board[cLoc[0]][cLoc[1]]
+        
+        if current_value == "O":
+            self.board[cLoc[0]][cLoc[1]] = "*"
+        elif current_value == "S":
+            self.board[cLoc[0]][cLoc[1]] = "X"
+        else:
+            success = False
+        
+        return success
+
+
+
+def convert_loc(loc):
+    """
+
+    """
+    if (loc[0] == "A"):
+        col = 0
+    elif (loc[0] == "B"):
+        col = 1
+    elif (loc[0] == "C"):
+        col = 2
+    elif (loc[0] == "D"):
+        col = 3
+    elif (loc[0] == "E"):
+        col = 4
+    elif (loc[0] == "F"):
+        col = 5
+    elif (loc[0] == "G"):
+        col = 6
+    elif (loc[0] == "H"):
+        col = 7
+    elif (loc[0] == "I"):
+        col = 8
+
+    row = int(loc[1]) -1
+
     coverted = (row,col)
 
     return coverted
+>>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759

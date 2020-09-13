@@ -6,6 +6,10 @@ import colorama
 
 # Handels the output for the application
 class Terminal:
+    """
+    This is a helper class that will help print to the terminal
+
+    """
 
     def __init__(self):
         # Initialize the cross platform color tool
@@ -41,9 +45,15 @@ class Terminal:
         """
         
         print("Your Board")
-        print("-"*18)
+        print("-"*20)
+
+
+        print("  A B C D E F G H I")
+        index = 1
 
         for row in board.board:
+            print(index,  end=" ") 
+            index += 1
             for loc in row:
                 if loc == 'O':
                     print(colorama.Fore.BLUE + "O", end=" ")
@@ -63,9 +73,13 @@ class Terminal:
         """
 
         print("Your Enemies Board")
-        print("-"*18)
+        print("-"*20)
+
+        print("  A B C D E F G H I")
+        index = 1
 
         for row in board.board:
+            print(index,  end=" ") 
             for loc in row:
                 if loc == 'O' or loc == 'S':
                     print(colorama.Fore.BLUE + "O", end=" ")
@@ -76,6 +90,12 @@ class Terminal:
             print("")
 
     def printWelcome(self):
+        """
+        Prints the Welcome message to the players
+
+
+        """
+        
         # Clear the board and other info from the screen
         self.clearScreen()
 
@@ -85,31 +105,50 @@ class Terminal:
         print(colorama.Fore.CYAN +"="*self.line)
 
     def printSwitchPrompt(self, player):
+        """
+        Prints the promt to switch players 
+
+        @parm player the player whos turn it is
+        """
 
         # Clear the board and other info from the screen
         self.clearScreen()
 
         print(colorama.Fore.CYAN +"="*self.line)
-        print("Its Time to switch")
+        print("Its Time to switch to "+ player.name)
         print(colorama.Fore.CYAN +"="*self.line)
 
         
 
     def printHit(self, loc):
+        """
+        Prints that a location was a hit
         
+        @parm loc is the tupple of the location 
+        """
         print(colorama.Fore.GREEN +"-"*self.line)
         print(colorama.Fore.GREEN + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a hit!")
         print(colorama.Fore.GREEN +"-"*self.line)
         
 
     def printMiss(self, loc):
+        """
+        Prints that a location was a miss
         
+        @parm loc is the tupple of the location 
+        """
         print(colorama.Fore.RED +"-"*self.line)
         print(colorama.Fore.RED + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a miss!")
         print(colorama.Fore.RED +"-"*self.line)
         
 
     def printWinner(self, winPlayer, losePlayer):
+        """
+        Prints the winner
+        
+        @parm winPlayer is the player who won
+        @parm losePlayer is the player who lost
+        """
         print(colorama.Fore.MAGENTA +"="*self.line)
         print(colorama.Fore.MAGENTA + "The Player " + winPlayer.name + " has Won!!")
         print(colorama.Fore.MAGENTA +"="*self.line)
@@ -117,7 +156,10 @@ class Terminal:
 
 
     def clearScreen(self):
-        
+        """
+        A function to clear the screen that will work on windows, macOS, or linux
+
+        """
         if(os.name == "nt"):
             os.system('cls')
         elif  (os.name == 'posix'):

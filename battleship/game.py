@@ -4,23 +4,33 @@ from board import board
 from Terminal import Terminal
 
 class Game:
+	
+	aTerminal = Terminal()
 
 	def __init__(self):
 		"""
 		Initializes the game
 
 		"""
-		self.aTerminal = Terminal()
 		self.aTerminal.printWelcome()
 		
+		number_of_ships = 0
+		while(True):
+			number_of_ships = input("How many ships would you like to play with? ")
+			if (number_of_ships == "1") | (number_of_ships == "2") | (number_of_ships == "3") | (number_of_ships == "4") | (number_of_ships == "5"):
+				break
+			else:
+				print("You must pick a number between 1 and 5. Try again.\n")
+				continue
+		
 		player_one_name = input("Player 1, please enter your name: ")
-		self.p1 = Player(player_one_name)
+		self.p1 = Player(player_one_name, number_of_ships)
 		self.p1.set_ships()
 		self.aTerminal.printSelfBoard(self.p1.board)
 
 
 		player_two_name = input("Player 2, please enter your name: ")
-		self.p2 = Player(player_two_name)
+		self.p2 = Player(player_two_name, number_of_ships)
 		self.p2.set_ships()
 		self.aTerminal.printSelfBoard(self.p2.board)
 
@@ -32,7 +42,9 @@ class Game:
 	#begins the game & conducts turn untill winner determined
 	def play_game(self):
 		"""
+
 		Startes the game 
+
 		"""
 
 		won_game = False
@@ -43,8 +55,7 @@ class Game:
 			#board of player one is shown and chooses target area to hit 
 			self.aTerminal.playerView(self.p1,self.p2)
 			#self.player_one_board.print_board(self.p1)
-			col = input("Player1, please enter where to hit target (column)")
-			row = input("Please enter where to hit target (row)")
+			
 			self.p1.fire(col,row)
 			
 			#checks if player's boats are floating

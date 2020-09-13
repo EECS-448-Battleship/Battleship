@@ -7,7 +7,7 @@
 #int                   def getHealth(self)
 #int                   def getSize(self)
 #Prints(str,str)       def getlocation(self)
-#
+#                      def get_location_array(self):
 #---------------SHIP METHODS END---------------------------------
 
 #Keep in mind, letters MUST be enetered as capital letters
@@ -52,6 +52,7 @@
 #print(Ship_Ex.getHealth())
 #print(Ship_Ex.getSize())
 #Ship_Ex.getlocation()
+#Ship_Ex.get_location_array()
 #--------------------------END OF EXAMPLES
 
 # Variables in parameter of "__init__"
@@ -84,7 +85,6 @@ class Ship:
         
                 self.front_int= int(self.front[1])
                 self.back_int=int(self.back[1])
-                
 #Bottom half of if statement will then activate if the orientation is horizontal
 #which will put in order of smallest (A) to largest (I)
         elif self.front[0] != self.back[0]:
@@ -212,6 +212,9 @@ class Ship:
             return "H"
         if int == 9:
             return "I"
+
+    def get_location_array(self):
+        return self.board_array
 
 
 

@@ -1,74 +1,41 @@
 import os
-
-
-class Ship:
-    def __init__(self, length, front, back):
-        
-        self.health=length
-        self.length=length
-        self.front=front
-        self.back=back
-
-
-    #def isHit(self, location):
-     
-
-     
-
-    
-    def isFloating(self):
-        if self.health>0:
-            return True
-        else:
-            return False
-
-    def getHealth(self):
-        return self.health
- 
-    def getSize(self):
-        return self.length
-
-    def getlocation(self):
-        print("(Front,Back) of Ship: ", "(",self.front, ",", self.back,")")
-
-
-#added the basics of Edwin's class so I could get mine to compile/run
-
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
+from class_ship import Ship
 
 class Player:
 
-    def __init__(self, name):
+    def __init__(self, name, number_of_ships):
     
+        self.number_of_ships = number_of_ships
         self.ships = []
         self.name = name
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
+        
+        for i in range(number_of_ships):
+                    self.ships.append(i + 1)
 
 
 
-    def fire(self, x, y):                                                        #to fire at other players ships
-    
-        if board.filled(x,y) & board.is_hit(x,y):                                #if a ship is there and it has been hit
-            print("Location already hit.")
-            return False
-        elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
-            print("Hit!")
-            return True
-        elif board.not_filled(x,y):                                              #if a ship is not there
-            print("Miss!")
-            return False
+    def fire(self):                                                        #to fire at other players ships
+        """ 
+        
+
+        """
+        hit_successful = False
+
+        while not hit_successful:
+            col = input("Player1, please enter where to hit target (column)")
+            row = input("Please enter where to hit target (row)")
+
+            if board(x,y) & board.is_hit(x,y):
+                # If the board has a ship there                                #if a ship is there and it has been hit
+                print("Location already hit.")
+                return False
+            elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
+                print("Hit!")
+                return True
+            elif board.not_filled(x,y):                                              #if a ship is not there
+                print("Miss!")
+                return False
 
 
 
@@ -176,6 +143,10 @@ class Player:
                 if (back_row < 1):
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_row, front_row + 1):
+                    if self.Board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "D") | (orientation == "d"):
                 back_col = front_col
@@ -183,6 +154,10 @@ class Player:
                 if (back_row > 9):
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_row, back_row + 1):
+                    if self.Board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "L") | (orientation == "l"):
                 back_col = front_col - (self.ships[i] - 1)
@@ -190,6 +165,10 @@ class Player:
                 if (back_col < 1):
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_column, front_column + 1):
+                    if self.Board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "R") | (orientation == "r"):
                 back_col = front_col + (self.ships[i] - 1)
@@ -197,6 +176,10 @@ class Player:
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_col, back_column + 1):
+                    if self.Board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             else:
                 print("Invalid orientaion selection! Choices are: U, D, L, R\n")
@@ -205,18 +188,7 @@ class Player:
     
     
 
-    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
-    
-        while ( True ):        
-            x = input("How many ships do you want to play with?\n") 
-            os.system("cls")
-            if (x == "1") | (x == "2") | (x == "3") | (x == "4") | (x == "5"):   
-                x = int(x)
-                for i in range(x):
-                    self.ships.append(i+1)
-                break
-            else:
-                print("Invalid number of ships! You can only have 1-5.\n")
+    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class
         for i in range(len(self.ships)):
             initial_location = self.choose_coordinates()
             final_location = self.choose_orient(initial_location, i)
@@ -224,11 +196,6 @@ class Player:
             back_loc = final_location[2] + final_location[3]
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
-            #self.board.place_ship(x,y)
+            self.board.setUp(self.ships[i])
 
 
-
-
-
-player = Player("Player 1")
-player.set_ships()
