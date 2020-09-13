@@ -53,7 +53,7 @@ class Terminal:
 
         for row in board.board:
             print(index,  end=" ") 
-            
+            index += 1
             for loc in row:
                 if loc == 'O':
                     print(colorama.Fore.BLUE + "O", end=" ")
