@@ -4,13 +4,14 @@ from board import board
 from Terminal import Terminal
 
 class Game:
+	
+	aTerminal = Terminal()
 
 	def __init__(self):
 		"""
 		Initializes the game
 
 		"""
-		self.aTerminal = Terminal()
 		self.aTerminal.printWelcome()
 		
 		player_one_name = input("Player 1, please enter your name: ")
@@ -32,7 +33,9 @@ class Game:
 	#begins the game & conducts turn untill winner determined
 	def play_game(self):
 		"""
+
 		Startes the game 
+
 		"""
 
 		won_game = False
@@ -43,8 +46,7 @@ class Game:
 			#board of player one is shown and chooses target area to hit 
 			self.aTerminal.playerView(self.p1,self.p2)
 			#self.player_one_board.print_board(self.p1)
-			col = input("Player1, please enter where to hit target (column)")
-			row = input("Please enter where to hit target (row)")
+			
 			self.p1.fire(col,row)
 			
 			#checks if player's boats are floating

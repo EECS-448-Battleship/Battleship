@@ -15,15 +15,20 @@ class board:
 
 
     #setup function that places the ships and places them on the board
-    def setUp():
+    def setUp(self, ship):
+        """
+
+        """
+
+        
         for ship in range(0, 9):
             if (set_ships(ship) == true):
                 board.append(["S"])
 
     #update function
-    def update():
+    def update(self):
         for ship in range(0, 9):
             if (hit(ship) == true):
                 board.append(["X"])
-            else
+            else:
                 board.append(["*"])
