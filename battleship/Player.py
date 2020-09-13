@@ -139,6 +139,10 @@ class Player:
                 if (back_row < 1):
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_row, front_row + 1):
+                    if self.Board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "D") | (orientation == "d"):
                 back_col = front_col
@@ -146,6 +150,10 @@ class Player:
                 if (back_row > 9):
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_row, back_row + 1):
+                    if self.Board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "L") | (orientation == "l"):
                 back_col = front_col - (self.ships[i] - 1)
@@ -153,6 +161,10 @@ class Player:
                 if (back_col < 1):
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_column, front_column + 1):
+                    if self.Board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "R") | (orientation == "r"):
                 back_col = front_col + (self.ships[i] - 1)
@@ -160,6 +172,10 @@ class Player:
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_col, back_column + 1):
+                    if self.Board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             else:
                 print("Invalid orientaion selection! Choices are: U, D, L, R\n")
@@ -187,7 +203,7 @@ class Player:
             back_loc = final_location[2] + final_location[3]
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
-            #self.board.place_ship(x,y)
+            self.board.setUp(self.ships[i])
 
 
 
