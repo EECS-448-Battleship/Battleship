@@ -1,5 +1,6 @@
 import os 
-from .Player import Player
+import Player
+import board
 # this will help with cross platfrom color output
 import colorama
 
@@ -14,13 +15,74 @@ class Terminal:
 
     
     def playerView(self, player, enemy):
-        print(colorama.Fore.CYAN + "-"*self.line)
-        print("Your Board")
-        print("----------")
-         
+        """
+        This function prints the players view
+
+        @parm player is the player object whos turn it is
+        @parm enemy is the player object whos turn it is not
+        """
+
         print(colorama.Fore.CYAN + "-"*self.line)
 
-        pass
+        self.printSelfBoard(player.board)
+        print(colorama.Fore.CYAN + "-"*self.line)
+
+        self.printOtherBoard(enemy.board)
+
+        print(colorama.Fore.CYAN + "-"*self.line)
+
+
+    
+    def printSelfBoard(self, board):
+        """
+        This function prints the  players board
+
+        @parm board is the board to print
+        """
+        
+        print("Your Board")
+        print("-"*18)
+
+        for row in board.board:
+            for loc in row:
+                if loc == 'O':
+                    print(colorama.Fore.BLUE + "O", end=" ")
+                elif loc == 'S':
+                    print(colorama.Fore.GREEN + "S", end=" ")
+                elif loc == 'X':
+                    print(colorama.Fore.RED + "X", end=" ")
+                elif loc == '*':
+                    print(colorama.Fore.MAGENTA + "*", end= " ")
+            print("")
+
+    def printOtherBoard(self, board):
+        """
+        This function prints the other players board
+
+        @parm board is the board to print
+        """
+
+        print("Your Enemies Board")
+        print("-"*18)
+
+        for row in board.board:
+            for loc in row:
+                if loc == 'O' or loc == 'S':
+                    print(colorama.Fore.BLUE + "O", end=" ")
+                elif loc == 'X':
+                    print(colorama.Fore.RED + "X", end=" ")
+                elif loc == '*':
+                    print(colorama.Fore.MAGENTA + "*", end= " ")
+            print("")
+
+    def printWelcome(self):
+        # Clear the board and other info from the screen
+        self.clearScreen()
+
+        print(colorama.Fore.CYAN +"="*self.line)
+        print("Welcome to the game. Players will take turns.")
+        print("When it is not your turn please look away!")
+        print(colorama.Fore.CYAN +"="*self.line)
 
     def printSwitchPrompt(self, player):
 
