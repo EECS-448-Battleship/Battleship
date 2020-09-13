@@ -8,7 +8,7 @@ import colorama
 class Terminal:
     """
     This is a helper class that will help print to the terminal
-    
+
     """
 
     def __init__(self):
@@ -45,9 +45,15 @@ class Terminal:
         """
         
         print("Your Board")
-        print("-"*18)
+        print("-"*20)
+
+
+        print("  A B C D E F G H I")
+        index = 1
 
         for row in board.board:
+            print(index,  end=" ") 
+            
             for loc in row:
                 if loc == 'O':
                     print(colorama.Fore.BLUE + "O", end=" ")
@@ -67,9 +73,13 @@ class Terminal:
         """
 
         print("Your Enemies Board")
-        print("-"*18)
+        print("-"*20)
+
+        print("  A B C D E F G H I")
+        index = 1
 
         for row in board.board:
+            print(index,  end=" ") 
             for loc in row:
                 if loc == 'O' or loc == 'S':
                     print(colorama.Fore.BLUE + "O", end=" ")

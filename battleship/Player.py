@@ -20,7 +20,7 @@ class Player:
 
         while not hit_successful:
             col = input("Player1, please enter where to hit target (column)")
-			row = input("Please enter where to hit target (row)")
+            row = input("Please enter where to hit target (row)")
 
             if board(x,y) & board.is_hit(x,y):
                 # If the board has a ship there                                #if a ship is there and it has been hit
