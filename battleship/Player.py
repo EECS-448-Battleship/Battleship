@@ -1,52 +1,5 @@
 import os
-
-
-class Ship:
-    def __init__(self, length, front, back):
-        
-        self.health=length
-        self.length=length
-        self.front=front
-        self.back=back
-
-
-    #def isHit(self, location):
-     
-
-     
-
-    
-    def isFloating(self):
-        if self.health>0:
-            return True
-        else:
-            return False
-
-    def getHealth(self):
-        return self.health
- 
-    def getSize(self):
-        return self.length
-
-    def getlocation(self):
-        print("(Front,Back) of Ship: ", "(",self.front, ",", self.back,")")
-
-
-#added the basics of Edwin's class so I could get mine to compile/run
-
-
-
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
+from class_ship import Ship
 
 class Player:
 
@@ -58,17 +11,27 @@ class Player:
 
 
 
-    def fire(self, x, y):                                                        #to fire at other players ships
-    
-        if board.filled(x,y) & board.is_hit(x,y):                                #if a ship is there and it has been hit
-            print("Location already hit.")
-            return False
-        elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
-            print("Hit!")
-            return True
-        elif board.not_filled(x,y):                                              #if a ship is not there
-            print("Miss!")
-            return False
+    def fire(self):                                                        #to fire at other players ships
+        """ 
+        
+
+        """
+        hit_successful = False
+
+        while not hit_successful:
+            col = input("Player1, please enter where to hit target (column)")
+            row = input("Please enter where to hit target (row)")
+
+            if board(x,y) & board.is_hit(x,y):
+                # If the board has a ship there                                #if a ship is there and it has been hit
+                print("Location already hit.")
+                return False
+            elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
+                print("Hit!")
+                return True
+            elif board.not_filled(x,y):                                              #if a ship is not there
+                print("Miss!")
+                return False
 
 
 
