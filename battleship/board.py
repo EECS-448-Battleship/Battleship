@@ -1,3 +1,5 @@
+from class_ship import Ship
+
 class board:
 
     #creating 9 by 9 board of O's
