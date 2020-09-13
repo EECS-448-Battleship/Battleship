@@ -58,7 +58,7 @@ player_one_board = board()
 aTerminal.clearScreen()
 
 player_two_name = input("Player 2, please enter your name: ")
-p2 = Player(p2Name)
+p2 = Player(player_two_name)
 p2.set_Ships()
 player_two_board= board()
 
