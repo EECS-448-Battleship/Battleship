@@ -3,22 +3,17 @@ from class_ship import Ship
 
 class Player:
 
-    def __init__(self, name, number_of_ships):
+    def __init__(self, name):
     
-        self.number_of_ships = number_of_ships
         self.ships = []
         self.name = name
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
-        
-        for i in range(number_of_ships):
-                    self.ships.append(i + 1)
 
 
 
     def fire(self):                                                        #to fire at other players ships
         """ 
         
-
         """
         hit_successful = False
 
@@ -188,7 +183,18 @@ class Player:
     
     
 
-    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class
+    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
+    
+        while ( True ):        
+            x = input("How many ships do you want to play with?\n") 
+            os.system("cls")
+            if (x == "1") | (x == "2") | (x == "3") | (x == "4") | (x == "5"):   
+                x = int(x)
+                for i in range(x):
+                    self.ships.append(i+1)
+                break
+            else:
+                print("Invalid number of ships! You can only have 1-5.\n")
         for i in range(len(self.ships)):
             initial_location = self.choose_coordinates()
             final_location = self.choose_orient(initial_location, i)
@@ -197,5 +203,3 @@ class Player:
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
             self.board.setUp(self.ships[i])
-
-
