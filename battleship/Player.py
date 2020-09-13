@@ -3,11 +3,15 @@ from class_ship import Ship
 
 class Player:
 
-    def __init__(self, name):
+    def __init__(self, name, number_of_ships):
     
+        self.number_of_ships = number_of_ships
         self.ships = []
         self.name = name
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
+        
+        for i in range(number_of_ships):
+                    self.ships.append(i + 1)
 
 
 
@@ -184,18 +188,7 @@ class Player:
     
     
 
-    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
-    
-        while ( True ):        
-            x = input("How many ships do you want to play with?\n") 
-            os.system("cls")
-            if (x == "1") | (x == "2") | (x == "3") | (x == "4") | (x == "5"):   
-                x = int(x)
-                for i in range(x):
-                    self.ships.append(i+1)
-                break
-            else:
-                print("Invalid number of ships! You can only have 1-5.\n")
+    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class
         for i in range(len(self.ships)):
             initial_location = self.choose_coordinates()
             final_location = self.choose_orient(initial_location, i)
@@ -206,8 +199,3 @@ class Player:
             self.board.setUp(self.ships[i])
 
 
-
-
-
-player = Player("Player 1")
-player.set_ships()
