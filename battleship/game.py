@@ -25,6 +25,7 @@ class Game:
 			
 			#checks if player's boats are floating
 			if(p2.isFloating()==false)
+				won_game==true
 				aTerminal.printWiner(p1,p2)
 				break()	
 				
@@ -41,6 +42,7 @@ class Game:
 			
 			#checks if player's boats are floating
 			if(p1.isFloating()==false)
+				won_game==true
 				aTerminal.printWiner(p2,p1)
 				break()			
 			aTerminal.printSwitchPrompt(p1)	
