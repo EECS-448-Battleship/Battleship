@@ -25,20 +25,29 @@ class board:
         Takes a ship and places it on the board
 
 
-        """
-
-        
-        for ship in range(0, 9):
-            if (set_ships(ship) == true):
-                board.append(["S"])
+        """    
+            
+        for loc in ship.get_location_array():
+            cLoc = convert_loc(loc)
+            self.board[cLoc[0]][cLoc[1]] = "S"           
 
     #update function
     def update(self, loc):
-        for ship in range(0, 9):
-            if (hit(ship) == true):
-                board.append(["X"])
-            else:
-                board.append(["*"])
+        
+        success = True
+
+        cLoc = convert_loc(loc)
+        current_value = self.board[cLoc[0]][cLoc[1]]
+        
+        if current_value == "0":
+            self.board[cLoc[0]][cLoc[1]] = "*"
+        elif current_value == "S":
+            self.board[cLoc[0]][cLoc[1]] = "X"
+        else:
+            success = False
+        
+        return success
+
 
 
 def convert_loc(loc):
@@ -63,12 +72,9 @@ def convert_loc(loc):
         col = 7
     elif (loc[0] == "I"):
         col = 8
-    
 
-    x = loc[0]
+    row = int(loc[1]) -1
 
-    y = int(loc[1]) -1
-
-    coverted = (x,y)
+    coverted = (row,col)
 
     return coverted
