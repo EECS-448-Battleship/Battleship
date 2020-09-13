@@ -11,17 +11,19 @@ class board:
     # # #printing the board with spaces in between
     # def print_board(board):
     #     for row in board:
-        
+
 
 
     #setup function that places the ships and places them on the board
     def setUp():
-        for i in range(0, 9):
-            if (set_ships(i) == true):
+        for ship in range(0, 9):
+            if (set_ships(ship) == true):
                 board.append(["S"])
 
     #update function
     def update():
-        for i in range(0, 9):
-            if (hit(i) == true):
+        for ship in range(0, 9):
+            if (hit(ship) == true):
                 board.append(["X"])
+            else
+                board.append(["*"])
