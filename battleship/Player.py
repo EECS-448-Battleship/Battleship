@@ -35,6 +35,7 @@ class Player:
             loc = input("Please enter where to hit target (i.e A1)")
             if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.board.been_shot(loc):
                 self.update(loc)
+                fired = True
             else:
                 print("Invalid Cordinate, Try again")
 

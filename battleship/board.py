@@ -72,7 +72,7 @@ class board:
         cLoc = convert_loc(loc)
         if cLoc != (99,99):
             current_value = self.board[cLoc[0]][cLoc[1]]
-            if current_value == "0" or current_value == "S":
+            if current_value == "O" or current_value == "S":
                 return True
         return False
         
@@ -88,6 +88,7 @@ def convert_loc(loc):
     Args:
         loc: location string of form "A1" or "I8"
     """
+    loc = (loc[0].upper(), loc[1])
     col = 0
     if (loc[0] == "A"):
         col = 0
