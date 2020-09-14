@@ -27,6 +27,8 @@ class Game:
 		self.p1.set_ships()
 		self.aTerminal.printSelfBoard(self.p1.board)
 
+		input("Press enter to Contitue")
+		self.aTerminal.clearScreen()
 
 		player_two_name = input("Player 2, please enter your name: ")
 		self.p2 = Player(player_two_name)

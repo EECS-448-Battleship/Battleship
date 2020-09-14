@@ -336,4 +336,20 @@ class Ship:
         """
         return self.board_array
 
+    def check_if_at_location(self, loc):
+        """Checks if the ship is at the locations
+
+        Args:
+            loc: the location string of the potenital placment
+
+        Returns: 
+            True: their is a ship at this location
+            Flase: their is not a ship at this location
+        """
+        
+        
+        for space in self.board_array:
+            if (space == loc):
+                return True
+        return False
 
