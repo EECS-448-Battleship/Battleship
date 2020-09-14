@@ -30,11 +30,15 @@ class Player:
 
 
     def check_other(self, x, y):                                                 #check if you have fired at a specific location
-   
-        if board.is_hit(x,y):
-            return True
-        else:
-            return False
+        
+        col = input("Please enter where to hit target (column)")
+        row = input("Please enter where to hit target (row)")
+        for i in range(9):
+            for ii in range(9):
+                if self.other_player.board.board[i][ii] == "S":
+                    print("O")
+                else:
+                    print(self.other_player.board.board[i][ii]
 
 
 
