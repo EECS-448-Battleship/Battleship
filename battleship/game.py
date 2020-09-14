@@ -1,7 +1,7 @@
 from .Ship import Ship
 from .Player import Player
 from .board import board
-from .Terminal import Terminal
+from .terminal import Terminal
 
 class Game:
 	""" The class 
