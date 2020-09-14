@@ -1,10 +1,18 @@
-from class_ship import Ship
+from Ship import Ship
 from Player import Player
 from board import board
 from Terminal import Terminal
 
 class Game:
-	
+	""" The class 
+
+	Attributes:
+		p1: The first player object.
+		p2: The second player object.
+		aTerminal: The terminal helper object.
+
+
+	"""
 	aTerminal = Terminal()
 
 	def __init__(self):
@@ -19,11 +27,18 @@ class Game:
 		self.p1.set_ships()
 		self.aTerminal.printSelfBoard(self.p1.board)
 
+		input("Press enter to Contitue")
+		self.aTerminal.clearScreen()
 
 		player_two_name = input("Player 2, please enter your name: ")
 		self.p2 = Player(player_two_name)
 		self.p2.set_ships()
 		self.aTerminal.printSelfBoard(self.p2.board)
+
+
+		self.p1.other_player = self.p2
+		self.p2.other_player = self.p1
+
 
 		input("Press enter to begin")
 		self.aTerminal.clearScreen()

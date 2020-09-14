@@ -1,5 +1,5 @@
 import os
-from class_ship import Ship
+from Ship import Ship
 from board import board
 
 class Player:
@@ -9,8 +9,8 @@ class Player:
         self.ships = []
         self.board = board()
         self.name = name
+        self.other_player = None
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
-        self.board = board()
 
 
     def set_other_player(self, player2):
@@ -49,7 +49,6 @@ class Player:
 
 
     def check_mine(self):                                                        #check what ships have been hit
-    
         for i in range(9):
             for ii in range(9):
                 print(self.board.board[i][ii])

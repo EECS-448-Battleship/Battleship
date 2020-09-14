@@ -119,8 +119,8 @@ class Terminal:
 
         print(colorama.Fore.CYAN +"="*self.line)
         print("Its Time to switch to "+ player.name)
+        input("Press Enter to continue")
         print(colorama.Fore.CYAN +"="*self.line)
-
         
 
     def printHit(self, loc):
