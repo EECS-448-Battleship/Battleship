@@ -9,6 +9,7 @@ pip install -r  .\requirements.txt
 ```
 
 ## How to play
+py ./run.py
 
 ## Documentation
 
