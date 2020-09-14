@@ -23,8 +23,9 @@ class Terminal:
         """
         This function prints the players view
 
-        @parm player is the player object whos turn it is
-        @parm enemy is the player object whos turn it is not
+        Args:
+            player: the player object whos turn it is
+            enemy: the player object whos turn it is not
         """
 
         print(colorama.Fore.CYAN + "-"*self.line)
@@ -41,8 +42,9 @@ class Terminal:
     def printSelfBoard(self, board):
         """
         This function prints the  players board
-
-        @parm board is the board to print
+        
+        Args:   
+            board: the board to print
         """
         
         print("Your Board")
@@ -70,7 +72,8 @@ class Terminal:
         """
         This function prints the other players board
 
-        @parm board is the board to print
+        Args:
+            board: the board to print
         """
 
         print("Your Enemies Board")
@@ -91,10 +94,8 @@ class Terminal:
             print("")
 
     def printWelcome(self):
-        """
-        Prints the Welcome message to the players
-
-
+        """Prints the Welcome message to the players
+        
         """
         
         # Clear the board and other info from the screen
@@ -109,7 +110,8 @@ class Terminal:
         """
         Prints the promt to switch players 
 
-        @parm player the player whos turn it is
+        Args:
+            player: the player whos turn it is
         """
 
         # Clear the board and other info from the screen
@@ -124,8 +126,9 @@ class Terminal:
     def printHit(self, loc):
         """
         Prints that a location was a hit
-        
-        @parm loc is the tupple of the location 
+
+        Args:        
+            loc: The tupple of the location 
         """
         print(colorama.Fore.GREEN +"-"*self.line)
         print(colorama.Fore.GREEN + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a hit!")
@@ -136,7 +139,8 @@ class Terminal:
         """
         Prints that a location was a miss
         
-        @parm loc is the tupple of the location 
+        Args:
+            loc: the tupple of the location 
         """
         print(colorama.Fore.RED +"-"*self.line)
         print(colorama.Fore.RED + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a miss!")
@@ -147,8 +151,9 @@ class Terminal:
         """
         Prints the winner
         
-        @parm winPlayer is the player who won
-        @parm losePlayer is the player who lost
+        Args:
+            winPlayer: the player who won
+            losePlayer: the player who lost
         """
         print(colorama.Fore.MAGENTA +"="*self.line)
         print(colorama.Fore.MAGENTA + "The Player " + winPlayer.name + " has Won!!")

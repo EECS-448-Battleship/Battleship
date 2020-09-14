@@ -1,5 +1,6 @@
 import os
 from class_ship import Ship
+from board import board
 
 class Player:
 
