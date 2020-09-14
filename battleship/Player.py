@@ -16,7 +16,6 @@
 
 #playerObject= Player(Jasmine)
 #playerObject= Player(Thomas)
-#loc2="C2"
 #if playerOne.isFloating() == false:
 #print("   Player 2 has won ! ! !")
 #choose_coordinates(self, 2)
