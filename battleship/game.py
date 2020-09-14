@@ -1,4 +1,4 @@
-from class_ship import Ship
+from Ship import Ship
 from Player import Player
 from board import board
 from Terminal import Terminal
