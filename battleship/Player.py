@@ -32,8 +32,8 @@ class Player:
         fired = False
         while not fired:
             loc = input("Please enter where to hit target (i.e A1)")
-            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.board.been_shot(loc):
-                self.update(loc)
+            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
+                self.other_player.update(loc)
                 fired = True
             else:
                 print("Invalid Cordinate, Try again")
@@ -41,9 +41,9 @@ class Player:
     def update(self, loc):
         """ Updates the board and the ship array
         """
-        self.other_player.board.update(loc)
+        self.board.update(loc)
         
-        for ship in self.other_player.ships:
+        for ship in self.ships:
             if ship.check_if_at_location(loc):
                 ship.hit(loc)
 
