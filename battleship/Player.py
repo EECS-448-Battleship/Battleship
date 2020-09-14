@@ -10,7 +10,7 @@ class Player:
         self.name = name
         self.other_player
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
-
+        self.board = board.board()
 
 
     def set_other_player(player2):
