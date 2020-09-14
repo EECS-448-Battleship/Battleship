@@ -1,144 +1,76 @@
-from class_ship import Ship
+from .Ship import Ship
 
 class board:
 
-<<<<<<< HEAD
-    """
+    """ The class to abstract the board
+
+    Attributes:
+        board: the array that will hold the data. O for open. * for miss. S for ship. X for hit ship.
     """
 
     # Creates a 9x9 board of O's.
 
-||||||| merged common ancestors
-    #creating 9 by 9 board of O's
-=======
-    """
-
-
-    """
-
-    #creating 9 by 9 board of O's
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
     def __init__(self):
+        """ Inits the board
+
+
+        """
+
         self.board = []
-        for i in range(0, 9):
+        for _ in range(0, 9):
             self.board.append(["O"] * 9)
 
-    # Places the ships on the board and signifies the ships place
-    # by using an "S".
+
 
     def setUp(self, ship):
-        """
-        Takes a ship and places it on the board
+        """Places a ship on the board
+        
+        Places the ships on the board and signifies the ships place by using an "S".
+        
+        Args:
+            ship: a ship object to be placed on the board.
         """
 
         for loc in ship.get_location_array():
             cLoc = convert_loc(loc)
             self.board[cLoc[0]][cLoc[1]] = "S"
 
-    # Updates the board when a player makes a move.  If the
-    # ship is hit, it will be signified on the board with a
-    # "X".  If the player shoots and there is no ship there it
-    # will be signified with a "*".
+ 
 
 
     def update(self, loc):
-
-        success = True
-
-        cLoc = convert_loc(loc)
-        current_value = self.board[cLoc[0]][cLoc[1]]
-
-        if current_value == "0":
-            self.board[cLoc[0]][cLoc[1]] = "*"
-        elif current_value == "S":
-            self.board[cLoc[0]][cLoc[1]] = "X"
-        else:
-            success = False
-
-        return success
-
-# Converts the letters on the board to numbers that coorespond
-# with the columns.
-
-def convert_loc(loc):
-    """
-    """
-    if (loc[0] == "A"):
-        col = 0
-    elif (loc[0] == "B"):
-        col = 1
-    elif (loc[0] == "C"):
-        col = 2
-    elif (loc[0] == "D"):
-        col = 3
-    elif (loc[0] == "E"):
-        col = 4
-    elif (loc[0] == "F"):
-        col = 5
-    elif (loc[0] == "G"):
-        col = 6
-    elif (loc[0] == "H"):
-        col = 7
-    elif (loc[0] == "I"):
-        col = 8
-
-    row = int(loc[1]) -1
-
-<<<<<<< HEAD
-    coverted = (row,col)
-||||||| merged common ancestors
-    #setup function that places the ships and places them on the board
-    def setUp():
-        for ship in range(0, 9):
-            if (set_ships(ship) == true):
-                board.append(["S"])
-=======
-    #setup function that places the ships and places them on the board
-    def setUp(self, ship):
         """
-        Takes a ship and places it on the board
-
-
-        """    
-
-        for loc in ship.get_location_array():
-            cLoc = convert_loc(loc)
-            self.board[cLoc[0]][cLoc[1]] = "S"           
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
-
-<<<<<<< HEAD
-    return coverted
-||||||| merged common ancestors
-    #update function
-    def update():
-        for ship in range(0, 9):
-            if (hit(ship) == true):
-                board.append(["X"])
-            else
-                board.append(["*"])
-=======
-    #update function
-    def update(self, loc):
+        Updates the board when a player makes a move.  If the
+        ship is hit, it will be signified on the board with a
+        "X".  If the player shoots and there is no ship there it
+        will be signified with a "*".
         
+        Args:
+            loc: the string location that is to be updated
+        """
         success = True
 
         cLoc = convert_loc(loc)
         current_value = self.board[cLoc[0]][cLoc[1]]
-        
+
         if current_value == "O":
             self.board[cLoc[0]][cLoc[1]] = "*"
         elif current_value == "S":
             self.board[cLoc[0]][cLoc[1]] = "X"
         else:
             success = False
-        
-        return success
+
+        return success      
+
 
 
 
 def convert_loc(loc):
-    """
-
+    """ Coverts to arry access tuple
+    Converts the letters on the board to numbers that coorespond with the columns.
+    
+    Args:
+        loc: location string of form "A1" or "I8"
     """
     if (loc[0] == "A"):
         col = 0
@@ -164,4 +96,3 @@ def convert_loc(loc):
     coverted = (row,col)
 
     return coverted
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
