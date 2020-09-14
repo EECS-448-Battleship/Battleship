@@ -1,4 +1,4 @@
-from .class_ship import Ship
+from class_ship import Ship
 
 class board:
 
