@@ -1,6 +1,31 @@
+#-------------INDEX OF CLASS: PLAYER METHODS BELOW-------------------
+# 
+#                      def set_other_player(self, player2)
+#action                def fire(self)
+#action                def set_ships(self)
+#action                def choose_coordinates(self, i)
+#bool                  def isFloating(self)
+#Prints(str,str)       def check_other(self, x, y):
+#Prints()              def check_mine(self):
+#---------------PLAYER METHODS END---------------------------------
+
+#Keep in mind, letters MUST be enetered as capital letters
+#When calling Player Object, name of player must be passed in.
+#There, it will be create unique board of the respective
+#-----------------START OF EXAMPLE USE-------------
+
+#playerObject= Player(Jasmine)
+#playerObject= Player(Thomas)
+#loc2="C2"
+#if playerOne.isFloating() == false:
+#print("   Player 2 has won ! ! !")
+# choose_coordinates(self, 2)
+#object.check_other(self, A, 1):
+#object.check_mine(self):
+#--------------------------END OF EXAMPLES
 import os
-from .Ship import Ship
-from .board import board
+from Ship import Ship
+from board import board
 
 class Player:
 
@@ -18,50 +43,21 @@ class Player:
 
 
     def isFloating(self):
-        for ship in self.ships:
-            for spot in ship.isHit_array:
-                if spot == False:
+        for i in range(len(self.ships)):
+            for ii in range(self.ships.isHit_array[i]):
+                if self.ships[i].isHit_array[ii] == False:
                     return True
         return False
 
 
     def fire(self):                                                        #to fire at other players ships
-        """ Takes the players turn to fire
-
-        Returns:
-            True: has hit a ship
-            False: has not hit a ship
-
-        """
-        fired = False
-        while not fired:
-            loc = input("Please enter where to hit target (i.e A1)")
-            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
-                hit = self.other_player.update(loc)
-                
-                fired = True
-                return hit
-            else:
-                print("Invalid Cordinate, Try again")
-
-    def update(self, loc):
-        """ Updates the board and the ship array
+        """ 
         
-        Returns:
-            True: a Ship has been hit
-            False: a ship has not been Hit
         """
-
-
-        hit = self.board.update(loc)
-        
-        for ship in self.ships:
-            if ship.check_if_at_location(loc):
-                ship.hit(loc)
-
-        return hit
-
-
+        col = input("Please enter where to hit target (column)")
+        row = input("Please enter where to hit target (row)")
+        self.other_player.board.update(col+row)
+        return self.other_player.board.update(col+row)
 
 
 
