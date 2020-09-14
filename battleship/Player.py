@@ -8,7 +8,13 @@ class Player:
     
         self.ships = []
         self.name = name
+        self.other_player
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
+
+
+
+    def set_other_player(player2):
+        other_player = player2
 
 
 
@@ -16,31 +22,23 @@ class Player:
         """ 
         
         """
-        hit_successful = False
-
-        while not hit_successful:
-            col = input("Please enter where to hit target (column)")
-            row = input("Please enter where to hit target (row)")
-
-            if board(x,y) & board.is_hit(x,y):
-                # If the board has a ship there                                #if a ship is there and it has been hit
-                print("Location already hit.")
-                return False
-            elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
-                print("Hit!")
-                return True
-            elif board.not_filled(x,y):                                              #if a ship is not there
-                print("Miss!")
-                return False
+        col = input("Please enter where to hit target (column)")
+        row = input("Please enter where to hit target (row)")
+        self.other_player.board.update(col+row)
+        return self.other_player.board.update(col+row)
 
 
 
     def check_other(self, x, y):                                                 #check if you have fired at a specific location
-   
-        if board.is_hit(x,y):
-            return True
-        else:
-            return False
+        
+        col = input("Please enter where to hit target (column)")
+        row = input("Please enter where to hit target (row)")
+        for i in range(9):
+            for ii in range(9):
+                if self.other_player.board.board[i][ii] == "S":
+                    print("O")
+                else:
+                    print(self.other_player.board.board[i][ii]
 
 
 
@@ -140,7 +138,7 @@ class Player:
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
                     continue
                 for j in range(back_row, front_row + 1):
-                    if self.Board.board[front_col - 1][j] == "S":
+                    if self.board.board[front_col - 1][j] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         continue
                 break
@@ -151,7 +149,7 @@ class Player:
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
                     continue
                 for j in range(front_row, back_row + 1):
-                    if self.Board.board[front_col - 1][j] == "S":
+                    if self.board.board[front_col - 1][j] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         continue
                 break
@@ -162,7 +160,7 @@ class Player:
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
                     continue
                 for j in range(back_column, front_column + 1):
-                    if self.Board.board[j][front_row - 1] == "S":
+                    if self.board.board[j][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         continue
                 break
@@ -173,7 +171,7 @@ class Player:
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     continue
                 for j in range(front_col, back_column + 1):
-                    if self.Board.board[j][front_row - 1] == "S":
+                    if self.board.board[j][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         continue
                 break

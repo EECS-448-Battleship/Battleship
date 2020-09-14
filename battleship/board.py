@@ -37,7 +37,7 @@ class board:
         cLoc = convert_loc(loc)
         current_value = self.board[cLoc[0]][cLoc[1]]
 
-        if current_value == "0":
+        if current_value == "O":
             self.board[cLoc[0]][cLoc[1]] = "*"
         elif current_value == "S":
             self.board[cLoc[0]][cLoc[1]] = "X"
