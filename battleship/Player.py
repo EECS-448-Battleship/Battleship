@@ -145,6 +145,7 @@ class Player:
                 if (back_row < 1):
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
                     is_good = False
+                    continue
                 for j in range(back_row, front_row + 1):
                     if self.board.board[front_col - 1][j - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
@@ -160,10 +161,12 @@ class Player:
                 if (back_row > 9):
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
                     is_good = False
+                    continue
                 for j in range(front_row, back_row + 1):
                     if self.board.board[front_col - 1][j - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         is_good = False
+                        break
                 if is_good == True:
                     break
                 else:
@@ -174,10 +177,12 @@ class Player:
                 if (back_col < 1):
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
                     is_good = False
+                    continue
                 for j in range(back_col, front_col + 1):
                     if self.board.board[j - 1][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         is_good = False
+                        break
                 if is_good == True:
                     break
                 else:
@@ -188,10 +193,12 @@ class Player:
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     is_good = False
+                    continue
                 for j in range(front_col, back_col + 1):
                     if self.board.board[j - 1][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         is_good = False
+                        break
                 if is_good == True:
                     break
                 else:
