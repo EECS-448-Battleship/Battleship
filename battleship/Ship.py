@@ -235,8 +235,11 @@ class Ship:
         Action:
             This will be in a for loop checking if the location passed in matches with
             location saved in the board_array. It will then check the isHit array of the corresponding "i"
-            and will bring the health count down by one if the ship hasn't been hit yet or it will print out 
-            "already hit" message
+            and will bring the health count down by one if the ship hasn't been hit yet or it will return false
+
+        Return:
+            True: the ship has been hit
+            False: the ship has not been hit
 
         """
         for i in range(0,self.length):
@@ -244,9 +247,9 @@ class Ship:
                 if self.isHit_array[i]==False:
                     self.isHit_array[i] = True
                     self.health=self.health-1  
-                    print(location, "has been hit")
+                    return True
                 else:
-                    print("Location has already been hit")
+                    return False
 
 
                     

@@ -62,13 +62,29 @@ class board:
 
         return success      
 
+    def been_shot(self, loc):
+        """ Returns if the spot has already been shot
+        
+        Args:
+            loc: the string location that is to be updated
+        """
 
+        cLoc = convert_loc(loc)
+        if cLoc != (99,99):
+            current_value = self.board[cLoc[0]][cLoc[1]]
+            if current_value == "0" or current_value == "S":
+                return True
+        return False
+        
 
 
 def convert_loc(loc):
     """ Coverts to arry access tuple
     Converts the letters on the board to numbers that coorespond with the columns.
     
+    Returns: 
+        loc: if valid then it is tuple, if not then it is (99, 99)
+
     Args:
         loc: location string of form "A1" or "I8"
     """
@@ -91,9 +107,12 @@ def convert_loc(loc):
         col = 7
     elif (loc[0] == "I"):
         col = 8
+    else:
+        col = 99
 
     row = int(loc[1]) -1
-
+    if not((row >= 0) and (row<=8)):
+        row == 99
     coverted = (row,col)
 
     return coverted

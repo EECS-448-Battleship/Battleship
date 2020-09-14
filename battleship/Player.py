@@ -26,18 +26,27 @@ class Player:
 
 
 
-    def fire(self, ):                                                        #to fire at other players ships
+    def fire(self):                                                        #to fire at other players ships
         """ 
         
         """
         fired = False
         while not fired:
-            cord = input("Please enter where to hit target (i.e A1)")
-            if len(cord) == 2 and cord[0].isalpha() and cord[1].isdigit():
-                self.other_player.board.update(cord)
-                return self.other_player.board.update(cord)
+            loc = input("Please enter where to hit target (i.e A1)")
+            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.board.been_shot(loc):
+                self.update(loc)
             else:
                 print("Invalid Cordinate, Try again")
+
+    def update(self, loc):
+        """ Updates the board and the ship array
+        """
+        self.other_player.board.update(loc)
+        
+        for ship in self.other_player.ships:
+            if ship.check_if_at_location(loc):
+                ship.hit(loc)
+
 
 
 
