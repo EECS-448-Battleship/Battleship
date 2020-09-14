@@ -4,7 +4,15 @@ from board import board
 from Terminal import Terminal
 
 class Game:
-	
+	""" The class 
+
+	Attributes:
+		p1: The first player object.
+		p2: The second player object.
+		aTerminal: The terminal helper object.
+
+
+	"""
 	aTerminal = Terminal()
 
 	def __init__(self):
