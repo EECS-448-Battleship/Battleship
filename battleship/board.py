@@ -3,44 +3,53 @@ from class_ship import Ship
 class board:
 
     """
-
-
     """
 
-    #creating 9 by 9 board of O's
+    # Creates a 9x9 board of O's.
+
     def __init__(self):
         self.board = []
-        for i in range(0, 9):
+        for _ in range(0, 9):
             self.board.append(["O"] * 9)
 
-    # # #printing the board with spaces in between
-    # def print_board(board):
-    #     for row in board:
+    # Places the ships on the board and signifies the ships place
+    # by using an "S".
 
-
-
-    #setup function that places the ships and places them on the board
     def setUp(self, ship):
         """
         Takes a ship and places it on the board
-
-
         """
 
-        
-        for ship in range(0, 9):
-            if (set_ships(ship) == true):
-                board.append(["S"])
+        for loc in ship.get_location_array():
+            cLoc = convert_loc(loc)
+            self.board[cLoc[0]][cLoc[1]] = "S"
 
-    #update function
+    # Updates the board when a player makes a move.  If the
+    # ship is hit, it will be signified on the board with a
+    # "X".  If the player shoots and there is no ship there it
+    # will be signified with a "*".
+
+
     def update(self, loc):
-        for ship in range(0, 9):
-            if (hit(ship) == true):
-                board.append(["X"])
-            else:
-                board.append(["*"])
+
+        success = True
+
+        cLoc = convert_loc(loc)
+        current_value = self.board[cLoc[0]][cLoc[1]]
+
+        if current_value == "O":
+            self.board[cLoc[0]][cLoc[1]] = "*"
+        elif current_value == "S":
+            self.board[cLoc[0]][cLoc[1]] = "X"
+        else:
+            success = False
+
+        return success      
 
 
+
+# Converts the letters on the board to numbers that coorespond
+# with the columns.
 def convert_loc(loc):
     """
 
@@ -63,12 +72,9 @@ def convert_loc(loc):
         col = 7
     elif (loc[0] == "I"):
         col = 8
-    
 
-    x = loc[0]
+    row = int(loc[1]) -1
 
-    y = int(loc[1]) -1
-
-    coverted = (x,y)
+    coverted = (row,col)
 
     return coverted

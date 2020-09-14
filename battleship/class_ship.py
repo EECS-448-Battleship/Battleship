@@ -16,7 +16,7 @@
 #2) Smallest to largest by int 
 
 # Example: (B6,B2) are input by user, if Ship.getlocation() is called
-#       it will output (B2,B6), front and back are switched when 
+#       it will output (B2,B6), front and back are switcsyhed when 
 #       ___init__ is called
 
 
@@ -55,6 +55,7 @@
 #--------------------------END OF EXAMPLES
 
 class Ship:
+<<<<<<< HEAD
     """Ship class which is used when building a ship from player class.
 
     Ship object is instantiated when the player class calls on an object to be
@@ -110,6 +111,31 @@ class Ship:
             Makes a call to fill_location_array which then fills in self.board_array
 
         """
+=======
+    """ The ships that are used for the board
+
+    Attributes:
+        health: The remaining unhit parts of the ship
+        length: The length of the ship (1-5)
+        front: The location of the front of the ship
+        back: The location of the back of the ship
+        isHit_array: Where has been hit array
+        board_array: The location of the ship on the board array
+
+    """
+
+
+    def __init__(self, length, front, back):
+        """ Inits a new ship
+
+        Args:
+            length: How long the ship is (1-5)
+            front: The location of the front of the ship
+            back: The location of the back of the ship
+
+        """
+
+>>>>>>> c71eccaff7c73dd9a1bd401b143b3445ea5e8b5d
         self.health=length
         self.length=length
         self.front=front
@@ -119,7 +145,7 @@ class Ship:
         self.board_array=[("")]*(self.length)
 
 
-#Bottom will put the input in order from smallest to largest number
+        #Bottom will put the input in order from smallest to largest number
         if self.front[0] == self.back[0]:
             
             self.orientation="h"
@@ -132,8 +158,8 @@ class Ship:
         
                 self.front_int= int(self.front[1])
                 self.back_int=int(self.back[1])
-#Bottom half of if statement will then activate if the orientation is horizontal
-#which will put in order of smallest (A) to largest (I)
+        #Bottom half of if statement will then activate if the orientation is horizontal
+        #which will put in order of smallest (A) to largest (I)
         elif self.front[0] != self.back[0]:
             self.orientation="v"
 
@@ -148,8 +174,9 @@ class Ship:
 
 
 
-#Below bool isHit function
+    #Below bool isHit function
     def isHit(self, location):
+<<<<<<< HEAD
 
         """bool function that returns true or false for if ship is hit.
 
@@ -165,6 +192,13 @@ class Ship:
 
         """
 
+=======
+        """ Tells if the spot has been hit before
+
+        Args:
+            location: The location string that is to be checked against
+        """
+>>>>>>> c71eccaff7c73dd9a1bd401b143b3445ea5e8b5d
         for i in range(0,self.length):
             if self.board_array[i]==location:
                 if self.isHit_array[i] == True:

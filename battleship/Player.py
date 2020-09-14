@@ -1,54 +1,60 @@
 import os
 from class_ship import Ship
+from board import board
 
 class Player:
 
     def __init__(self, name):
     
         self.ships = []
+        self.board = board()
         self.name = name
+        self.other_player
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
+        self.board = board.board()
 
+
+    def set_other_player(self, player2):
+        self.other_player = player2
+
+
+    def isFloating(self):
+        for i in range(len(self.ships)):
+            for ii in range(ships.isHit_array[i]):
+                if self.ships[i].isHit_array[ii] == False:
+                    return True
+        return False
 
 
     def fire(self):                                                        #to fire at other players ships
         """ 
         
-
         """
-        hit_successful = False
-
-        while not hit_successful:
-            col = input("Player1, please enter where to hit target (column)")
-            row = input("Please enter where to hit target (row)")
-
-            if board(x,y) & board.is_hit(x,y):
-                # If the board has a ship there                                #if a ship is there and it has been hit
-                print("Location already hit.")
-                return False
-            elif board.filled(x,y) & board.is_not_hit(x,y):                          #if a ship is there and it has not been hit
-                print("Hit!")
-                return True
-            elif board.not_filled(x,y):                                              #if a ship is not there
-                print("Miss!")
-                return False
+        col = input("Please enter where to hit target (column)")
+        row = input("Please enter where to hit target (row)")
+        self.other_player.board.update(col+row)
+        return self.other_player.board.update(col+row)
 
 
 
     def check_other(self, x, y):                                                 #check if you have fired at a specific location
-   
-        if board.is_hit(x,y):
-            return True
-        else:
-            return False
+        
+        for i in range(9):
+            for ii in range(9):
+                if self.other_player.board.board[i][ii] == "S":
+                    print("O")
+                else:
+                    print(self.other_player.board.board[i][ii])
+            print("\n")
 
 
 
     def check_mine(self):                                                        #check what ships have been hit
     
-        for x in ships:
-            if ships[x].is_hit():
-                return True                                                      #need to figure out how we print which ship/location
+        for i in range(9):
+            for ii in range(9):
+                print(self.board.board[i][ii])
+            print("\n")
 
 
 
@@ -139,6 +145,10 @@ class Player:
                 if (back_row < 1):
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_row, front_row + 1):
+                    if self.board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "D") | (orientation == "d"):
                 back_col = front_col
@@ -146,6 +156,10 @@ class Player:
                 if (back_row > 9):
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_row, back_row + 1):
+                    if self.board.board[front_col - 1][j] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "L") | (orientation == "l"):
                 back_col = front_col - (self.ships[i] - 1)
@@ -153,6 +167,10 @@ class Player:
                 if (back_col < 1):
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(back_column, front_column + 1):
+                    if self.board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             elif (orientation == "R") | (orientation == "r"):
                 back_col = front_col + (self.ships[i] - 1)
@@ -160,6 +178,10 @@ class Player:
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     continue
+                for j in range(front_col, back_column + 1):
+                    if self.board.board[j][front_row - 1] == "S":
+                        print("A ship is already located here! Try another orientation.\n")
+                        continue
                 break
             else:
                 print("Invalid orientaion selection! Choices are: U, D, L, R\n")
@@ -187,11 +209,4 @@ class Player:
             back_loc = final_location[2] + final_location[3]
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
-            #self.board.place_ship(x,y)
-
-
-
-
-
-player = Player("Player 1")
-player.set_ships()
+            self.board.setUp(self.ships[i])
