@@ -47,7 +47,7 @@ class Game:
 			self.aTerminal.playerView(self.p1,self.p2)
 			#self.player_one_board.print_board(self.p1)
 			
-			self.p1.fire(col,row)
+			self.p1.fire()
 			
 			#checks if player's boats are floating
 			if(self.p2.isFloating()==False):
@@ -62,9 +62,7 @@ class Game:
 			#board of player two is shown and chooses target area to hit
 			self.aTerminal.playerView(self.p2,self.p1)
 			#player_two_board.print_board()
-			col = input("Player2, please enter where to hit target (column)")
-			row = input("Please enter where to hit target (row)")
-			self.p1.fire(col,row)
+			self.p1.fire()
 			
 			#checks if player's boats are floating
 			if(self.p1.isFloating()==False):

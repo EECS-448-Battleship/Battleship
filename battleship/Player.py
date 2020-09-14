@@ -19,7 +19,7 @@ class Player:
         hit_successful = False
 
         while not hit_successful:
-            col = input("Player1, please enter where to hit target (column)")
+            col = input("Please enter where to hit target (column)")
             row = input("Please enter where to hit target (row)")
 
             if board(x,y) & board.is_hit(x,y):
