@@ -55,7 +55,6 @@
 #--------------------------END OF EXAMPLES
 
 class Ship:
-<<<<<<< HEAD
     """Ship class which is used when building a ship from player class.
 
     Ship object is instantiated when the player class calls on an object to be
@@ -111,31 +110,6 @@ class Ship:
             Makes a call to fill_location_array which then fills in self.board_array
 
         """
-=======
-    """ The ships that are used for the board
-
-    Attributes:
-        health: The remaining unhit parts of the ship
-        length: The length of the ship (1-5)
-        front: The location of the front of the ship
-        back: The location of the back of the ship
-        isHit_array: Where has been hit array
-        board_array: The location of the ship on the board array
-
-    """
-
-
-    def __init__(self, length, front, back):
-        """ Inits a new ship
-
-        Args:
-            length: How long the ship is (1-5)
-            front: The location of the front of the ship
-            back: The location of the back of the ship
-
-        """
-
->>>>>>> c71eccaff7c73dd9a1bd401b143b3445ea5e8b5d
         self.health=length
         self.length=length
         self.front=front
@@ -176,7 +150,6 @@ class Ship:
 
     #Below bool isHit function
     def isHit(self, location):
-<<<<<<< HEAD
 
         """bool function that returns true or false for if ship is hit.
 
@@ -192,13 +165,6 @@ class Ship:
 
         """
 
-=======
-        """ Tells if the spot has been hit before
-
-        Args:
-            location: The location string that is to be checked against
-        """
->>>>>>> c71eccaff7c73dd9a1bd401b143b3445ea5e8b5d
         for i in range(0,self.length):
             if self.board_array[i]==location:
                 if self.isHit_array[i] == True:
