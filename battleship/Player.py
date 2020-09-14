@@ -7,6 +7,7 @@ class Player:
     def __init__(self, name):
     
         self.ships = []
+        self.board = board()
         self.name = name
         self.other_player = None
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
@@ -16,6 +17,13 @@ class Player:
     def set_other_player(self, player2):
         self.other_player = player2
 
+
+    def isFloating(self):
+        for i in range(len(self.ships)):
+            for ii in range(ships.isHit_array[i]):
+                if self.ships[i].isHit_array[ii] == False:
+                    return True
+        return False
 
 
     def fire(self):                                                        #to fire at other players ships
