@@ -1,6 +1,6 @@
 import os
-from Ship import Ship
-from board import board
+from .Ship import Ship
+from .board import board
 
 class Player:
 
@@ -18,9 +18,9 @@ class Player:
 
 
     def isFloating(self):
-        for i in range(len(self.ships)):
-            for ii in range(self.ships.isHit_array[i]):
-                if self.ships[i].isHit_array[ii] == False:
+        for ship in self.ships:
+            for spot in ship.isHit_array:
+                if spot == False:
                     return True
         return False
 
