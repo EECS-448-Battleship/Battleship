@@ -11,7 +11,7 @@
 
 #Keep in mind, letters MUST be enetered as capital letters
 #When calling Player Object, name of player must be passed in.
-#There, it will create unique board of the respective
+#There, it will create unique board of the respective player.
 #-----------------START OF EXAMPLE USE-------------
 
 #playerObject= Player(Jasmine)
