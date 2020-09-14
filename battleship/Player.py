@@ -11,7 +11,6 @@ class Player:
         self.name = name
         self.other_player = None
         self.letters = [ "A", "B", "C", "D", "E", "F", "G", "H", "I" ]
-        self.board = board()
 
 
     def set_other_player(self, player2):
@@ -177,7 +176,7 @@ class Player:
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
                     continue
-                for j in range(front_col, back_column + 1):
+                for j in range(front_col, back_col + 1):
                     if self.board.board[j][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
                         continue
@@ -209,3 +208,4 @@ class Player:
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
             self.board.setUp(self.ships[i])
+            
