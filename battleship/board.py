@@ -72,6 +72,7 @@ def convert_loc(loc):
     Args:
         loc: location string of form "A1" or "I8"
     """
+    col = 0
     if (loc[0] == "A"):
         col = 0
     elif (loc[0] == "B"):

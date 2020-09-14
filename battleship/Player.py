@@ -26,14 +26,20 @@ class Player:
 
 
 
-    def fire(self):                                                        #to fire at other players ships
+    def fire(self, ):                                                        #to fire at other players ships
         """ 
         
         """
-        col = input("Please enter where to hit target (column)")
-        row = input("Please enter where to hit target (row)")
-        self.other_player.board.update(col+row)
-        return self.other_player.board.update(col+row)
+        fired = False
+        while not fired:
+            cord = input("Please enter where to hit target (i.e A1)")
+            if len(cord) == 2 and cord[0].isalpha() and cord[1].isdigit():
+                self.other_player.board.update(cord)
+                return self.other_player.board.update(cord)
+            else:
+                print("Invalid Cordinate, Try again")
+
+
 
 
 

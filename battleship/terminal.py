@@ -27,6 +27,10 @@ class Terminal:
             player: the player object whos turn it is
             enemy: the player object whos turn it is not
         """
+        print(colorama.Fore.CYAN + "="*self.line)
+        
+        print(colorama.Fore.GREEN + player.name)
+
 
         print(colorama.Fore.CYAN + "-"*self.line)
 
@@ -36,6 +40,8 @@ class Terminal:
         self.printOtherBoard(enemy.board)
 
         print(colorama.Fore.CYAN + "-"*self.line)
+        print(colorama.Fore.CYAN + "="*self.line)
+
 
 
     
