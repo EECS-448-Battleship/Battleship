@@ -2,7 +2,8 @@ from class_ship import Ship
 
 class board:
 
-    """
+    """ The 
+
     """
 
     # Creates a 9x9 board of O's.
