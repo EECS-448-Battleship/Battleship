@@ -44,7 +44,7 @@ class Player:
                 if self.other_player.board.board[i][ii] == "S":
                     print("O")
                 else:
-                    print(self.other_player.board.board[i][ii]
+                    print(self.other_player.board.board[i][ii])
             print("\n")
 
 
