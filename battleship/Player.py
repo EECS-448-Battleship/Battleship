@@ -11,7 +11,7 @@
 
 #Keep in mind, letters MUST be enetered as capital letters
 #When calling Player Object, name of player must be passed in.
-#There, it will be create unique board of the respective
+#There, it will create unique board of the respective
 #-----------------START OF EXAMPLE USE-------------
 
 #playerObject= Player(Jasmine)
@@ -19,7 +19,7 @@
 #loc2="C2"
 #if playerOne.isFloating() == false:
 #print("   Player 2 has won ! ! !")
-# choose_coordinates(self, 2)
+#choose_coordinates(self, 2)
 #object.check_other(self, A, 1):
 #object.check_mine(self):
 #--------------------------END OF EXAMPLES
