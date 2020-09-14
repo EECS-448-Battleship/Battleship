@@ -2,37 +2,52 @@ from class_ship import Ship
 
 class board:
 
-    """ The 
+    """ The class to abstract the board
 
+    Attributes:
+        board: the array that will hold the data. O for open. * for miss. S for ship. X for hit ship.
     """
 
     # Creates a 9x9 board of O's.
 
     def __init__(self):
+        """ Inits the board
+
+
+        """
+
         self.board = []
         for _ in range(0, 9):
             self.board.append(["O"] * 9)
 
-    # Places the ships on the board and signifies the ships place
-    # by using an "S".
+
 
     def setUp(self, ship):
-        """
-        Takes a ship and places it on the board
+        """Places a ship on the board
+        
+        Places the ships on the board and signifies the ships place by using an "S".
+        
+        Args:
+            ship: a ship object to be placed on the board.
         """
 
         for loc in ship.get_location_array():
             cLoc = convert_loc(loc)
             self.board[cLoc[0]][cLoc[1]] = "S"
 
-    # Updates the board when a player makes a move.  If the
-    # ship is hit, it will be signified on the board with a
-    # "X".  If the player shoots and there is no ship there it
-    # will be signified with a "*".
+ 
 
 
     def update(self, loc):
-
+        """
+        Updates the board when a player makes a move.  If the
+        ship is hit, it will be signified on the board with a
+        "X".  If the player shoots and there is no ship there it
+        will be signified with a "*".
+        
+        Args:
+            loc: the string location that is to be updated
+        """
         success = True
 
         cLoc = convert_loc(loc)
@@ -49,11 +64,13 @@ class board:
 
 
 
-# Converts the letters on the board to numbers that coorespond
-# with the columns.
-def convert_loc(loc):
-    """
 
+def convert_loc(loc):
+    """ Coverts to arry access tuple
+    Converts the letters on the board to numbers that coorespond with the columns.
+    
+    Args:
+        loc: location string of form "A1" or "I8"
     """
     if (loc[0] == "A"):
         col = 0
