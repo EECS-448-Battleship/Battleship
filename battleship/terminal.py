@@ -6,9 +6,10 @@ import colorama
 
 # Handels the output for the application
 class Terminal:
-    """
-    This is a helper class that will help print to the terminal
+    """This is a helper class that will help print to the terminal
 
+    Attributes:
+        line: the length of the line that sepreates the sections
     """
 
     def __init__(self):

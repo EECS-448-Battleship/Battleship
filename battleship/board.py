@@ -2,22 +2,12 @@ from class_ship import Ship
 
 class board:
 
-<<<<<<< HEAD
-    """
-    """
-
-    # Creates a 9x9 board of O's.
-
-||||||| merged common ancestors
-    #creating 9 by 9 board of O's
-=======
     """
 
 
     """
 
     #creating 9 by 9 board of O's
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
     def __init__(self):
         self.board = []
         for i in range(0, 9):
@@ -84,15 +74,6 @@ def convert_loc(loc):
 
     row = int(loc[1]) -1
 
-<<<<<<< HEAD
-    coverted = (row,col)
-||||||| merged common ancestors
-    #setup function that places the ships and places them on the board
-    def setUp():
-        for ship in range(0, 9):
-            if (set_ships(ship) == true):
-                board.append(["S"])
-=======
     #setup function that places the ships and places them on the board
     def setUp(self, ship):
         """
@@ -104,19 +85,7 @@ def convert_loc(loc):
         for loc in ship.get_location_array():
             cLoc = convert_loc(loc)
             self.board[cLoc[0]][cLoc[1]] = "S"           
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
 
-<<<<<<< HEAD
-    return coverted
-||||||| merged common ancestors
-    #update function
-    def update():
-        for ship in range(0, 9):
-            if (hit(ship) == true):
-                board.append(["X"])
-            else
-                board.append(["*"])
-=======
     #update function
     def update(self, loc):
         
@@ -164,4 +133,3 @@ def convert_loc(loc):
     coverted = (row,col)
 
     return coverted
->>>>>>> 8c6ce7ea4ecd60b730957b8d06d478b38afd0759
