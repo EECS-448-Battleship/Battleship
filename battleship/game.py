@@ -25,6 +25,11 @@ class Game:
 		self.p2.set_ships()
 		self.aTerminal.printSelfBoard(self.p2.board)
 
+
+		self.p1.other_player = self.p2
+		self.p2.other_player = self.p1
+
+
 		input("Press enter to begin")
 		self.aTerminal.clearScreen()
 
