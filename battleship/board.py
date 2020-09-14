@@ -48,7 +48,7 @@ class board:
         Args:
             loc: the string location that is to be updated
         """
-        success = True
+        hit = False
 
         cLoc = convert_loc(loc)
         current_value = self.board[cLoc[0]][cLoc[1]]
@@ -57,10 +57,10 @@ class board:
             self.board[cLoc[0]][cLoc[1]] = "*"
         elif current_value == "S":
             self.board[cLoc[0]][cLoc[1]] = "X"
-        else:
-            success = False
+            hit = True
+    
 
-        return success      
+        return hit      
 
     def been_shot(self, loc):
         """ Returns if the spot has already been shot
@@ -76,6 +76,20 @@ class board:
                 return True
         return False
         
+    def any_left(self):
+        """check the win
+        
+        Returns:
+            True: there is a ship left
+            False: there is not a ship left
+        """
+        for row in self.board:
+            for spot in row:
+                if spot == "S":
+                    return True
+        return False
+
+    
 
 
 def convert_loc(loc):

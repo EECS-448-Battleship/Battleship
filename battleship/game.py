@@ -57,32 +57,48 @@ class Game:
 	
 		while(won_game==False):
 			
+			
 				
 			#board of player one is shown and chooses target area to hit 
 			self.aTerminal.playerView(self.p1,self.p2)
 			#self.player_one_board.print_board(self.p1)
 			
-			self.p1.fire()
+			hit = self.p1.fire()
 			
+			if hit:
+				self.aTerminal.printHit()
+			else:
+				self.aTerminal.printMiss()
+			
+			input()
+
 			#checks if player's boats are floating
-			if(self.p2.isFloating()==False):
+			if(self.p2.board.any_left()==False):
 				won_game==True
 				self.aTerminal.printWinner(self.p1,self.p2)
 				break
+			
+			if won_game==False:	
+				#players switch
+				self.aTerminal.printSwitchPrompt(self.p2)
 				
-			#players switch
-			self.aTerminal.printSwitchPrompt(self.p2)
-			
-			
-			#board of player two is shown and chooses target area to hit
-			self.aTerminal.playerView(self.p2,self.p1)
-			#player_two_board.print_board()
-			self.p2.fire()
-			
-			#checks if player's boats are floating
-			if(self.p2.isFloating()==False):
-				won_game==True
-				self.aTerminal.printWinner(self.p2,self.p1)
-				break			
-			self.aTerminal.printSwitchPrompt(self.p1)	
+				
+				#board of player two is shown and chooses target area to hit
+				self.aTerminal.playerView(self.p2,self.p1)
+				#player_two_board.print_board()
+				hit = self.p2.fire()
+
+				if hit:
+					self.aTerminal.printHit()
+				else:
+					self.aTerminal.printMiss()
+				
+				input()
+				
+				#checks if player's boats are floating
+				if(self.p1.board.any_left()==False):
+					won_game==True
+					self.aTerminal.printWinner(self.p2,self.p1)
+					break			
+				self.aTerminal.printSwitchPrompt(self.p1)	
 	

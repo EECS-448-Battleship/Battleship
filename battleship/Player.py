@@ -26,27 +26,40 @@ class Player:
 
 
     def fire(self):                                                        #to fire at other players ships
-        """ 
-        
+        """ Takes the players turn to fire
+
+        Returns:
+            True: has hit a ship
+            False: has not hit a ship
+
         """
         fired = False
         while not fired:
             loc = input("Please enter where to hit target (i.e A1)")
             if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
-                self.other_player.update(loc)
+                hit = self.other_player.update(loc)
+                
                 fired = True
+                return hit
             else:
                 print("Invalid Cordinate, Try again")
 
     def update(self, loc):
         """ Updates the board and the ship array
+        
+        Returns:
+            True: a Ship has been hit
+            False: a ship has not been Hit
         """
-        self.board.update(loc)
+
+
+        hit = self.board.update(loc)
         
         for ship in self.ships:
             if ship.check_if_at_location(loc):
                 ship.hit(loc)
 
+        return hit
 
 
 

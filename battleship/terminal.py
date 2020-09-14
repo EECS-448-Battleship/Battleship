@@ -126,31 +126,29 @@ class Terminal:
 
         print(colorama.Fore.CYAN +"="*self.line)
         print("Its Time to switch to "+ player.name)
-        input("Press Enter to continue")
         print(colorama.Fore.CYAN +"="*self.line)
+        input("Press Enter to continue")
         
 
-    def printHit(self, loc):
+    def printHit(self):
         """
         Prints that a location was a hit
 
-        Args:        
-            loc: The tupple of the location 
+        
         """
         print(colorama.Fore.GREEN +"-"*self.line)
-        print(colorama.Fore.GREEN + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a hit!")
+        print(colorama.Fore.GREEN + "The shot at location was a hit!")
         print(colorama.Fore.GREEN +"-"*self.line)
         
 
-    def printMiss(self, loc):
+    def printMiss(self):
         """
         Prints that a location was a miss
         
-        Args:
-            loc: the tupple of the location 
+ 
         """
         print(colorama.Fore.RED +"-"*self.line)
-        print(colorama.Fore.RED + "The shot at location ("+str(loc[0]) + "," + str(loc[1]) +") was a miss!")
+        print(colorama.Fore.RED + "The shot at location was a miss!")
         print(colorama.Fore.RED +"-"*self.line)
         
 
