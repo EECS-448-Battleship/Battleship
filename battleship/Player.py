@@ -1,31 +1,3 @@
-"""
-Player.py
-
-Class that will represent real life players of the game
-
-Attributes:
-
-    self.ships
-    self.board
-    self.name
-    self.other_player
-    self.letters
-
-
-Methods:
-
-    __init__(self, name)
-    set_other_player(self, player2)
-    isFloating(self)
-    fire(self)
-    check_other(self, x, y)
-    check_mine(self)
-    choose_coordinates(self)
-    choose_orient(self, coordinate, i)
-    set_ships(self)
-    
-"""
-
 import os
 from Ship import Ship
 from board import board

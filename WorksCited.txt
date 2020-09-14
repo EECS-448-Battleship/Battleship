@@ -1,0 +1,1 @@
+We utilized the "Colorama" package to help with the coloring on mac/linux and windows. Other than that, our code is our original work. 
