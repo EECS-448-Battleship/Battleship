@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.1" />
-<title>Terminal API documentation</title>
+<title>battleship.Terminal API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>Terminal</code></h1>
+<h1 class="title">Module <code>battleship.Terminal</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -27,8 +27,8 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import os 
-import Player
-import board
+from .Player import Player
+from .board import board
 # this will help with cross platfrom color output
 import colorama
 
@@ -147,8 +147,8 @@ class Terminal:
 
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
         print(&#34;Its Time to switch to &#34;+ player.name)
+        input(&#34;Press Enter to continue&#34;)
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
-
         
 
     def printHit(self, loc):
@@ -209,7 +209,7 @@ class Terminal:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="Terminal.Terminal"><code class="flex name class">
+<dt id="battleship.Terminal.Terminal"><code class="flex name class">
 <span>class <span class="ident">Terminal</span></span>
 </code></dt>
 <dd>
@@ -337,8 +337,8 @@ class Terminal:
 
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
         print(&#34;Its Time to switch to &#34;+ player.name)
+        input(&#34;Press Enter to continue&#34;)
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
-
         
 
     def printHit(self, loc):
@@ -391,7 +391,7 @@ class Terminal:
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="Terminal.Terminal.clearScreen"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.clearScreen"><code class="name flex">
 <span>def <span class="ident">clearScreen</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -411,7 +411,7 @@ class Terminal:
         os.system(&#39;clear&#39;)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.playerView"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.playerView"><code class="name flex">
 <span>def <span class="ident">playerView</span></span>(<span>self, player, enemy)</span>
 </code></dt>
 <dd>
@@ -446,7 +446,7 @@ class Terminal:
     print(colorama.Fore.CYAN + &#34;-&#34;*self.line)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printHit"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printHit"><code class="name flex">
 <span>def <span class="ident">printHit</span></span>(<span>self, loc)</span>
 </code></dt>
 <dd>
@@ -470,7 +470,7 @@ loc: The tupple of the location</p></div>
     print(colorama.Fore.GREEN +&#34;-&#34;*self.line)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printMiss"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printMiss"><code class="name flex">
 <span>def <span class="ident">printMiss</span></span>(<span>self, loc)</span>
 </code></dt>
 <dd>
@@ -496,7 +496,7 @@ loc: The tupple of the location</p></div>
     print(colorama.Fore.RED +&#34;-&#34;*self.line)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printOtherBoard"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printOtherBoard"><code class="name flex">
 <span>def <span class="ident">printOtherBoard</span></span>(<span>self, board)</span>
 </code></dt>
 <dd>
@@ -536,7 +536,7 @@ loc: The tupple of the location</p></div>
         print(&#34;&#34;)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printSelfBoard"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printSelfBoard"><code class="name flex">
 <span>def <span class="ident">printSelfBoard</span></span>(<span>self, board)</span>
 </code></dt>
 <dd>
@@ -578,7 +578,7 @@ board: the board to print</p></div>
         print(&#34;&#34;)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printSwitchPrompt"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printSwitchPrompt"><code class="name flex">
 <span>def <span class="ident">printSwitchPrompt</span></span>(<span>self, player)</span>
 </code></dt>
 <dd>
@@ -605,10 +605,11 @@ board: the board to print</p></div>
 
     print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
     print(&#34;Its Time to switch to &#34;+ player.name)
+    input(&#34;Press Enter to continue&#34;)
     print(colorama.Fore.CYAN +&#34;=&#34;*self.line)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printWelcome"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printWelcome"><code class="name flex">
 <span>def <span class="ident">printWelcome</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -631,7 +632,7 @@ board: the board to print</p></div>
     print(colorama.Fore.CYAN +&#34;=&#34;*self.line)</code></pre>
 </details>
 </dd>
-<dt id="Terminal.Terminal.printWinner"><code class="name flex">
+<dt id="battleship.Terminal.Terminal.printWinner"><code class="name flex">
 <span>def <span class="ident">printWinner</span></span>(<span>self, winPlayer, losePlayer)</span>
 </code></dt>
 <dd>
@@ -672,20 +673,25 @@ board: the board to print</p></div>
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="battleship" href="index.html">battleship</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="Terminal.Terminal" href="#Terminal.Terminal">Terminal</a></code></h4>
+<h4><code><a title="battleship.Terminal.Terminal" href="#battleship.Terminal.Terminal">Terminal</a></code></h4>
 <ul class="two-column">
-<li><code><a title="Terminal.Terminal.clearScreen" href="#Terminal.Terminal.clearScreen">clearScreen</a></code></li>
-<li><code><a title="Terminal.Terminal.playerView" href="#Terminal.Terminal.playerView">playerView</a></code></li>
-<li><code><a title="Terminal.Terminal.printHit" href="#Terminal.Terminal.printHit">printHit</a></code></li>
-<li><code><a title="Terminal.Terminal.printMiss" href="#Terminal.Terminal.printMiss">printMiss</a></code></li>
-<li><code><a title="Terminal.Terminal.printOtherBoard" href="#Terminal.Terminal.printOtherBoard">printOtherBoard</a></code></li>
-<li><code><a title="Terminal.Terminal.printSelfBoard" href="#Terminal.Terminal.printSelfBoard">printSelfBoard</a></code></li>
-<li><code><a title="Terminal.Terminal.printSwitchPrompt" href="#Terminal.Terminal.printSwitchPrompt">printSwitchPrompt</a></code></li>
-<li><code><a title="Terminal.Terminal.printWelcome" href="#Terminal.Terminal.printWelcome">printWelcome</a></code></li>
-<li><code><a title="Terminal.Terminal.printWinner" href="#Terminal.Terminal.printWinner">printWinner</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.clearScreen" href="#battleship.Terminal.Terminal.clearScreen">clearScreen</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.playerView" href="#battleship.Terminal.Terminal.playerView">playerView</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printHit" href="#battleship.Terminal.Terminal.printHit">printHit</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printMiss" href="#battleship.Terminal.Terminal.printMiss">printMiss</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printOtherBoard" href="#battleship.Terminal.Terminal.printOtherBoard">printOtherBoard</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printSelfBoard" href="#battleship.Terminal.Terminal.printSelfBoard">printSelfBoard</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printSwitchPrompt" href="#battleship.Terminal.Terminal.printSwitchPrompt">printSwitchPrompt</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printWelcome" href="#battleship.Terminal.Terminal.printWelcome">printWelcome</a></code></li>
+<li><code><a title="battleship.Terminal.Terminal.printWinner" href="#battleship.Terminal.Terminal.printWinner">printWinner</a></code></li>
 </ul>
 </li>
 </ul>

@@ -1,4 +1,4 @@
-from Ship import Ship
+from .Ship import Ship
 
 class board:
 

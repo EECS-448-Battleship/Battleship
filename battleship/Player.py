@@ -1,6 +1,6 @@
 import os
-from Ship import Ship
-from board import board
+from .Ship import Ship
+from .board import board
 
 class Player:
 

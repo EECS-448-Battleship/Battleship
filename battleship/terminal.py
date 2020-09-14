@@ -1,6 +1,6 @@
 import os 
-import Player
-import board
+from .Player import Player
+from .board import board
 # this will help with cross platfrom color output
 import colorama
 
