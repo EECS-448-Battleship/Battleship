@@ -136,51 +136,72 @@ class Player:
         front_col = self.letters.index(coordinate[0]) + 1
         front_row = int(coordinate[1])
         while ( True ):
+            is_good = True
             orientation = input("Orient Up (U), Down (D), Left (L), or Right (R)?\n")
             if (orientation == "U") | (orientation == "u"):
                 back_col = front_col
                 back_row = front_row - (self.ships[i] - 1)
                 if (back_row < 1):
                     print("Ship is off the board by ", -1*back_row + 1, " space(s)! Try another orientaion.\n")
+                    is_good = False
                     continue
                 for j in range(back_row, front_row + 1):
-                    if self.board.board[front_col - 1][j] == "S":
+                    if self.board.board[front_col - 1][j - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
-                        continue
-                break
+                        is_good = False
+                        break
+                if is_good == True:
+                    break
+                else:
+                    continue
             elif (orientation == "D") | (orientation == "d"):
                 back_col = front_col
                 back_row = front_row + (self.ships[i] - 1)
                 if (back_row > 9):
                     print("Ship is off the board by ", back_row-9, " space(s)! Try another orientaion.\n")
+                    is_good = False
                     continue
                 for j in range(front_row, back_row + 1):
-                    if self.board.board[front_col - 1][j] == "S":
+                    if self.board.board[front_col - 1][j - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
-                        continue
-                break
+                        is_good = False
+                        break
+                if is_good == True:
+                    break
+                else:
+                    continue
             elif (orientation == "L") | (orientation == "l"):
                 back_col = front_col - (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col < 1):
                     print("Ship is off the board by ", -1*back_col + 1, " space(s)! Try another orientaion.\n")
+                    is_good = False
                     continue
-                for j in range(back_column, front_column + 1):
-                    if self.board.board[j][front_row - 1] == "S":
+                for j in range(back_col, front_col + 1):
+                    if self.board.board[j - 1][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
-                        continue
-                break
+                        is_good = False
+                        break
+                if is_good == True:
+                    break
+                else:
+                    continue
             elif (orientation == "R") | (orientation == "r"):
                 back_col = front_col + (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col > 9):
                     print("Ship is off the board by ", back_col - 9, " space(s)! Try another orientaion.\n")
+                    is_good = False
                     continue
                 for j in range(front_col, back_col + 1):
-                    if self.board.board[j][front_row - 1] == "S":
+                    if self.board.board[j - 1][front_row - 1] == "S":
                         print("A ship is already located here! Try another orientation.\n")
-                        continue
-                break
+                        is_good = False
+                        break
+                if is_good == True:
+                    break
+                else:
+                    continue
             else:
                 print("Invalid orientaion selection! Choices are: U, D, L, R\n")
                 continue
