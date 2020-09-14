@@ -263,8 +263,11 @@ class Ship:
         Action:
             This will be in a for loop checking if the location passed in matches with
             location saved in the board_array. It will then check the isHit array of the corresponding &#34;i&#34;
-            and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will print out 
-            &#34;already hit&#34; message
+            and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will return false
+
+        Return:
+            True: the ship has been hit
+            False: the ship has not been hit
 
         &#34;&#34;&#34;
         for i in range(0,self.length):
@@ -272,9 +275,9 @@ class Ship:
                 if self.isHit_array[i]==False:
                     self.isHit_array[i] = True
                     self.health=self.health-1  
-                    print(location, &#34;has been hit&#34;)
+                    return True
                 else:
-                    print(&#34;Location has already been hit&#34;)
+                    return False
 
 
                     
@@ -624,8 +627,11 @@ self.back = "B2"</p>
         Action:
             This will be in a for loop checking if the location passed in matches with
             location saved in the board_array. It will then check the isHit array of the corresponding &#34;i&#34;
-            and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will print out 
-            &#34;already hit&#34; message
+            and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will return false
+
+        Return:
+            True: the ship has been hit
+            False: the ship has not been hit
 
         &#34;&#34;&#34;
         for i in range(0,self.length):
@@ -633,9 +639,9 @@ self.back = "B2"</p>
                 if self.isHit_array[i]==False:
                     self.isHit_array[i] = True
                     self.health=self.health-1  
-                    print(location, &#34;has been hit&#34;)
+                    return True
                 else:
-                    print(&#34;Location has already been hit&#34;)
+                    return False
 
 
                     
@@ -1009,8 +1015,10 @@ to a letter and then will proceed to be added to the board_array.</p></div>
 <h2 id="action">Action</h2>
 <p>This will be in a for loop checking if the location passed in matches with
 location saved in the board_array. It will then check the isHit array of the corresponding "i"
-and will bring the health count down by one if the ship hasn't been hit yet or it will print out
-"already hit" message</p></div>
+and will bring the health count down by one if the ship hasn't been hit yet or it will return false</p>
+<h2 id="return">Return</h2>
+<p>True: the ship has been hit
+False: the ship has not been hit</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1023,8 +1031,11 @@ and will bring the health count down by one if the ship hasn't been hit yet or i
     Action:
         This will be in a for loop checking if the location passed in matches with
         location saved in the board_array. It will then check the isHit array of the corresponding &#34;i&#34;
-        and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will print out 
-        &#34;already hit&#34; message
+        and will bring the health count down by one if the ship hasn&#39;t been hit yet or it will return false
+
+    Return:
+        True: the ship has been hit
+        False: the ship has not been hit
 
     &#34;&#34;&#34;
     for i in range(0,self.length):
@@ -1032,9 +1043,9 @@ and will bring the health count down by one if the ship hasn't been hit yet or i
             if self.isHit_array[i]==False:
                 self.isHit_array[i] = True
                 self.health=self.health-1  
-                print(location, &#34;has been hit&#34;)
+                return True
             else:
-                print(&#34;Location has already been hit&#34;)</code></pre>
+                return False</code></pre>
 </details>
 </dd>
 <dt id="battleship.Ship.Ship.isFloating"><code class="name flex">

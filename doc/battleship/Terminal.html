@@ -55,6 +55,10 @@ class Terminal:
             player: the player object whos turn it is
             enemy: the player object whos turn it is not
         &#34;&#34;&#34;
+        print(colorama.Fore.CYAN + &#34;=&#34;*self.line)
+        
+        print(colorama.Fore.GREEN + player.name)
+
 
         print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
 
@@ -64,6 +68,8 @@ class Terminal:
         self.printOtherBoard(enemy.board)
 
         print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
+        print(colorama.Fore.CYAN + &#34;=&#34;*self.line)
+
 
 
     
@@ -112,6 +118,7 @@ class Terminal:
 
         for row in board.board:
             print(index,  end=&#34; &#34;) 
+            index += 1
             for loc in row:
                 if loc == &#39;O&#39; or loc == &#39;S&#39;:
                     print(colorama.Fore.BLUE + &#34;O&#34;, end=&#34; &#34;)
@@ -147,31 +154,29 @@ class Terminal:
 
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
         print(&#34;Its Time to switch to &#34;+ player.name)
-        input(&#34;Press Enter to continue&#34;)
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
+        input(&#34;Press Enter to continue&#34;)
         
 
-    def printHit(self, loc):
+    def printHit(self):
         &#34;&#34;&#34;
         Prints that a location was a hit
 
-        Args:        
-            loc: The tupple of the location 
+        
         &#34;&#34;&#34;
         print(colorama.Fore.GREEN +&#34;-&#34;*self.line)
-        print(colorama.Fore.GREEN + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a hit!&#34;)
+        print(colorama.Fore.GREEN + &#34;The shot at location was a hit!&#34;)
         print(colorama.Fore.GREEN +&#34;-&#34;*self.line)
         
 
-    def printMiss(self, loc):
+    def printMiss(self):
         &#34;&#34;&#34;
         Prints that a location was a miss
         
-        Args:
-            loc: the tupple of the location 
+ 
         &#34;&#34;&#34;
         print(colorama.Fore.RED +&#34;-&#34;*self.line)
-        print(colorama.Fore.RED + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a miss!&#34;)
+        print(colorama.Fore.RED + &#34;The shot at location was a miss!&#34;)
         print(colorama.Fore.RED +&#34;-&#34;*self.line)
         
 
@@ -245,6 +250,10 @@ class Terminal:
             player: the player object whos turn it is
             enemy: the player object whos turn it is not
         &#34;&#34;&#34;
+        print(colorama.Fore.CYAN + &#34;=&#34;*self.line)
+        
+        print(colorama.Fore.GREEN + player.name)
+
 
         print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
 
@@ -254,6 +263,8 @@ class Terminal:
         self.printOtherBoard(enemy.board)
 
         print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
+        print(colorama.Fore.CYAN + &#34;=&#34;*self.line)
+
 
 
     
@@ -302,6 +313,7 @@ class Terminal:
 
         for row in board.board:
             print(index,  end=&#34; &#34;) 
+            index += 1
             for loc in row:
                 if loc == &#39;O&#39; or loc == &#39;S&#39;:
                     print(colorama.Fore.BLUE + &#34;O&#34;, end=&#34; &#34;)
@@ -337,31 +349,29 @@ class Terminal:
 
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
         print(&#34;Its Time to switch to &#34;+ player.name)
-        input(&#34;Press Enter to continue&#34;)
         print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
+        input(&#34;Press Enter to continue&#34;)
         
 
-    def printHit(self, loc):
+    def printHit(self):
         &#34;&#34;&#34;
         Prints that a location was a hit
 
-        Args:        
-            loc: The tupple of the location 
+        
         &#34;&#34;&#34;
         print(colorama.Fore.GREEN +&#34;-&#34;*self.line)
-        print(colorama.Fore.GREEN + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a hit!&#34;)
+        print(colorama.Fore.GREEN + &#34;The shot at location was a hit!&#34;)
         print(colorama.Fore.GREEN +&#34;-&#34;*self.line)
         
 
-    def printMiss(self, loc):
+    def printMiss(self):
         &#34;&#34;&#34;
         Prints that a location was a miss
         
-        Args:
-            loc: the tupple of the location 
+ 
         &#34;&#34;&#34;
         print(colorama.Fore.RED +&#34;-&#34;*self.line)
-        print(colorama.Fore.RED + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a miss!&#34;)
+        print(colorama.Fore.RED + &#34;The shot at location was a miss!&#34;)
         print(colorama.Fore.RED +&#34;-&#34;*self.line)
         
 
@@ -435,6 +445,10 @@ class Terminal:
         player: the player object whos turn it is
         enemy: the player object whos turn it is not
     &#34;&#34;&#34;
+    print(colorama.Fore.CYAN + &#34;=&#34;*self.line)
+    
+    print(colorama.Fore.GREEN + player.name)
+
 
     print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
 
@@ -443,56 +457,47 @@ class Terminal:
 
     self.printOtherBoard(enemy.board)
 
-    print(colorama.Fore.CYAN + &#34;-&#34;*self.line)</code></pre>
+    print(colorama.Fore.CYAN + &#34;-&#34;*self.line)
+    print(colorama.Fore.CYAN + &#34;=&#34;*self.line)</code></pre>
 </details>
 </dd>
 <dt id="battleship.Terminal.Terminal.printHit"><code class="name flex">
-<span>def <span class="ident">printHit</span></span>(<span>self, loc)</span>
+<span>def <span class="ident">printHit</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Prints that a location was a hit</p>
-<p>Args:
-<br>
-loc: The tupple of the location</p></div>
+<div class="desc"><p>Prints that a location was a hit</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def printHit(self, loc):
+<pre><code class="python">def printHit(self):
     &#34;&#34;&#34;
     Prints that a location was a hit
 
-    Args:        
-        loc: The tupple of the location 
+    
     &#34;&#34;&#34;
     print(colorama.Fore.GREEN +&#34;-&#34;*self.line)
-    print(colorama.Fore.GREEN + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a hit!&#34;)
+    print(colorama.Fore.GREEN + &#34;The shot at location was a hit!&#34;)
     print(colorama.Fore.GREEN +&#34;-&#34;*self.line)</code></pre>
 </details>
 </dd>
 <dt id="battleship.Terminal.Terminal.printMiss"><code class="name flex">
-<span>def <span class="ident">printMiss</span></span>(<span>self, loc)</span>
+<span>def <span class="ident">printMiss</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Prints that a location was a miss</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>loc</code></strong></dt>
-<dd>the tupple of the location</dd>
-</dl></div>
+<div class="desc"><p>Prints that a location was a miss</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def printMiss(self, loc):
+<pre><code class="python">def printMiss(self):
     &#34;&#34;&#34;
     Prints that a location was a miss
     
-    Args:
-        loc: the tupple of the location 
+
     &#34;&#34;&#34;
     print(colorama.Fore.RED +&#34;-&#34;*self.line)
-    print(colorama.Fore.RED + &#34;The shot at location (&#34;+str(loc[0]) + &#34;,&#34; + str(loc[1]) +&#34;) was a miss!&#34;)
+    print(colorama.Fore.RED + &#34;The shot at location was a miss!&#34;)
     print(colorama.Fore.RED +&#34;-&#34;*self.line)</code></pre>
 </details>
 </dd>
@@ -526,6 +531,7 @@ loc: The tupple of the location</p></div>
 
     for row in board.board:
         print(index,  end=&#34; &#34;) 
+        index += 1
         for loc in row:
             if loc == &#39;O&#39; or loc == &#39;S&#39;:
                 print(colorama.Fore.BLUE + &#34;O&#34;, end=&#34; &#34;)
@@ -605,8 +611,8 @@ board: the board to print</p></div>
 
     print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
     print(&#34;Its Time to switch to &#34;+ player.name)
-    input(&#34;Press Enter to continue&#34;)
-    print(colorama.Fore.CYAN +&#34;=&#34;*self.line)</code></pre>
+    print(colorama.Fore.CYAN +&#34;=&#34;*self.line)
+    input(&#34;Press Enter to continue&#34;)</code></pre>
 </details>
 </dd>
 <dt id="battleship.Terminal.Terminal.printWelcome"><code class="name flex">

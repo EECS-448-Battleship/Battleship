@@ -46,21 +46,50 @@ class Player:
 
 
     def isFloating(self):
-        for i in range(len(self.ships)):
-            for ii in range(ships.isHit_array[i]):
-                if self.ships[i].isHit_array[ii] == False:
+        for ship in self.ships:
+            for spot in ship.isHit_array:
+                if spot == False:
                     return True
         return False
 
 
     def fire(self):                                                        #to fire at other players ships
-        &#34;&#34;&#34; 
-        
+        &#34;&#34;&#34; Takes the players turn to fire
+
+        Returns:
+            True: has hit a ship
+            False: has not hit a ship
+
         &#34;&#34;&#34;
-        col = input(&#34;Please enter where to hit target (column)&#34;)
-        row = input(&#34;Please enter where to hit target (row)&#34;)
-        self.other_player.board.update(col+row)
-        return self.other_player.board.update(col+row)
+        fired = False
+        while not fired:
+            loc = input(&#34;Please enter where to hit target (i.e A1)&#34;)
+            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
+                hit = self.other_player.update(loc)
+                
+                fired = True
+                return hit
+            else:
+                print(&#34;Invalid Cordinate, Try again&#34;)
+
+    def update(self, loc):
+        &#34;&#34;&#34; Updates the board and the ship array
+        
+        Returns:
+            True: a Ship has been hit
+            False: a ship has not been Hit
+        &#34;&#34;&#34;
+
+
+        hit = self.board.update(loc)
+        
+        for ship in self.ships:
+            if ship.check_if_at_location(loc):
+                ship.hit(loc)
+
+        return hit
+
+
 
 
 
@@ -84,7 +113,7 @@ class Player:
 
 
 
-    def choose_coordinates(self):                                                #method to choose coordinates of the front of the ship
+    def choose_coordinates(self, i):                                                #method to choose coordinates of the front of the ship
     
         print(&#34;Choose the coordinates for the front of the ship. &#34;
         &#34;To orient the ship, you will pivot around this point\n&#34;)
@@ -92,136 +121,106 @@ class Player:
             x = input(&#34;Choose a column:\n\n| A | B | C | D | E | F | G | H | I |\n&#34;)
             if (x == &#34;A&#34;) | (x == &#34;a&#34;):
                 col = &#34;A&#34;
-                break
             elif (x == &#34;B&#34;) | (x == &#34;b&#34;):
                 col = &#34;B&#34;
-                break
             elif (x == &#34;C&#34;) | (x == &#34;c&#34;):
                 col = &#34;C&#34;
-                break
             elif (x == &#34;D&#34;) | (x == &#34;d&#34;):
                 col = &#34;D&#34;
-                break
             elif (x == &#34;E&#34;) | (x == &#34;e&#34;):
                 col = &#34;E&#34;
-                break
             elif (x == &#34;F&#34;) | (x == &#34;f&#34;):
                 col = &#34;F&#34;
-                break
             elif (x == &#34;G&#34;) | (x == &#34;g&#34;):
                 col = &#34;G&#34;
-                break
             elif (x == &#34;H&#34;) | (x == &#34;h&#34;):
                 col = &#34;H&#34;
-                break
             elif (x == &#34;I&#34;) | (x == &#34;i&#34;):
                 col = &#34;I&#34;
-                break
             else:
                 print(&#34;Location is not on the board. Try again\n&#34;)
-                continue
-        os.system(&#34;cls&#34;)
-        while ( True ):
+                return False
+            os.system(&#34;cls&#34;)
             y = input(&#34;Choose a row:\n\n| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n&#34;)
             if y == &#34;1&#34;:
                 row = &#34;1&#34;
-                break
             elif y == &#34;2&#34;:
                 row = &#34;2&#34;
-                break
             elif y == &#34;3&#34;:
                 row = &#34;3&#34;
-                break
             elif y == &#34;4&#34;:
                 row = &#34;4&#34;
-                break
             elif y == &#34;5&#34;:
                 row = &#34;5&#34;
-                break
             elif y == &#34;6&#34;:
                 row = &#34;6&#34;
-                break
             elif y == &#34;7&#34;:
                 row = &#34;7&#34;
-                break
             elif y == &#34;8&#34;:
                 row = &#34;8&#34;
-                break
             elif y == &#34;9&#34;:
                 row = &#34;9&#34;
-                break
             else:
                 print(&#34;Location is not on the board. Try again\n&#34;)
-                continue
-        os.system(&#34;cls&#34;)
-        coordinate = col + row
-        return coordinate        
-    
-    
-    
-    def choose_orient(self, coordinate, i):                                                   #method to choose the orientation of the ship
-    
-        front_col = self.letters.index(coordinate[0]) + 1
-        front_row = int(coordinate[1])
-        while ( True ):
+                return False
+            os.system(&#34;cls&#34;)
+            coordinate = col + row     
+            front_col = self.letters.index(coordinate[0]) + 1
+            front_row = int(coordinate[1])
             orientation = input(&#34;Orient Up (U), Down (D), Left (L), or Right (R)?\n&#34;)
             if (orientation == &#34;U&#34;) | (orientation == &#34;u&#34;):
                 back_col = front_col
                 back_row = front_row - (self.ships[i] - 1)
                 if (back_row &lt; 1):
                     print(&#34;Ship is off the board by &#34;, -1*back_row + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(back_row, front_row + 1):
-                    if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                    if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;D&#34;) | (orientation == &#34;d&#34;):
                 back_col = front_col
                 back_row = front_row + (self.ships[i] - 1)
                 if (back_row &gt; 9):
                     print(&#34;Ship is off the board by &#34;, back_row-9, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(front_row, back_row + 1):
-                    if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                    if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;L&#34;) | (orientation == &#34;l&#34;):
                 back_col = front_col - (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col &lt; 1):
                     print(&#34;Ship is off the board by &#34;, -1*back_col + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
-                for j in range(back_column, front_column + 1):
-                    if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                    return False
+                for j in range(back_col, front_col + 1):
+                    if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;R&#34;) | (orientation == &#34;r&#34;):
                 back_col = front_col + (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col &gt; 9):
                     print(&#34;Ship is off the board by &#34;, back_col - 9, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(front_col, back_col + 1):
-                    if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                    if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             else:
                 print(&#34;Invalid orientaion selection! Choices are: U, D, L, R\n&#34;)
-                continue
-        return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    
+                return False
+            return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    
     
     
 
     def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
     
         while ( True ):        
-            x = input(&#34;How many ships do you want to play with?\n&#34;) 
+            x = input(&#34;How many ships do you want to play with?\n&#34;)
             os.system(&#34;cls&#34;)
-            if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;):   
+            if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;): 
                 x = int(x)
                 for i in range(x):
                     self.ships.append(i+1)
@@ -229,8 +228,12 @@ class Player:
             else:
                 print(&#34;Invalid number of ships! You can only have 1-5.\n&#34;)
         for i in range(len(self.ships)):
-            initial_location = self.choose_coordinates()
-            final_location = self.choose_orient(initial_location, i)
+            while (True):
+                final_location = self.choose_coordinates(i)
+                if final_location == False:
+                    continue
+                else:
+                    break
             front_loc = final_location[0] + final_location[1]
             back_loc = final_location[2] + final_location[3]
             self.ships.pop(i)
@@ -274,21 +277,50 @@ class Player:
 
 
     def isFloating(self):
-        for i in range(len(self.ships)):
-            for ii in range(ships.isHit_array[i]):
-                if self.ships[i].isHit_array[ii] == False:
+        for ship in self.ships:
+            for spot in ship.isHit_array:
+                if spot == False:
                     return True
         return False
 
 
     def fire(self):                                                        #to fire at other players ships
-        &#34;&#34;&#34; 
-        
+        &#34;&#34;&#34; Takes the players turn to fire
+
+        Returns:
+            True: has hit a ship
+            False: has not hit a ship
+
         &#34;&#34;&#34;
-        col = input(&#34;Please enter where to hit target (column)&#34;)
-        row = input(&#34;Please enter where to hit target (row)&#34;)
-        self.other_player.board.update(col+row)
-        return self.other_player.board.update(col+row)
+        fired = False
+        while not fired:
+            loc = input(&#34;Please enter where to hit target (i.e A1)&#34;)
+            if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
+                hit = self.other_player.update(loc)
+                
+                fired = True
+                return hit
+            else:
+                print(&#34;Invalid Cordinate, Try again&#34;)
+
+    def update(self, loc):
+        &#34;&#34;&#34; Updates the board and the ship array
+        
+        Returns:
+            True: a Ship has been hit
+            False: a ship has not been Hit
+        &#34;&#34;&#34;
+
+
+        hit = self.board.update(loc)
+        
+        for ship in self.ships:
+            if ship.check_if_at_location(loc):
+                ship.hit(loc)
+
+        return hit
+
+
 
 
 
@@ -312,7 +344,7 @@ class Player:
 
 
 
-    def choose_coordinates(self):                                                #method to choose coordinates of the front of the ship
+    def choose_coordinates(self, i):                                                #method to choose coordinates of the front of the ship
     
         print(&#34;Choose the coordinates for the front of the ship. &#34;
         &#34;To orient the ship, you will pivot around this point\n&#34;)
@@ -320,136 +352,106 @@ class Player:
             x = input(&#34;Choose a column:\n\n| A | B | C | D | E | F | G | H | I |\n&#34;)
             if (x == &#34;A&#34;) | (x == &#34;a&#34;):
                 col = &#34;A&#34;
-                break
             elif (x == &#34;B&#34;) | (x == &#34;b&#34;):
                 col = &#34;B&#34;
-                break
             elif (x == &#34;C&#34;) | (x == &#34;c&#34;):
                 col = &#34;C&#34;
-                break
             elif (x == &#34;D&#34;) | (x == &#34;d&#34;):
                 col = &#34;D&#34;
-                break
             elif (x == &#34;E&#34;) | (x == &#34;e&#34;):
                 col = &#34;E&#34;
-                break
             elif (x == &#34;F&#34;) | (x == &#34;f&#34;):
                 col = &#34;F&#34;
-                break
             elif (x == &#34;G&#34;) | (x == &#34;g&#34;):
                 col = &#34;G&#34;
-                break
             elif (x == &#34;H&#34;) | (x == &#34;h&#34;):
                 col = &#34;H&#34;
-                break
             elif (x == &#34;I&#34;) | (x == &#34;i&#34;):
                 col = &#34;I&#34;
-                break
             else:
                 print(&#34;Location is not on the board. Try again\n&#34;)
-                continue
-        os.system(&#34;cls&#34;)
-        while ( True ):
+                return False
+            os.system(&#34;cls&#34;)
             y = input(&#34;Choose a row:\n\n| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n&#34;)
             if y == &#34;1&#34;:
                 row = &#34;1&#34;
-                break
             elif y == &#34;2&#34;:
                 row = &#34;2&#34;
-                break
             elif y == &#34;3&#34;:
                 row = &#34;3&#34;
-                break
             elif y == &#34;4&#34;:
                 row = &#34;4&#34;
-                break
             elif y == &#34;5&#34;:
                 row = &#34;5&#34;
-                break
             elif y == &#34;6&#34;:
                 row = &#34;6&#34;
-                break
             elif y == &#34;7&#34;:
                 row = &#34;7&#34;
-                break
             elif y == &#34;8&#34;:
                 row = &#34;8&#34;
-                break
             elif y == &#34;9&#34;:
                 row = &#34;9&#34;
-                break
             else:
                 print(&#34;Location is not on the board. Try again\n&#34;)
-                continue
-        os.system(&#34;cls&#34;)
-        coordinate = col + row
-        return coordinate        
-    
-    
-    
-    def choose_orient(self, coordinate, i):                                                   #method to choose the orientation of the ship
-    
-        front_col = self.letters.index(coordinate[0]) + 1
-        front_row = int(coordinate[1])
-        while ( True ):
+                return False
+            os.system(&#34;cls&#34;)
+            coordinate = col + row     
+            front_col = self.letters.index(coordinate[0]) + 1
+            front_row = int(coordinate[1])
             orientation = input(&#34;Orient Up (U), Down (D), Left (L), or Right (R)?\n&#34;)
             if (orientation == &#34;U&#34;) | (orientation == &#34;u&#34;):
                 back_col = front_col
                 back_row = front_row - (self.ships[i] - 1)
                 if (back_row &lt; 1):
                     print(&#34;Ship is off the board by &#34;, -1*back_row + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(back_row, front_row + 1):
-                    if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                    if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;D&#34;) | (orientation == &#34;d&#34;):
                 back_col = front_col
                 back_row = front_row + (self.ships[i] - 1)
                 if (back_row &gt; 9):
                     print(&#34;Ship is off the board by &#34;, back_row-9, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(front_row, back_row + 1):
-                    if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                    if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;L&#34;) | (orientation == &#34;l&#34;):
                 back_col = front_col - (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col &lt; 1):
                     print(&#34;Ship is off the board by &#34;, -1*back_col + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
-                for j in range(back_column, front_column + 1):
-                    if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                    return False
+                for j in range(back_col, front_col + 1):
+                    if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             elif (orientation == &#34;R&#34;) | (orientation == &#34;r&#34;):
                 back_col = front_col + (self.ships[i] - 1)
                 back_row = front_row
                 if (back_col &gt; 9):
                     print(&#34;Ship is off the board by &#34;, back_col - 9, &#34; space(s)! Try another orientaion.\n&#34;)
-                    continue
+                    return False
                 for j in range(front_col, back_col + 1):
-                    if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                    if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                         print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                        continue
-                break
+                        return False
             else:
                 print(&#34;Invalid orientaion selection! Choices are: U, D, L, R\n&#34;)
-                continue
-        return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    
+                return False
+            return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    
     
     
 
     def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
     
         while ( True ):        
-            x = input(&#34;How many ships do you want to play with?\n&#34;) 
+            x = input(&#34;How many ships do you want to play with?\n&#34;)
             os.system(&#34;cls&#34;)
-            if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;):   
+            if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;): 
                 x = int(x)
                 for i in range(x):
                     self.ships.append(i+1)
@@ -457,8 +459,12 @@ class Player:
             else:
                 print(&#34;Invalid number of ships! You can only have 1-5.\n&#34;)
         for i in range(len(self.ships)):
-            initial_location = self.choose_coordinates()
-            final_location = self.choose_orient(initial_location, i)
+            while (True):
+                final_location = self.choose_coordinates(i)
+                if final_location == False:
+                    continue
+                else:
+                    break
             front_loc = final_location[0] + final_location[1]
             back_loc = final_location[2] + final_location[3]
             self.ships.pop(i)
@@ -504,7 +510,7 @@ class Player:
 </details>
 </dd>
 <dt id="battleship.Player.Player.choose_coordinates"><code class="name flex">
-<span>def <span class="ident">choose_coordinates</span></span>(<span>self)</span>
+<span>def <span class="ident">choose_coordinates</span></span>(<span>self, i)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -512,7 +518,7 @@ class Player:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def choose_coordinates(self):                                                #method to choose coordinates of the front of the ship
+<pre><code class="python">def choose_coordinates(self, i):                                                #method to choose coordinates of the front of the ship
 
     print(&#34;Choose the coordinates for the front of the ship. &#34;
     &#34;To orient the ship, you will pivot around this point\n&#34;)
@@ -520,154 +526,133 @@ class Player:
         x = input(&#34;Choose a column:\n\n| A | B | C | D | E | F | G | H | I |\n&#34;)
         if (x == &#34;A&#34;) | (x == &#34;a&#34;):
             col = &#34;A&#34;
-            break
         elif (x == &#34;B&#34;) | (x == &#34;b&#34;):
             col = &#34;B&#34;
-            break
         elif (x == &#34;C&#34;) | (x == &#34;c&#34;):
             col = &#34;C&#34;
-            break
         elif (x == &#34;D&#34;) | (x == &#34;d&#34;):
             col = &#34;D&#34;
-            break
         elif (x == &#34;E&#34;) | (x == &#34;e&#34;):
             col = &#34;E&#34;
-            break
         elif (x == &#34;F&#34;) | (x == &#34;f&#34;):
             col = &#34;F&#34;
-            break
         elif (x == &#34;G&#34;) | (x == &#34;g&#34;):
             col = &#34;G&#34;
-            break
         elif (x == &#34;H&#34;) | (x == &#34;h&#34;):
             col = &#34;H&#34;
-            break
         elif (x == &#34;I&#34;) | (x == &#34;i&#34;):
             col = &#34;I&#34;
-            break
         else:
             print(&#34;Location is not on the board. Try again\n&#34;)
-            continue
-    os.system(&#34;cls&#34;)
-    while ( True ):
+            return False
+        os.system(&#34;cls&#34;)
         y = input(&#34;Choose a row:\n\n| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n&#34;)
         if y == &#34;1&#34;:
             row = &#34;1&#34;
-            break
         elif y == &#34;2&#34;:
             row = &#34;2&#34;
-            break
         elif y == &#34;3&#34;:
             row = &#34;3&#34;
-            break
         elif y == &#34;4&#34;:
             row = &#34;4&#34;
-            break
         elif y == &#34;5&#34;:
             row = &#34;5&#34;
-            break
         elif y == &#34;6&#34;:
             row = &#34;6&#34;
-            break
         elif y == &#34;7&#34;:
             row = &#34;7&#34;
-            break
         elif y == &#34;8&#34;:
             row = &#34;8&#34;
-            break
         elif y == &#34;9&#34;:
             row = &#34;9&#34;
-            break
         else:
             print(&#34;Location is not on the board. Try again\n&#34;)
-            continue
-    os.system(&#34;cls&#34;)
-    coordinate = col + row
-    return coordinate        </code></pre>
-</details>
-</dd>
-<dt id="battleship.Player.Player.choose_orient"><code class="name flex">
-<span>def <span class="ident">choose_orient</span></span>(<span>self, coordinate, i)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def choose_orient(self, coordinate, i):                                                   #method to choose the orientation of the ship
-
-    front_col = self.letters.index(coordinate[0]) + 1
-    front_row = int(coordinate[1])
-    while ( True ):
+            return False
+        os.system(&#34;cls&#34;)
+        coordinate = col + row     
+        front_col = self.letters.index(coordinate[0]) + 1
+        front_row = int(coordinate[1])
         orientation = input(&#34;Orient Up (U), Down (D), Left (L), or Right (R)?\n&#34;)
         if (orientation == &#34;U&#34;) | (orientation == &#34;u&#34;):
             back_col = front_col
             back_row = front_row - (self.ships[i] - 1)
             if (back_row &lt; 1):
                 print(&#34;Ship is off the board by &#34;, -1*back_row + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                continue
+                return False
             for j in range(back_row, front_row + 1):
-                if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                     print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                    continue
-            break
+                    return False
         elif (orientation == &#34;D&#34;) | (orientation == &#34;d&#34;):
             back_col = front_col
             back_row = front_row + (self.ships[i] - 1)
             if (back_row &gt; 9):
                 print(&#34;Ship is off the board by &#34;, back_row-9, &#34; space(s)! Try another orientaion.\n&#34;)
-                continue
+                return False
             for j in range(front_row, back_row + 1):
-                if self.board.board[front_col - 1][j] == &#34;S&#34;:
+                if self.board.board[front_col - 1][j - 1] == &#34;S&#34;:
                     print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                    continue
-            break
+                    return False
         elif (orientation == &#34;L&#34;) | (orientation == &#34;l&#34;):
             back_col = front_col - (self.ships[i] - 1)
             back_row = front_row
             if (back_col &lt; 1):
                 print(&#34;Ship is off the board by &#34;, -1*back_col + 1, &#34; space(s)! Try another orientaion.\n&#34;)
-                continue
-            for j in range(back_column, front_column + 1):
-                if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                return False
+            for j in range(back_col, front_col + 1):
+                if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                     print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                    continue
-            break
+                    return False
         elif (orientation == &#34;R&#34;) | (orientation == &#34;r&#34;):
             back_col = front_col + (self.ships[i] - 1)
             back_row = front_row
             if (back_col &gt; 9):
                 print(&#34;Ship is off the board by &#34;, back_col - 9, &#34; space(s)! Try another orientaion.\n&#34;)
-                continue
+                return False
             for j in range(front_col, back_col + 1):
-                if self.board.board[j][front_row - 1] == &#34;S&#34;:
+                if self.board.board[j - 1][front_row - 1] == &#34;S&#34;:
                     print(&#34;A ship is already located here! Try another orientation.\n&#34;)
-                    continue
-            break
+                    return False
         else:
             print(&#34;Invalid orientaion selection! Choices are: U, D, L, R\n&#34;)
-            continue
-    return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    </code></pre>
+            return False
+        return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    </code></pre>
 </details>
 </dd>
 <dt id="battleship.Player.Player.fire"><code class="name flex">
 <span>def <span class="ident">fire</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Takes the players turn to fire</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>True</code></dt>
+<dd>has hit a ship</dd>
+<dt><code>False</code></dt>
+<dd>has not hit a ship</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def fire(self):                                                        #to fire at other players ships
-    &#34;&#34;&#34; 
-    
+    &#34;&#34;&#34; Takes the players turn to fire
+
+    Returns:
+        True: has hit a ship
+        False: has not hit a ship
+
     &#34;&#34;&#34;
-    col = input(&#34;Please enter where to hit target (column)&#34;)
-    row = input(&#34;Please enter where to hit target (row)&#34;)
-    self.other_player.board.update(col+row)
-    return self.other_player.board.update(col+row)</code></pre>
+    fired = False
+    while not fired:
+        loc = input(&#34;Please enter where to hit target (i.e A1)&#34;)
+        if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
+            hit = self.other_player.update(loc)
+            
+            fired = True
+            return hit
+        else:
+            print(&#34;Invalid Cordinate, Try again&#34;)</code></pre>
 </details>
 </dd>
 <dt id="battleship.Player.Player.isFloating"><code class="name flex">
@@ -680,9 +665,9 @@ class Player:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def isFloating(self):
-    for i in range(len(self.ships)):
-        for ii in range(ships.isHit_array[i]):
-            if self.ships[i].isHit_array[ii] == False:
+    for ship in self.ships:
+        for spot in ship.isHit_array:
+            if spot == False:
                 return True
     return False</code></pre>
 </details>
@@ -712,9 +697,9 @@ class Player:
 <pre><code class="python">def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
 
     while ( True ):        
-        x = input(&#34;How many ships do you want to play with?\n&#34;) 
+        x = input(&#34;How many ships do you want to play with?\n&#34;)
         os.system(&#34;cls&#34;)
-        if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;):   
+        if (x == &#34;1&#34;) | (x == &#34;2&#34;) | (x == &#34;3&#34;) | (x == &#34;4&#34;) | (x == &#34;5&#34;): 
             x = int(x)
             for i in range(x):
                 self.ships.append(i+1)
@@ -722,13 +707,51 @@ class Player:
         else:
             print(&#34;Invalid number of ships! You can only have 1-5.\n&#34;)
     for i in range(len(self.ships)):
-        initial_location = self.choose_coordinates()
-        final_location = self.choose_orient(initial_location, i)
+        while (True):
+            final_location = self.choose_coordinates(i)
+            if final_location == False:
+                continue
+            else:
+                break
         front_loc = final_location[0] + final_location[1]
         back_loc = final_location[2] + final_location[3]
         self.ships.pop(i)
         self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
         self.board.setUp(self.ships[i])</code></pre>
+</details>
+</dd>
+<dt id="battleship.Player.Player.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, loc)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Updates the board and the ship array</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>True</code></dt>
+<dd>a Ship has been hit</dd>
+<dt><code>False</code></dt>
+<dd>a ship has not been Hit</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, loc):
+    &#34;&#34;&#34; Updates the board and the ship array
+    
+    Returns:
+        True: a Ship has been hit
+        False: a ship has not been Hit
+    &#34;&#34;&#34;
+
+
+    hit = self.board.update(loc)
+    
+    for ship in self.ships:
+        if ship.check_if_at_location(loc):
+            ship.hit(loc)
+
+    return hit</code></pre>
 </details>
 </dd>
 </dl>
@@ -755,11 +778,11 @@ class Player:
 <li><code><a title="battleship.Player.Player.check_mine" href="#battleship.Player.Player.check_mine">check_mine</a></code></li>
 <li><code><a title="battleship.Player.Player.check_other" href="#battleship.Player.Player.check_other">check_other</a></code></li>
 <li><code><a title="battleship.Player.Player.choose_coordinates" href="#battleship.Player.Player.choose_coordinates">choose_coordinates</a></code></li>
-<li><code><a title="battleship.Player.Player.choose_orient" href="#battleship.Player.Player.choose_orient">choose_orient</a></code></li>
 <li><code><a title="battleship.Player.Player.fire" href="#battleship.Player.Player.fire">fire</a></code></li>
 <li><code><a title="battleship.Player.Player.isFloating" href="#battleship.Player.Player.isFloating">isFloating</a></code></li>
 <li><code><a title="battleship.Player.Player.set_other_player" href="#battleship.Player.Player.set_other_player">set_other_player</a></code></li>
 <li><code><a title="battleship.Player.Player.set_ships" href="#battleship.Player.Player.set_ships">set_ships</a></code></li>
+<li><code><a title="battleship.Player.Player.update" href="#battleship.Player.Player.update">update</a></code></li>
 </ul>
 </li>
 </ul>
