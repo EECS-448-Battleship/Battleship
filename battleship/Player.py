@@ -31,22 +31,22 @@ class Player:
 
     def check_other(self, x, y):                                                 #check if you have fired at a specific location
         
-        col = input("Please enter where to hit target (column)")
-        row = input("Please enter where to hit target (row)")
         for i in range(9):
             for ii in range(9):
                 if self.other_player.board.board[i][ii] == "S":
                     print("O")
                 else:
                     print(self.other_player.board.board[i][ii]
+            print("\n")
 
 
 
     def check_mine(self):                                                        #check what ships have been hit
     
-        for x in ships:
-            if ships[x].is_hit():
-                return True                                                      #need to figure out how we print which ship/location
+        for i in range(9):
+            for ii in range(9):
+                print(self.board.board[i][ii])
+            print("\n")
 
 
 
