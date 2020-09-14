@@ -71,7 +71,3 @@ class Game:
 				break			
 			self.aTerminal.printSwitchPrompt(self.p1)	
 	
-
-g = Game()
-
-g.play_game()
