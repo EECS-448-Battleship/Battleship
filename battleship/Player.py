@@ -18,11 +18,12 @@ class Player:
 
 
     def isFloating(self):
-        for i in range(len(self.ships)):
-            for ii in range(ships.isHit_array[i]):
-                if self.ships[i].isHit_array[ii] == False:
+        for ship in self.ships:
+            for spot in ship.isHit_array:
+                if spot == False:
                     return True
         return False
+
 
 
     def fire(self):                                                        #to fire at other players ships
