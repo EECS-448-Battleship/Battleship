@@ -5,7 +5,7 @@ from .board import board
 class Player:
 
     def __init__(self, name):
-    
+
         self.ships = []
         self.board = board()
         self.name = name
@@ -17,9 +17,9 @@ class Player:
         self.other_player = player2
 
 
-    def isFloating(self):
+    def is_floating(self):
         for ship in self.ships:
-            for spot in ship.isHit_array:
+            for spot in ship.is_hit_array:
                 if spot == False:
                     return True
         return False
@@ -38,7 +38,7 @@ class Player:
             loc = input("Please enter where to hit target (i.e A1)")
             if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
                 hit = self.other_player.update(loc)
-                
+
                 fired = True
                 return hit
             else:
@@ -46,7 +46,7 @@ class Player:
 
     def update(self, loc):
         """ Updates the board and the ship array
-        
+
         Returns:
             True: a Ship has been hit
             False: a ship has not been Hit
@@ -54,7 +54,7 @@ class Player:
 
 
         hit = self.board.update(loc)
-        
+
         for ship in self.ships:
             if ship.check_if_at_location(loc):
                 ship.hit(loc)
@@ -66,7 +66,7 @@ class Player:
 
 
     def check_other(self, x, y):                                                 #check if you have fired at a specific location
-        
+
         for i in range(9):
             for ii in range(9):
                 if self.other_player.board.board[i][ii] == "S":
@@ -86,7 +86,7 @@ class Player:
 
 
     def choose_coordinates(self, i):                                                #method to choose coordinates of the front of the ship
-    
+
         print("Choose the coordinates for the front of the ship. "
         "To orient the ship, you will pivot around this point\n")
         while ( True ):
@@ -136,7 +136,7 @@ class Player:
                 print("Location is not on the board. Try again\n")
                 return False
             os.system("cls")
-            coordinate = col + row     
+            coordinate = col + row
             front_col = self.letters.index(coordinate[0]) + 1
             front_row = int(coordinate[1])
             orientation = input("Orient Up (U), Down (D), Left (L), or Right (R)?\n")
@@ -183,16 +183,16 @@ class Player:
             else:
                 print("Invalid orientaion selection! Choices are: U, D, L, R\n")
                 return False
-            return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)    
-    
-    
+            return self.letters[front_col - 1] + str(front_row) + self.letters[back_col - 1] + str(back_row)
 
-    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class    
-    
-        while ( True ):        
+
+
+    def set_ships(self):                                                                         #set the ships on the board by handing the coordinates over to the board class
+
+        while ( True ):
             x = input("How many ships do you want to play with?\n")
             os.system("cls")
-            if (x == "1") | (x == "2") | (x == "3") | (x == "4") | (x == "5"): 
+            if (x == "1") | (x == "2") | (x == "3") | (x == "4") | (x == "5"):
                 x = int(x)
                 for i in range(x):
                     self.ships.append(i+1)
@@ -211,4 +211,3 @@ class Player:
             self.ships.pop(i)
             self.ships.insert(i, Ship(i + 1, front_loc, back_loc))
             self.board.setUp(self.ships[i])
-            
