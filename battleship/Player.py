@@ -1,6 +1,6 @@
 import os
 from .Ship import Ship
-from .board import board
+from .board import board, convert_loc, loc_string_is_valid
 from .enum import BoardCellState
 
 
@@ -40,6 +40,21 @@ class Player:
                 return hit
             else:
                 print("Invalid Coordinate, Try again")
+
+    def attempt_fire(self, loc_str):
+        """Programmatically attempt to fire on the other player's board
+
+        Args:
+            loc_str: the location string to fire at
+
+        Returns:
+            True: if we hit
+            False: if we miss or invalid
+        """
+        if loc_string_is_valid(loc_str) and self.other_player.board.cell_can_be_fired_upon(loc_str):
+            return self.other_player.update(loc_str)
+
+        return False
 
     def update(self, loc):
         """ Updates the board and the ship array
