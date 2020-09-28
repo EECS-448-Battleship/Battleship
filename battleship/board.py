@@ -1,7 +1,7 @@
-from .Ship import Ship
+from .enum import BoardCellState
+
 
 class board:
-
     """ The class to abstract the board
 
     Attributes:
@@ -12,15 +12,11 @@ class board:
 
     def __init__(self):
         """ Inits the board
-
-
         """
 
         self.board = []
         for _ in range(0, 9):
-            self.board.append(["O"] * 9)
-
-
+            self.board.append([BoardCellState.Empty] * 9)
 
     def setUp(self, ship):
         """Places a ship on the board
@@ -33,10 +29,7 @@ class board:
 
         for loc in ship.get_location_array():
             cLoc = convert_loc(loc)
-            self.board[cLoc[0]][cLoc[1]] = "S"
-
- 
-
+            self.board[cLoc[0]][cLoc[1]] = BoardCellState.Ship
 
     def update(self, loc):
         """
@@ -53,14 +46,13 @@ class board:
         cLoc = convert_loc(loc)
         current_value = self.board[cLoc[0]][cLoc[1]]
 
-        if current_value == "O":
-            self.board[cLoc[0]][cLoc[1]] = "*"
-        elif current_value == "S":
-            self.board[cLoc[0]][cLoc[1]] = "X"
+        if current_value == BoardCellState.Empty:
+            self.board[cLoc[0]][cLoc[1]] = BoardCellState.Miss
+        elif current_value == BoardCellState.Ship:
+            self.board[cLoc[0]][cLoc[1]] = BoardCellState.Hit
             hit = True
-    
 
-        return hit      
+        return hit
 
     def been_shot(self, loc):
         """ Returns if the spot has already been shot
@@ -70,10 +62,11 @@ class board:
         """
 
         cLoc = convert_loc(loc)
-        if cLoc != (99,99):
+        if cLoc != (99, 99):
             current_value = self.board[cLoc[0]][cLoc[1]]
-            if current_value == "O" or current_value == "S":
+            if current_value == BoardCellState.Empty or current_value == BoardCellState.Ship:
                 return True
+
         return False
         
     def any_left(self):
@@ -85,15 +78,64 @@ class board:
         """
         for row in self.board:
             for spot in row:
-                if spot == "S":
+                if spot == BoardCellState.Ship:
                     return True
         return False
 
-    
+    def get_cell_status(self, loc_str):
+        """get the state of the given cell
+
+        Args:
+            loc_str: the string location that is to be fetched
+        """
+        loc = convert_loc(loc_str)
+
+        if loc == (99, 99):
+            return BoardCellState.Unknown
+
+        return self.board[loc[0]][loc[1]]
+
+    def cell_has_ship(self, loc_str):
+        """returns true if the given cell has a ship, sunk or otherwise
+
+        Args:
+            loc_str: the string location that is to be checked
+        """
+        loc = convert_loc(loc_str)
+
+        if loc == (99, 99):
+            return False
+
+        state = self.board[loc[0]][loc[1]]
+        return state == BoardCellState.Ship or state == BoardCellState.Hit
+
+    def cell_can_be_fired_upon(self, loc_str):
+        """returns true if the given cell can be fired upon
+
+        Args:
+            loc_str: the string location that is to be checked
+        """
+        loc = convert_loc(loc_str)
+
+        if loc == (99, 99):
+            return False
+
+        state = self.board[loc[0]][loc[1]]
+        return state == BoardCellState.Ship or state == BoardCellState.Empty
+
+
+def loc_string_is_valid(loc_str):
+    """returns true if the given location string is valid
+
+    Args:
+        loc_str: the string location to be checked
+    """
+
+    return convert_loc(loc_str) != (99, 99)
 
 
 def convert_loc(loc):
-    """ Coverts to arry access tuple
+    """ Coverts to array access tuple
     Converts the letters on the board to numbers that coorespond with the columns.
     
     Returns: 
@@ -104,30 +146,30 @@ def convert_loc(loc):
     """
     loc = (loc[0].upper(), loc[1])
     col = 0
-    if (loc[0] == "A"):
+    if loc[0] == "A":
         col = 0
-    elif (loc[0] == "B"):
+    elif loc[0] == "B":
         col = 1
-    elif (loc[0] == "C"):
+    elif loc[0] == "C":
         col = 2
-    elif (loc[0] == "D"):
+    elif loc[0] == "D":
         col = 3
-    elif (loc[0] == "E"):
+    elif loc[0] == "E":
         col = 4
-    elif (loc[0] == "F"):
+    elif loc[0] == "F":
         col = 5
-    elif (loc[0] == "G"):
+    elif loc[0] == "G":
         col = 6
-    elif (loc[0] == "H"):
+    elif loc[0] == "H":
         col = 7
-    elif (loc[0] == "I"):
+    elif loc[0] == "I":
         col = 8
     else:
         col = 99
 
     row = int(loc[1]) -1
-    if not((row >= 0) and (row<=8)):
-        row == 99
-    coverted = (row,col)
+    if not ((row >= 0) and (row <= 8)):
+        row = 99
 
-    return coverted
+    converted = (row, col)
+    return converted

@@ -52,10 +52,9 @@ class Game:
 		Startes the game 
 
 		"""
-
 		won_game = False
 	
-		while(won_game==False):
+		while(won_game == False):
 			
 			
 				
