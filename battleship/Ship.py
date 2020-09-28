@@ -235,7 +235,8 @@ class Ship:
     def getlocation(self):
         """Prints out the location of the ship, front and back.
         """
-        print("(Front,Back) of Ship: ", "(",self.front, ",", self.back,")")
+        print("(Front,Back) of Ship: ", "(", self.front, ",", self.back, ")")
+        return self.front, self.back
 
     def column_to_num(self, col_str):
         """Used by fill_location_array method to change letter to number.
