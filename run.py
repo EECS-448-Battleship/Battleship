@@ -1,4 +1,4 @@
-from battleship.game import Game
+from battleship.Game import Game
 
 if __name__ == "__main__":
     print("Hi")

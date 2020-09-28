@@ -1,7 +1,7 @@
 from .enum import BoardCellState
 
 
-class board:
+class Board:
     """ The class to abstract the board
 
     Attributes:

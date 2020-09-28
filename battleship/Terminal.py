@@ -1,10 +1,8 @@
 import os 
-from .Player import Player
-from .board import board
-# this will help with cross platfrom color output
+# this will help with cross platform color output
 import colorama
 
-# Handels the output for the application
+
 class Terminal:
     """This is a helper class that will help print to the terminal
 
@@ -15,9 +13,7 @@ class Terminal:
     def __init__(self):
         # Initialize the cross platform color tool
         colorama.init(autoreset=True)
-        
         self.line = 50
-
     
     def playerView(self, player, enemy):
         """
@@ -31,7 +27,6 @@ class Terminal:
         
         print(colorama.Fore.GREEN + player.name)
 
-
         print(colorama.Fore.CYAN + "-"*self.line)
 
         self.printSelfBoard(player.board)
@@ -41,9 +36,6 @@ class Terminal:
 
         print(colorama.Fore.CYAN + "-"*self.line)
         print(colorama.Fore.CYAN + "="*self.line)
-
-
-
     
     def printSelfBoard(self, board):
         """
@@ -55,7 +47,6 @@ class Terminal:
         
         print("Your Board")
         print("-"*20)
-
 
         print("  A B C D E F G H I")
         index = 1
@@ -71,7 +62,7 @@ class Terminal:
                 elif loc == 'X':
                     print(colorama.Fore.RED + "X", end=" ")
                 elif loc == '*':
-                    print(colorama.Fore.MAGENTA + "*", end= " ")
+                    print(colorama.Fore.MAGENTA + "*", end=" ")
             print("")
 
     def printOtherBoard(self, board):
@@ -81,7 +72,6 @@ class Terminal:
         Args:
             board: the board to print
         """
-
         print("Your Enemies Board")
         print("-"*20)
 
@@ -102,16 +92,14 @@ class Terminal:
 
     def printWelcome(self):
         """Prints the Welcome message to the players
-        
         """
-        
         # Clear the board and other info from the screen
         self.clearScreen()
 
-        print(colorama.Fore.CYAN +"="*self.line)
+        print(colorama.Fore.CYAN + "=" * self.line)
         print("Welcome to the game. Players will take turns.")
         print("When it is not your turn please look away!")
-        print(colorama.Fore.CYAN +"="*self.line)
+        print(colorama.Fore.CYAN + "=" * self.line)
 
     def printSwitchPrompt(self, player):
         """
@@ -128,29 +116,22 @@ class Terminal:
         print("Its Time to switch to "+ player.name)
         print(colorama.Fore.CYAN +"="*self.line)
         input("Press Enter to continue")
-        
 
     def printHit(self):
         """
         Prints that a location was a hit
-
-        
         """
-        print(colorama.Fore.GREEN +"-"*self.line)
+        print(colorama.Fore.GREEN + "-" * self.line)
         print(colorama.Fore.GREEN + "The shot at location was a hit!")
-        print(colorama.Fore.GREEN +"-"*self.line)
-        
+        print(colorama.Fore.GREEN + "-" * self.line)
 
     def printMiss(self):
         """
         Prints that a location was a miss
-        
- 
         """
-        print(colorama.Fore.RED +"-"*self.line)
+        print(colorama.Fore.RED + "-" * self.line)
         print(colorama.Fore.RED + "The shot at location was a miss!")
-        print(colorama.Fore.RED +"-"*self.line)
-        
+        print(colorama.Fore.RED + "-" * self.line)
 
     def printWinner(self, winPlayer, losePlayer):
         """
@@ -160,19 +141,14 @@ class Terminal:
             winPlayer: the player who won
             losePlayer: the player who lost
         """
-        print(colorama.Fore.MAGENTA +"="*self.line)
+        print(colorama.Fore.MAGENTA + "=" * self.line)
         print(colorama.Fore.MAGENTA + "The Player " + winPlayer.name + " has Won!!")
-        print(colorama.Fore.MAGENTA +"="*self.line)
+        print(colorama.Fore.MAGENTA + "=" * self.line)
         pass
-
 
     def clearScreen(self):
         """
         A function to clear the screen that will work on windows, macOS, or linux
 
         """
-        if(os.name == "nt"):
-            os.system('cls')
-        elif  (os.name == 'posix'):
-            os.system('clear')
-
+        print('\033[2J')  # ANSI clear

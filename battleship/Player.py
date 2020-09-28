@@ -1,13 +1,13 @@
 import os
 from .Ship import Ship
-from .board import board, convert_loc, loc_string_is_valid
+from .Board import Board, loc_string_is_valid
 from .enum import BoardCellState
 
 
 class Player:
     def __init__(self, name):
         self.ships = []
-        self.board = board()
+        self.board = Board()
         self.name = name
         self.other_player = None
         self.letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
