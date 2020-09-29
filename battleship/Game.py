@@ -1,5 +1,7 @@
 from .Player import Player
+from .AIPlayer import AIPlayer
 from .Terminal import Terminal
+from .GameEvents import GameEvents
 
 
 class Game:
@@ -9,35 +11,42 @@ class Game:
 		p1: The first player object.
 		p2: The second player object.
 		terminal: The terminal helper object.
+		events: The game event bus.
 	"""
 
 	terminal = Terminal()
+	events = GameEvents()
 
 	def __init__(self):
 		"""
 		Initializes the game
 		"""
+		self.events.show_welcome()
 
-		self.terminal.printWelcome()
-		
-		player_one_name = input("Player 1, please enter your name: ")
+		num_ships = self.events.choose_number_of_ships()
+
+		# Fetch player 1's name and set up their board
+		player_one_name = self.events.prompt_player_name()
 		self.p1 = Player(player_one_name)
-		self.p1.set_ships()
-		self.terminal.printSelfBoard(self.p1.board)
+		self.p1.set_ships(num_ships)
+		self.events.place_ships(self.p1)
 
-		input("Press enter to Contitue")
-		self.terminal.clearScreen()
+		# prompt player 1 to choose if player 2 is an AI or real person
+		is_ai = self.events.choose_if_ai()
 
-		player_two_name = input("Player 2, please enter your name: ")
-		self.p2 = Player(player_two_name)
-		self.p2.set_ships()
-		self.terminal.printSelfBoard(self.p2.board)
+		# Set up player 2 and their board (ai or otherwise)
+		if is_ai:
+			self.p2 = AIPlayer('Computer')
+			self.p2.set_ships(num_ships)
+			# TODO - call place_ships on AIPlayer, not via GUI
+		else:
+			player_two_name = self.events.prompt_player_name()
+			self.p2 = Player(player_two_name)
+			self.p2.set_ships(num_ships)
+			self.events.place_ships(self.p2)
 
 		self.p1.other_player = self.p2
 		self.p2.other_player = self.p1
-
-		input("Press enter to begin")
-		self.terminal.clearScreen()
 
 	def play_game(self):
 		"""
