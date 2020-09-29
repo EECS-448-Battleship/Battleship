@@ -1,5 +1,4 @@
 from .Terminal import Terminal
-from .AIPlayer import AIPlayer
 
 
 class GameEvents:
@@ -32,9 +31,7 @@ class GameEvents:
 
     def get_fire_coordinates(self, current_player):
         # TODO - connect with GUI to show current player, opposing player's boards, return coordinates
-        # FIXME - remove this, it's just temporary for testing
-        fake = AIPlayer('fake')
-        return fake.get_random_coord()
+        return 'A1'
 
     def show_player_hit(self, current_player):
         # TODO - connect with GUI ti show current player, opposing player's boards, and a successful hit message
