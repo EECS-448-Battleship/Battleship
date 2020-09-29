@@ -1,6 +1,5 @@
 from .Player import Player
 from .AIPlayer import AIPlayer
-from .Terminal import Terminal
 from .GameEvents import GameEvents
 
 
@@ -10,11 +9,9 @@ class Game:
 	Attributes:
 		p1: The first player object.
 		p2: The second player object.
-		terminal: The terminal helper object.
 		events: The game event bus.
 	"""
 
-	terminal = Terminal()
 	events = GameEvents()
 
 	def __init__(self):
@@ -53,47 +50,40 @@ class Game:
 		Starts the game
 		"""
 		won_game = False
+
+		self.events.switch_to_player(self.p1)
 	
-		while(won_game == False):
+		while not won_game:
 			# board of player one is shown and chooses target area to hit
-			self.terminal.playerView(self.p1,self.p2)
-			# self.player_one_board.print_board(self.p1)
-			
-			hit = self.p1.fire()
-			
-			if hit:
-				self.terminal.printHit()
+			p1_fire_loc = self.events.get_fire_coordinates(self.p1)
+			p1_hit = self.p1.attempt_fire(p1_fire_loc)
+
+			if p1_hit:
+				self.events.show_player_hit(self.p1)
 			else:
-				self.terminal.printMiss()
-			
-			input()
+				self.events.show_player_miss(self.p1)
 
 			# checks if player's boats are floating
 			if not self.p2.board.any_left():
 				won_game = True
-				self.terminal.printWinner(self.p1,self.p2)
-				break
-			
+				self.events.show_player_victory(self.p1)
+
 			if not won_game:
 				# players switch
-				self.terminal.printSwitchPrompt(self.p2)
-				
-				# board of player two is shown and chooses target area to hit
-				self.terminal.playerView(self.p2,self.p1)
-				# player_two_board.print_board()
-				hit = self.p2.fire()
+				self.events.switch_to_player(self.p2)
 
-				if hit:
-					self.terminal.printHit()
+				p2_fire_loc = self.events.get_fire_coordinates(self.p2)
+				p2_hit = self.p2.attempt_fire(p2_fire_loc)
+
+				if p2_hit:
+					self.events.show_player_hit(self.p2)
 				else:
-					self.terminal.printMiss()
-				
-				input()
-				
+					self.events.show_player_miss(self.p2)
+
 				# checks if player's boats are floating
 				if not self.p1.board.any_left():
 					won_game = True
-					self.terminal.printWinner(self.p2,self.p1)
-					break
+					self.events.show_player_victory(self.p2)
 
-				self.terminal.printSwitchPrompt(self.p1)	
+				if not won_game:
+					self.events.switch_to_player(self.p1)

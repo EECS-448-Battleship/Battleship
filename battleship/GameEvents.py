@@ -1,4 +1,5 @@
 from .Terminal import Terminal
+from .AIPlayer import AIPlayer
 
 
 class GameEvents:
@@ -28,3 +29,21 @@ class GameEvents:
     def choose_if_ai(self):
         # TODO - connect with GUI to prompt user to choose AI or real player
         return True  # true if AI, false if player
+
+    def get_fire_coordinates(self, current_player):
+        # TODO - connect with GUI to show current player, opposing player's boards, return coordinates
+        # FIXME - remove this, it's just temporary for testing
+        fake = AIPlayer('fake')
+        return fake.get_random_coord()
+
+    def show_player_hit(self, current_player):
+        # TODO - connect with GUI ti show current player, opposing player's boards, and a successful hit message
+        return
+
+    def show_player_miss(self, current_player):
+        # TODO - connect with GUI ti show current player, opposing player's boards, and a failed hit message
+        return
+
+    def show_player_victory(self, victorious_player):
+        # TODO - connect with GUI to show the victory screen, and both player's boards
+        return
