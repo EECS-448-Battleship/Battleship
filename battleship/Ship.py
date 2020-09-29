@@ -147,7 +147,7 @@ class Ship:
             where the ship was placed, has been hit
         """
 
-        for i in range(0,self.length):
+        for i in range(0, self.length):
             if self.board_array[i] == location:
                 return bool(self.is_hit_array[i])
 
@@ -174,7 +174,7 @@ class Ship:
 
         """
         if self.orientation == "h":
-            for i in range(0,self.length):
+            for i in range(0, self.length):
                 if i == 0:
                     self.board_array[i] = self.front
 
@@ -208,11 +208,11 @@ class Ship:
             False: the ship has not been hit
 
         """
-        for i in range(0,self.length):
+        for i in range(0, self.length):
             if self.board_array[i] == location:
                 if not self.is_hit_array[i]:
                     self.is_hit_array[i] = True
-                    self.health = self.health-1
+                    self.health = self.health - 1
                     return True
                 else:
                     return False

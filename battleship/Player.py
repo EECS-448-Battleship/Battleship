@@ -4,13 +4,27 @@ from .Board import Board, loc_string_is_valid
 from .enum import BoardCellState
 
 
+def missile_fire_history_record(loc, successful):
+    return {'location': loc, 'successful': successful}
+
+
 class Player:
     def __init__(self, name):
+        self.missile_fire_history = []
         self.ships = []
         self.board = Board()
         self.name = name
         self.other_player = None
         self.letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
+
+    def get_ship_locations(self):
+        """Returns a flat array of all cells with ships for this player
+        """
+        locations = []
+        for ship in self.ships:
+            for loc in ship.get_location_array():
+                locations.append(loc)
+        return locations
 
     def set_other_player(self, player2):
         self.other_player = player2
@@ -35,6 +49,7 @@ class Player:
             loc = input("Please enter where to hit target (i.e A1)")
             if len(loc) == 2 and loc[0].isalpha() and loc[1].isdigit() and self.other_player.board.been_shot(loc):
                 hit = self.other_player.update(loc)
+                self.missile_fire_history.append(missile_fire_history_record(loc, hit))
 
                 fired = True
                 return hit
@@ -52,7 +67,9 @@ class Player:
             False: if we miss or invalid
         """
         if loc_string_is_valid(loc_str) and self.other_player.board.cell_can_be_fired_upon(loc_str):
-            return self.other_player.update(loc_str)
+            hit = self.other_player.update(loc_str)
+            self.missile_fire_history.append(missile_fire_history_record(loc_str, hit))
+            return hit
 
         return False
 
