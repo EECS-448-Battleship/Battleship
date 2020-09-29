@@ -7,3 +7,9 @@ class BoardCellState(enum.Enum):
     Ship = 'S'
     Hit = 'X'
     Unknown = 'U'
+
+
+class AIDifficulty(enum.Enum):
+    Easy = 'easy'
+    Medium = 'medium'
+    Hard = 'hard'

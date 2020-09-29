@@ -167,7 +167,7 @@ def convert_loc(loc):
     else:
         col = 99
 
-    row = int(loc[1]) -1
+    row = int(loc[1]) - 1
     if not ((row >= 0) and (row <= 8)):
         row = 99
 
