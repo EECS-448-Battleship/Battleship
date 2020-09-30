@@ -1,51 +1,60 @@
-# -------------INDEX OF CLASS: SHIP METHODS BELOW-------------------
+#-------------INDEX OF CLASS: SHIP METHODS BELOW-------------------
 #
 #                      def __init__(self, length, front, back)
-# bool                  def is_hit(self, location)
-# action                def hit(self,location)
-# bool                  def is_floating(self)
-# int                   def getHealth(self)
-# int                   def getSize(self)
-# Prints(str,str)       def getlocation(self)
+#bool                  def is_hit(self, location)
+#action                def hit(self,location)
+#bool                  def is_floating(self)
+#int                   def get_health(self)
+#int                   def get_size(self)
+#Prints(str,str)       def get_location(self)
 #
-# ---------------SHIP METHODS END---------------------------------
-# Keep in mind, letters MUST be enetered as capital letters
-# will place "front" of ship and "back" in an order that goes from
-# 1) First to last letter by order of alphabet
-# 2) Smallest to largest by int
-# Example: (B6,B2) are input by user, if Ship.getlocation() is called
+#---------------SHIP METHODS END---------------------------------
+
+#Keep in mind, letters MUST be enetered as capital letters
+#will place "front" of ship and "back" in an order that goes from
+#1) First to last letter by order of alphabet
+#2) Smallest to largest by int
+
+# Example: (B6,B2) are input by user, if Ship.get_location() is called
 #       it will output (B2,B6), front and back are switcsyhed when
 #       ___init__ is called
+
+
+
+
 # Examples of Functions in use, this is how I tested everything
-# -----------------START OF EXAMPLE USE-------------
-# Ship_Ex=Ship(4, "F2", "C2")
-# Ship_Ex.hit("E2")
-# Ship_Ex.hit("C2")
-# Ship_Ex.hit("D2")
-# Ship_Ex.hit("F2")
-# loc="E2"
-# loc2="C2"
-# if Ship_Ex.is_hit(loc) == True:
+#-----------------START OF EXAMPLE USE-------------
+
+#Ship_Ex=Ship(4, "F2", "C2")
+#Ship_Ex.hit("E2")
+#Ship_Ex.hit("C2")
+#Ship_Ex.hit("D2")
+#Ship_Ex.hit("F2")
+#loc="E2"
+#loc2="C2"
+#if Ship_Ex.is_hit(loc) == True:
 #    print(loc,"is hit method positive")
-# else:
+#else:
 #    print(loc,"is hit method false")
-# if Ship_Ex.is_hit(loc2) == True:
+
+#if Ship_Ex.is_hit(loc2) == True:
 #    print(loc2,"is hit method")
-# else:
+#else:
 #    print(loc2,"is hit method false")
-# if Ship_Ex.is_floating()==True:
+
+#if Ship_Ex.is_floating()==True:
 #    print("Boat is still up")
-# elif Ship_Ex.is_floating()==False:
+#elif Ship_Ex.is_floating()==False:
 #    print("boat ded")
-# print(Ship_Ex.is_hit_array[0])
-# print(Ship_Ex.is_hit_array[1])
-# print(Ship_Ex.getHealth())
-# print(Ship_Ex.getSize())
-# Ship_Ex.getlocation()
-# --------------------------END OF EXAMPLES
 
+#print(Ship_Ex.is_hit_array[0])
+#print(Ship_Ex.is_hit_array[1])
+#print(Ship_Ex.get_health())
+#print(Ship_Ex.get_size())
+#Ship_Ex.get_location()
+#--------------------------END OF EXAMPLES
 
-class Ship:
+class Ship:program
     """Ship class which is used when building a ship from player class.
 
     Ship object is instantiated when the player class calls on an object to be
@@ -101,40 +110,47 @@ class Ship:
             Makes a call to fill_location_array which then fills in self.board_array
 
         """
-        self.health = length
-        self.length = length
-        self.front = front
-        self.back = back
+        self.health=length
+        self.length=length
+        self.front=front
+        self.back=back
 
-        self.is_hit_array = [False] * self.length
-        self.board_array = [""] * self.length
+        self.is_hit_array=[False]*(self.length)
+        self.board_array=[("")]*(self.length)
 
-        # Bottom will put the input in order from smallest to largest number
+
+        #Bottom will put the input in order from smallest to largest number
         if self.front[0] == self.back[0]:
 
-            self.orientation = "h"
-            self.front_int = int(self.front[1])
-            self.back_int = int(self.back[1])
+            self.orientation="h"
+            self.front_int= int(self.front[1])
+            self.back_int=int(self.back[1])
 
-            if self.front_int > self.back_int:
-                self.front = back
-                self.back = front
+            if self.front_int>self.back_int:
+                self.front=back
+                self.back=front
 
-                self.front_int = int(self.front[1])
-                self.back_int = int(self.back[1])
-
-        # Bottom half of if statement will then activate if the orientation is horizontal
-        # which will put in order of smallest (A) to largest (I)
+                self.front_int= int(self.front[1])
+                self.back_int=int(self.back[1])
+        #Bottom half of if statement will then activate if the orientation is horizontal
+        #which will put in order of smallest (A) to largest (I)
         elif self.front[0] != self.back[0]:
-            self.orientation = "v"
+            self.orientation="v"
 
             if self.column_to_num(self.front[0]) > self.column_to_num(self.back[0]):
-                self.front = back
-                self.back = front
+                self.front=back
+                self.back=front
+
 
         self.fill_location_array(self.orientation)
 
+
+
+
+
+    #Below bool is_hit function
     def is_hit(self, location):
+
         """bool function that returns true or false for if ship is hit.
 
         Arg:
@@ -145,13 +161,21 @@ class Ship:
             it will see if the is_hit_array returns true.
             WHAT THIS MEANS IS, the player already called a hit function and that location of
             where the ship was placed, has been hit
+
+
         """
 
-        for i in range(0, self.length):
-            if self.board_array[i] == location:
-                return bool(self.is_hit_array[i])
+        for i in range(0,self.length):
+            if self.board_array[i]==location:
+                if self.is_hit_array[i] == True:
+                    return True
+                else:
+                    return False
 
+
+#Function below to fill in board_array
     def fill_location_array(self, orientation):
+
         """Fills self.board_array with locations.
 
         Args:
@@ -173,27 +197,37 @@ class Ship:
                 to a letter and then will proceed to be added to the board_array.
 
         """
-        if self.orientation == "h":
-            for i in range(0, self.length):
-                if i == 0:
-                    self.board_array[i] = self.front
 
-                if i < self.length - 1:
-                    temp = str((int(self.front[1])+i))
-                    front_str = self.front[0]+temp
+#Bottom method will verify that orientation is horizontal
+#then will input the location into the board array index [i]
+
+        if self.orientation=="h":
+            for i in range(0,self.length):
+
+                if i ==0:
+                    self.board_array[i]=self.front
+
+                if i < self.length-1:
+                    temp=str((int(self.front[1])+i))
+                    front_str=self.front[0]+temp
                     self.board_array[i] = front_str
 
-                if i == self.length - 1:
-                    self.board_array[i] = self.back
 
-        elif self.orientation == "v":
-            for i in range(0, self.length):
-                temp = self.column_to_num(self.front[0])
-                index_num = temp+i
+                if i==(self.length)-1:
+                    self.board_array[i]=self.back
 
-                self.board_array[i] = self.back_to_row(index_num)+self.front[1]
 
-    def hit(self, location):
+        elif self.orientation=="v":
+            for i in range(0, (self.length)):
+                temp=self.column_to_num(self.front[0])
+                index_num=temp+i
+
+                self.board_array[i]=self.back_to_row(index_num)+self.front[1]
+
+
+
+
+    def hit(self,location):
         """Player passes location, this will lower the health of the ship.
 
         Arg:
@@ -208,90 +242,96 @@ class Ship:
             False: the ship has not been hit
 
         """
-        for i in range(0, self.length):
-            if self.board_array[i] == location:
-                if not self.is_hit_array[i]:
+        for i in range(0,self.length):
+            if self.board_array[i]==location:
+                if self.is_hit_array[i]==False:
                     self.is_hit_array[i] = True
-                    self.health = self.health - 1
+                    self.health=self.health-1
                     return True
                 else:
                     return False
 
+
+
+
     def is_floating(self):
         """Bool Function returns true if boat is health is above 0, returns false if sunk.
-        """
-        return self.health > 0
 
-    def getHealth(self):
+        """
+        if self.health>0:
+            return True
+        else:
+            return False
+
+    def get_health(self):
         """returns int which represents the ship's current health.
         """
         return self.health
 
-    def getSize(self):
+    def get_size(self):
         """returns int representing the length of the ship.
         """
         return self.length
 
-    def getlocation(self):
+    def get_location(self):
         """Prints out the location of the ship, front and back.
         """
-        print("(Front,Back) of Ship: ", "(", self.front, ",", self.back, ")")
-        return self.front, self.back
+        print("(Front,Back) of Ship: ", "(",self.front, ",", self.back,")")
 
-    def column_to_num(self, col_str):
+    def column_to_num(self, str):
         """Used by fill_location_array method to change letter to number.
 
         Args:
-            col_str: this represents the letter of the coordinate passed in
+            str- this represents the letter of the coordinate passed in
         Actions:
-            col_str is checked to match ones of these, once matched it will return the corresponding
+            str is checked to match ones of these, once matched it will return the corresponding
             int.
         """
-        if col_str == "A":
+        if str=="A":
             return 1
-        if col_str == "B":
+        if str=="B":
             return 2
-        if col_str == "C":
+        if str=="C":
             return 3
-        if col_str == "D":
+        if str=="D":
             return 4
-        if col_str == "E":
+        if str=="E":
             return 5
-        if col_str == "F":
+        if str=="F":
             return 6
-        if col_str == "G":
+        if str=="G":
             return 7
-        if col_str == "H":
+        if str=="H":
             return 8
-        if col_str == "I":
+        if str=="I":
             return 9
 
-    def back_to_row(self, row_int):
+    def back_to_row(self, int):
         """Used by fill_location_array method to change number back to letter.
 
         Args:
-            row_int-this will return the letter turned into an row_int back into a letter
+            int-this will return the letter turned into an int back into a letter
         Actions:
-            row_int is checked for corresponding number, once found it will return the corresponding
+            int is checked for corresponding number, once found it will return the corresponding
             letter
         """
-        if row_int == 1:
+        if int == 1:
             return "A"
-        if row_int == 2:
+        if int == 2:
             return "B"
-        if row_int == 3:
+        if int == 3:
             return "C"
-        if row_int == 4:
+        if int == 4:
             return "D"
-        if row_int == 5:
+        if int == 5:
             return "E"
-        if row_int == 6:
+        if int == 6:
            return "F"
-        if row_int == 7:
+        if int == 7:
             return "G"
-        if row_int == 8:
+        if int == 8:
             return "H"
-        if row_int == 9:
+        if int == 9:
             return "I"
 
     def get_location_array(self):
@@ -309,7 +349,9 @@ class Ship:
             True: their is a ship at this location
             Flase: their is not a ship at this location
         """
+
+
         for space in self.board_array:
-            if space == loc:
+            if (space == loc):
                 return True
         return False
