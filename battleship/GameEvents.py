@@ -1,4 +1,5 @@
 from .Terminal import Terminal
+from .AIPlayer import AIPlayer
 
 
 class GameEvents:
@@ -22,6 +23,10 @@ class GameEvents:
         return
 
     def place_ships(self, player):
+        if isinstance(player, AIPlayer):
+            player.generate_placed_ships()
+            return
+
         # TODO - connect with GUI to prompt player to place their ships
         return
 

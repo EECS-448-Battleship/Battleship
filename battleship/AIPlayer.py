@@ -22,6 +22,9 @@ class AIPlayer(Player):
         rows = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         return str(random.choice(cols)) + str(random.choice(rows))
 
+    def generate_placed_ships(self):
+        return  # TODO implement this
+
     def get_fire_coordinates_easy(self):
         # TODO implement this
         return 'A1'

@@ -34,16 +34,15 @@ class Game:
 		# Set up player 2 and their board (ai or otherwise)
 		if is_ai:
 			self.p2 = AIPlayer('Computer')
-			self.p2.set_ships(num_ships)
-			# TODO - call place_ships on AIPlayer, not via GUI
 		else:
 			player_two_name = self.events.prompt_player_name()
 			self.p2 = Player(player_two_name)
-			self.p2.set_ships(num_ships)
-			self.events.place_ships(self.p2)
 
 		self.p1.other_player = self.p2
 		self.p2.other_player = self.p1
+
+		self.p2.set_ships(num_ships)
+		self.events.place_ships(self.p2)
 
 	def play_game(self):
 		"""
