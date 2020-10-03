@@ -2,6 +2,7 @@ from .Terminal import Terminal
 from .AIPlayer import AIPlayer
 from .GUI.Window import Window
 from .enum import BoardCellState
+from .Board import coords_to_loc
 
 
 class GameEvents:
@@ -53,24 +54,34 @@ class GameEvents:
             player.generate_placed_ships()
             return
 
-        generated_ships = []
         for index, ship in enumerate(player.ships):
             player_grid, opponent_grid = self.window.render_board_for_player(player)
-            if index == 0:
+            if index == 0:  # 1x1 ships only require a single coordinate
                 self.window.show_message('Click a cell on your grid to place the 1x1 ship.')
                 row, col = self.window.get_grid_click_event(player_grid)
-                print((row, col))
-            else:
+                loc_str = coords_to_loc(row, col)
+                player.place_ship(0, loc_str, loc_str)
+            else:  # every other ship requires us to get two valid coordinates
                 player_grid, opponent_grid = self.window.render_board_for_player(player)
                 self.window.show_message('Click a cell on your grid to place the 1x' + str(index + 1) + ' ship.')
                 row_1, col_1 = self.window.get_grid_click_event(player_grid)
 
-                # TODO make sure row_1, col_1 doesn't have a ship
+                # don't allow the player to select an existing ship as the first coordinate
+                done = False
+                while not done:
+                    loc_str = coords_to_loc(row_1, col_1)
+                    if player.board.cell_has_ship(loc_str):
+                        row_1, col_1 = self.window.get_grid_click_event(player_grid)
+                    else:
+                        done = True
 
-                # Generate possible other coordinates
+                front_loc = coords_to_loc(row_1, col_1)
+
+                # Generate possible other coordinates that don't collide with other ships
                 valid_coords = player.board.get_valid_placement_cells_for_ship(row_1, col_1, index + 1)
                 overrides = [(x, BoardCellState.Placement) for x in valid_coords]
 
+                # don't allow the player to click a cell that isn't one of the valid placements
                 done = False
                 while not done:
                     player_grid, opponent_grid = self.window.render_board_for_player(player, overrides)
@@ -78,16 +89,17 @@ class GameEvents:
                     row_2, col_2 = self.window.get_grid_click_event(player_grid)
 
                     for coord in valid_coords:
-                        if coord[0] == row_2 and coord[1] == col_2:  # TODO check if ship overlaps with any others!
-                            print(coord)
-                            # TODO convert coordinate to loc string and call player.place_ship for the index
+                        if coord[0] == row_2 and coord[1] == col_2:
+                            # this is a valid placement, so convert it to a location string and place the ship
+                            back_loc = coords_to_loc(row_2, col_2)
+                            player.place_ship(index, front_loc, back_loc)
                             done = True
                             break
 
-
-
-        # TODO - connect with GUI to prompt player to place their ships
+        # show the player their finalized board before continuing
         self.window.render_board_for_player(player)
+        self.window.show_message('Your board has been set up! Click anywhere to continue...')
+        self.window.get_click_event()
         return
 
     def choose_if_ai(self):
