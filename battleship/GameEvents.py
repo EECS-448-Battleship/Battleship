@@ -2,8 +2,6 @@ from .Terminal import Terminal
 from .AIPlayer import AIPlayer
 from .GUI.Window import Window
 
-import time
-
 
 class GameEvents:
     terminal = Terminal()
@@ -43,7 +41,6 @@ class GameEvents:
 
 
     def switch_to_player(self, player):
-        # TODO - connect with GUI to prompt to switch to the given player
         self.window.full_screen_text('It is now ' + str(player.name) + '\'s turn. Switch players before the board is revealed.', title='Switch Players')
         return
 
@@ -56,8 +53,7 @@ class GameEvents:
         return
 
     def choose_if_ai(self):
-        # TODO - connect with GUI to prompt user to choose AI or real player
-        return True  # true if AI, false if player
+        return self.window.two_button_prompt('You can play the game against the computer, or another player.\n \nHow would you like to continue?', yes='Play against computer', no='Add another player')
 
     def get_fire_coordinates(self, current_player):
         # TODO - connect with GUI to show current player, opposing player's boards, return coordinates

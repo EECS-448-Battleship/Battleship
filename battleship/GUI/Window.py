@@ -1,4 +1,4 @@
-from .const import pygame, width, height, fill_color, text_color, text_bkg_color
+from .const import pygame, width, height, fill_color, text_color, text_bkg_color, button_bkg_color
 
 
 class TextRectException:
@@ -170,6 +170,78 @@ class Window:
         self._screen.blit(surface, rect)
         self.update()
         self.get_click_event()
+
+    def two_button_prompt(self, text, yes='Yes', no='No'):
+        """Draw a full-screen message as a prompt with two buttons.
+
+        Args:
+            text: the text to show the user
+            yes: the text of the "Yes" action
+            no: the text of the "No" action
+
+        Returns:
+            True: if the user clicked the "Yes" action
+            False: if the user clicked the "No" action
+        """
+        self.clear(update=False)
+
+        # Draw the full-screen text
+        title_font = pygame.font.Font(None, 48)
+        font = pygame.font.Font(None, 24)
+
+        rect_width = width * (2 / 3)
+        rect_height = height * (2 / 3)
+        offset_width = (width - rect_width) / 2
+        offset_height = (height - rect_height) / 2
+
+        rect = pygame.Rect(offset_width, offset_height, rect_width, rect_height)
+        surface = create_multi_line_surface(' \n' + text + '\n \n \n ', font, title_font, rect, text_color, text_bkg_color, 1)
+
+        self._screen.blit(surface, rect)
+
+        # Draw the buttons
+        yes_text = font.render(yes, 1, text_color)
+        yes_rect = yes_text.get_rect(center=(width / 2, height - 150))
+
+        yes_surf = pygame.Surface((yes_rect.width + 30, yes_rect.height + 30))
+        yes_surf.fill(button_bkg_color)
+        yes_surf.blit(yes_text, yes_rect.inflate(30, 30))
+
+        no_text = font.render(no, 1, text_color)
+        no_rect = no_text.get_rect(center=(width / 2, height - 150))
+
+        no_surf = pygame.Surface((no_rect.width + 30, no_rect.height + 30))
+        no_surf.fill(button_bkg_color)
+        no_surf.blit(no_text, no_rect.inflate(30, 30))
+
+        # Move the buttons to their appropriate places
+        yes_half_width = (yes_rect.width / 2) + 30
+        no_half_width = (no_rect.width / 2) + 30
+
+        yes_rect.move_ip(-yes_half_width, 0)
+        no_rect.move_ip(no_half_width, 0)
+
+        self._screen.blit(yes_surf, yes_rect)
+
+        yes_rect.move_ip(15, 15)
+        self._screen.blit(yes_text, yes_rect)
+
+        self._screen.blit(no_surf, no_rect)
+
+        no_rect.move_ip(15, 15)
+        self._screen.blit(no_text, no_rect)
+        self.update()
+
+        # Wait for a valid click event
+        while True:
+            event = self.get_click_event()
+            if yes_rect.inflate(30, 30).collidepoint(event.pos):
+                return True
+            elif no_rect.inflate(30, 30).collidepoint(event.pos):
+                return False
+
+
+
 
     def get_input(self, prompt):
         """Prompt the user for input using the prompt text.
