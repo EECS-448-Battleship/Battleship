@@ -35,7 +35,11 @@ class AIPlayer(Player):
 
     def get_fire_coordinates_hard(self):
         # TODO implement this
-        return 'A1'
+        aimbot = self.get_ship_locations()
+        for x in aimbot:
+            if self.missile_fire_history_record(x) != successful:
+                return x
+        
 
     def get_fire_coordinates(self):
         if self.ai_difficulty == AIDifficulty.Easy:
