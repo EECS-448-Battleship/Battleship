@@ -41,8 +41,12 @@ class AIPlayer(Player):
         # TODO implement this
         aimbot = self.get_ship_locations()
         for x in aimbot:
-            if self.missile_fire_history_record(x) != successful:
-                return x
+            for y in self.missile_fire_history:
+                if x != y:
+                    return x
+
+
+            
         
 
     def get_fire_coordinates(self):
