@@ -1,6 +1,7 @@
 from .Terminal import Terminal
 from .AIPlayer import AIPlayer
 from .GUI.Window import Window
+from .enum import BoardCellState
 
 
 class GameEvents:
@@ -84,14 +85,16 @@ class GameEvents:
                 if col_1 + ship_length_offset < 9:
                     valid_coords.append((row_1, col_1 + ship_length_offset))
 
+                overrides = [(x, BoardCellState.Placement) for x in valid_coords]
+
                 done = False
                 while not done:
-                    player_grid, opponent_grid = self.window.render_board_for_player(player)
+                    player_grid, opponent_grid = self.window.render_board_for_player(player, overrides)
                     self.window.show_message('Now, click the cell where the other end of the 1x' + str(index + 1) + ' ship should be located.')
                     row_2, col_2 = self.window.get_grid_click_event(player_grid)
 
                     for coord in valid_coords:
-                        if coord[0] == row_2 and coord[1] == col_2:
+                        if coord[0] == row_2 and coord[1] == col_2:  # TODO check if ship overlaps with any others!
                             print(coord)
                             # TODO convert coordinate to loc string and call player.place_ship for the index
                             done = True

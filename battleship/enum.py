@@ -6,6 +6,7 @@ class BoardCellState(enum.Enum):
     Miss = '*'
     Ship = 'S'
     Hit = 'X'
+    Placement = 'P'
     Unknown = 'U'
 
 
@@ -20,6 +21,8 @@ def board_cell_state_to_render_color(state):
         return 90, 90, 90
     elif state == BoardCellState.Hit:
         return 255, 0, 0
+    elif state == BoardCellState.Placement:
+        return 113, 198, 136
     else:
         return 0, 0, 0
 
