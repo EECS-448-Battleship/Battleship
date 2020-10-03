@@ -106,8 +106,14 @@ class GameEvents:
         return self.window.two_button_prompt('You can play the game against the computer, or another player.\n \nHow would you like to continue?', yes='Play against computer', no='Add another player')
 
     def get_fire_coordinates(self, current_player):
-        # TODO - connect with GUI to show current player, opposing player's boards, return coordinates
-        return 'A1'
+        if isinstance(current_player, AIPlayer):
+            return current_player.get_fire_coordinates()
+
+        player_grid, opponent_grid = self.window.render_board_for_player(current_player)
+        self.window.show_message('Click a cell on ' + current_player.other_player.name + '\'s board to fire a missile.')
+
+        fire_coords = self.window.get_grid_click_event(opponent_grid)
+        return coords_to_loc(fire_coords[0], fire_coords[1])
 
     def show_player_hit(self, current_player):
         # TODO - connect with GUI ti show current player, opposing player's boards, and a successful hit message
