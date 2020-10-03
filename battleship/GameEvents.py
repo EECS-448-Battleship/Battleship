@@ -64,9 +64,39 @@ class GameEvents:
                 self.window.show_message('Click a cell on your grid to place the 1x' + str(index + 1) + ' ship.')
                 row_1, col_1 = self.window.get_grid_click_event(player_grid)
 
-                player_grid, opponent_grid = self.window.render_board_for_player(player)
-                self.window.show_message('Now, click the cell where the other end of the 1x' + str(index + 1) + ' ship should be located.')
-                row_2, col_2 = self.window.get_grid_click_event(player_grid)
+                # Generate possible other coordinates - TODO move to Board class
+                valid_coords = []
+                ship_length_offset = index
+
+                # Vertical upward
+                if row_1 - ship_length_offset >= 0:
+                    valid_coords.append((row_1 - ship_length_offset, col_1))
+
+                # Vertical downward
+                if row_1 + ship_length_offset < 9:
+                    valid_coords.append((row_1 + ship_length_offset, col_1))
+
+                # Horizontal leftward
+                if col_1 - ship_length_offset >= 0:
+                    valid_coords.append((row_1, col_1 - ship_length_offset))
+
+                # Horizontal rightward
+                if col_1 + ship_length_offset < 9:
+                    valid_coords.append((row_1, col_1 + ship_length_offset))
+
+                done = False
+                while not done:
+                    player_grid, opponent_grid = self.window.render_board_for_player(player)
+                    self.window.show_message('Now, click the cell where the other end of the 1x' + str(index + 1) + ' ship should be located.')
+                    row_2, col_2 = self.window.get_grid_click_event(player_grid)
+
+                    for coord in valid_coords:
+                        if coord[0] == row_2 and coord[1] == col_2:
+                            print(coord)
+                            # TODO convert coordinate to loc string and call player.place_ship for the index
+                            done = True
+                            break
+
 
 
         # TODO - connect with GUI to prompt player to place their ships

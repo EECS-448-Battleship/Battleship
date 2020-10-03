@@ -195,7 +195,7 @@ class Window:
         """Wait for a click event, then return the coordinates of the cell that was clicked.
 
         Args:
-            rect_coords: array of (pygame.Rect, (row, col))
+            rect_coords: array of (pygame.Rect, (row, col)) "A1" or "D5"
         Returns:
             (row, col)
         """
