@@ -1,4 +1,5 @@
 from .const import pygame, width, height, fill_color, text_color, text_bkg_color, button_bkg_color
+from ..enum import board_cell_state_to_render_color
 
 
 class TextRectException:
@@ -125,8 +126,21 @@ class Window:
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
-    def _render_player_board(self, player, block_size, pixel_gap, offset_left, offset_top):
-        # TODO colors
+    def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top, override_statuses=None):
+        """Render the given board to the screen using the offset and gap info.
+
+            Args:
+                board: a Board object
+                block_size: number of pixels square for each cell
+                pixel_gap: how many pixels between cells
+                offset_left: left-most position of the grid
+                offset_top: top-most position of the grid
+                override_statuses: array of ((row, col), BoardCellState) to override from the board
+        """
+        if override_statuses is None:
+            override_statuses = []
+
+        rect_coords = []
         for row in range(9):
             for col in range(9):
                 rect = pygame.Rect(
@@ -137,28 +151,81 @@ class Window:
                 )
 
                 surf = pygame.Surface((rect.width, rect.height))
-                surf.fill(text_bkg_color)
 
+                status = board.board[row][col]
+                for status_group in override_statuses:
+                    coord = status_group[0]
+                    override = status_group[1]
+                    if coord[0] == row and coord[1] == col:
+                        status = override
+
+                surf.fill(board_cell_state_to_render_color(status))
+
+                rect_coords.append((rect, (row, col)))
                 self._screen.blit(surf, rect)
 
-    def render_board_for_player(self, player):
+        return rect_coords
+
+    def render_board_for_player(self, player, override_statuses=None):
+        # TODO hide ships on opponent's board
+        """Given a player, render the play screen for them, showing their grid and their opponent's.
+
+        Args:
+            player: the Player instance
+            override_statuses: array of ((row, col), BoardCellState) to override from the player's Board
+
+        Returns:
+            player_rects: array of rectangle, coordinate pairs placed
+            opponent_rects: array of rectangle, coordinate pairs placed
+        """
+        if override_statuses is None:
+            override_statuses = []
+
         self.clear(update=False)
+        font = pygame.font.Font(None, 24)
 
         block_size = 40
         pixel_gap = 2
         offset_left = 50
-        offset_top = 50
+        offset_top = 70
 
         # Render the left board (the opponent)
-        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
+        opponent_rects = self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
+
+        # Render the label for the grid
+        opponent_text = font.render(str(player.other_player.name) + '\'s Fleet', 1, text_color)
+        opponent_text_offset_left = (offset_left + (block_size * 4.5)) - (opponent_text.get_rect().width / 2)
+        opponent_text_rect = opponent_text.get_rect(left=opponent_text_offset_left, top=offset_top - 30)
+        self._screen.blit(opponent_text, opponent_text_rect)
 
         # Render the right board (the player)
         offset_left = width - (offset_left + (9 * (block_size + pixel_gap)))  # Recalculate how far from the left
-        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
+        player_rects = self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top, override_statuses)
+
+        # Render the label for the grid
+        player_text = font.render('Your Fleet', 1, text_color)
+        player_text_offset_left = (offset_left + (block_size * 4.5)) - (player_text.get_rect().width / 2)
+        player_text_rect = player_text.get_rect(left=player_text_offset_left, top=offset_top - 30)
+        self._screen.blit(player_text, player_text_rect)
 
         self.update()
-        self.get_click_event()
-        return
+        return player_rects, opponent_rects
+
+    def get_grid_click_event(self, rect_coords):
+        """Wait for a click event, then return the coordinates of the cell that was clicked.
+
+        Args:
+            rect_coords: array of (pygame.Rect, (row, col)) "A1" or "D5"
+        Returns:
+            (row, col)
+        """
+        while True:
+            event = self.get_click_event()
+            for rect_coord in rect_coords:
+                rect = rect_coord[0]
+                coords = rect_coord[1]
+                if rect.collidepoint(event.pos):
+                    return coords
 
     def clear(self, update=True):
         """Clear the screen and fill it with the default color."""
@@ -171,14 +238,14 @@ class Window:
         """Show a pop-up message at the bottom of the screen."""
         font = pygame.font.Font(None, 24)
         text = font.render(message, 1, text_color)
-        rectangle = text.get_rect(center=(width / 2, height - 50))
+        rectangle = text.get_rect(center=(width / 2, height - 75))
 
         surf = pygame.Surface((rectangle.width + 30, rectangle.height + 30))
         surf.fill(text_bkg_color)
         surf.blit(text, rectangle.inflate(30, 30))
 
-        self._screen.blit(surf, rectangle)
-        self._screen.blit(text, rectangle.move(15, 15))
+        self._screen.blit(surf, rectangle.move(-15, -15))
+        self._screen.blit(text, rectangle)
         self.update()
 
     def full_screen_text(self, text, title=None, continue_text='Click anywhere to continue...'):
