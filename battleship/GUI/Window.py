@@ -1,4 +1,5 @@
 from .const import pygame, width, height, fill_color, text_color, text_bkg_color, button_bkg_color
+from ..enum import board_cell_state_to_render_color
 
 
 class TextRectException:
@@ -125,7 +126,7 @@ class Window:
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
-    def _render_player_board(self, player, block_size, pixel_gap, offset_left, offset_top):
+    def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top):
         # TODO colors
         for row in range(9):
             for col in range(9):
@@ -137,7 +138,7 @@ class Window:
                 )
 
                 surf = pygame.Surface((rect.width, rect.height))
-                surf.fill(text_bkg_color)
+                surf.fill(board_cell_state_to_render_color(board.board[row][col]))
 
                 self._screen.blit(surf, rect)
 
@@ -150,11 +151,11 @@ class Window:
         offset_top = 50
 
         # Render the left board (the opponent)
-        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
+        self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
 
         # Render the right board (the player)
         offset_left = width - (offset_left + (9 * (block_size + pixel_gap)))  # Recalculate how far from the left
-        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
+        self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top)
 
         self.update()
         self.get_click_event()

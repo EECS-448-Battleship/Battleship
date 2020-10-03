@@ -39,8 +39,11 @@ class GameEvents:
             except:
                 pass
 
-
     def switch_to_player(self, player):
+        if isinstance(player, AIPlayer):
+            self.window.full_screen_text('It is now the computer\'s turn.', title='Switch Players')
+            return
+
         self.window.full_screen_text('It is now ' + str(player.name) + '\'s turn. Switch players before the board is revealed.', title='Switch Players')
         return
 

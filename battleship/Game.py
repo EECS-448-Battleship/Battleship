@@ -26,7 +26,6 @@ class Game:
 		player_one_name = self.events.prompt_player_name()
 		self.p1 = Player(player_one_name)
 		self.p1.set_ships(num_ships)
-		self.events.place_ships(self.p1)
 
 		# prompt player 1 to choose if player 2 is an AI or real person
 		is_ai = self.events.choose_if_ai()
@@ -42,6 +41,11 @@ class Game:
 		self.p2.other_player = self.p1
 
 		self.p2.set_ships(num_ships)
+
+		self.events.switch_to_player(self.p1)
+		self.events.place_ships(self.p1)
+
+		self.events.switch_to_player(self.p2)
 		self.events.place_ships(self.p2)
 
 	def play_game(self):
