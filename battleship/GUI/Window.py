@@ -127,6 +127,27 @@ class Window:
 
     def render_board_for_player(self, player):
         # TODO implement
+        self.clear(update=False)
+
+        block_size = 40
+        offset_left = 50
+        offset_top = 50
+
+        # Render the left board (the opponent)
+        for row in range(9):
+            for col in range(9):
+                rect = pygame.Rect(offset_left + (col * (block_size + 1)), offset_top + (row * (block_size + 1)), block_size, block_size)
+                pygame.draw.rect(self._screen, text_bkg_color, rect, 1)
+
+        # Render the right board (the player)
+        offset_left = width - ((offset_left + 10) + (9 * block_size))
+        for row in range(9):
+            for col in range(9):
+                rect = pygame.Rect(offset_left + (col * (block_size + 1)), offset_top + (row * (block_size + 1)), block_size, block_size)
+                pygame.draw.rect(self._screen, text_bkg_color, rect, 1)
+
+        self.update()
+        self.get_click_event()
         return
 
     def clear(self, update=True):
@@ -239,9 +260,6 @@ class Window:
                 return True
             elif no_rect.inflate(30, 30).collidepoint(event.pos):
                 return False
-
-
-
 
     def get_input(self, prompt):
         """Prompt the user for input using the prompt text.

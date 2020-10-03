@@ -50,6 +50,7 @@ class GameEvents:
             return
 
         # TODO - connect with GUI to prompt player to place their ships
+        self.window.render_board_for_player(player)
         return
 
     def choose_if_ai(self):
