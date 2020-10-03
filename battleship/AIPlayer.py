@@ -43,11 +43,7 @@ class AIPlayer(Player):
         for x in aimbot:
             for y in self.missile_fire_history:
                 if x != y:
-                    return x
-
-
-            
-        
+                    return x     
 
     def get_fire_coordinates(self):
         if self.ai_difficulty == AIDifficulty.Easy:
