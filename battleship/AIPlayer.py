@@ -28,12 +28,10 @@ class AIPlayer(Player):
     def get_fire_coordinates_easy(self):
         while True:
             rand = self.get_random_coord()
-            found = False
-            for record in self.missile_fire_history:
-                if record["location"] == rand:
-                    found = True
-            if not found:
-                return rand
+            for record self.missile_fire_history_record():
+                if rand != self.missile_fire_history_record():
+                    return rand
+        continue
 
     def get_fire_coordinates_medium(self):
         
@@ -43,9 +41,9 @@ class AIPlayer(Player):
         # TODO implement this
         aimbot = self.get_ship_locations()
         for x in aimbot:
-            if self.missile_fire_history != successful:
-                return x
-        
+            for y in self.missile_fire_history:
+                if x != y:
+                    return x     
 
     def get_fire_coordinates(self):
         if self.ai_difficulty == AIDifficulty.Easy:
