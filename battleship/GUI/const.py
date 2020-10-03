@@ -15,5 +15,6 @@ fps = 30
 fill_color = (66, 123, 181)
 text_color = (255, 255, 255)
 text_bkg_color = (29, 58, 87)
+button_bkg_color = (21, 43, 64)
 
 clock = pygame.time.Clock()

@@ -2,8 +2,6 @@ from .Terminal import Terminal
 from .AIPlayer import AIPlayer
 from .GUI.Window import Window
 
-import time
-
 
 class GameEvents:
     terminal = Terminal()
@@ -14,21 +12,36 @@ class GameEvents:
     ])
 
     def show_welcome(self):
-        # TODO - replace with GUI welcome
         self.terminal.printWelcome()
         self.window.full_screen_text(self.welcome_message, title='Welcome to Battleship!')
 
     def prompt_player_name(self):
-        import random
-        # TODO - connect with GUI to return real value
-        return 'fake player ' + str(random.randint(0, 100))
+        return self.window.get_input('Enter player name:')
 
     def choose_number_of_ships(self):
-        # TODO - connect with GUI to prompt user for number of ships 1 to 5
-        return 2
+        first = True
+        while True:
+            text = 'Enter number of ships to play with (1 to 5)'
+            if not first:
+                text += '. (Invalid. Please try again.)'
+            else:
+                text += ':'
+
+            input = self.window.get_input(text)
+
+            if first:
+                first = False
+
+            try:
+                input_int = int(input)
+                if 6 > input_int > 0:
+                    return input_int
+            except:
+                pass
+
 
     def switch_to_player(self, player):
-        # TODO - connect with GUI to prompt to switch to the given player
+        self.window.full_screen_text('It is now ' + str(player.name) + '\'s turn. Switch players before the board is revealed.', title='Switch Players')
         return
 
     def place_ships(self, player):
@@ -37,11 +50,11 @@ class GameEvents:
             return
 
         # TODO - connect with GUI to prompt player to place their ships
+        self.window.render_board_for_player(player)
         return
 
     def choose_if_ai(self):
-        # TODO - connect with GUI to prompt user to choose AI or real player
-        return True  # true if AI, false if player
+        return self.window.two_button_prompt('You can play the game against the computer, or another player.\n \nHow would you like to continue?', yes='Play against computer', no='Add another player')
 
     def get_fire_coordinates(self, current_player):
         # TODO - connect with GUI to show current player, opposing player's boards, return coordinates
