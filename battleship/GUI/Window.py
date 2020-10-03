@@ -173,7 +173,7 @@ class Window:
 
         return rect_coords
 
-    def render_board_for_player(self, player, override_statuses=None, mask_opponent=True):
+    def render_board_for_player(self, player, override_statuses=None, mask_opponent=True, victor=False):
         """Given a player, render the play screen for them, showing their grid and their opponent's.
 
         Args:
@@ -213,7 +213,7 @@ class Window:
         player_rects = self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top, override_statuses)
 
         # Render the label for the grid
-        player_text = font.render('Your Fleet', 1, text_color)
+        player_text = font.render(player.name + '\'s Fleet'+(' (winner)' if victor else ''), 1, text_color)
         player_text_offset_left = (offset_left + (block_size * 4.5)) - (player_text.get_rect().width / 2)
         player_text_rect = player_text.get_rect(left=player_text_offset_left, top=offset_top - 30)
         self._screen.blit(player_text, player_text_rect)

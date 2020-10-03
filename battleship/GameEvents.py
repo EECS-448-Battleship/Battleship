@@ -134,5 +134,11 @@ class GameEvents:
         self.window.get_click_event()
 
     def show_player_victory(self, victorious_player):
-        # TODO - connect with GUI to show the victory screen, and both player's boards
-        return
+        self.window.render_board_for_player(victorious_player)
+
+        if isinstance(victorious_player, AIPlayer):
+            self.window.show_message('The computer wins! Click anywhere to play again...')
+        else:
+            self.window.show_message(victorious_player.name + ' wins! Click anywhere to play again...')
+
+        self.window.get_click_event()
