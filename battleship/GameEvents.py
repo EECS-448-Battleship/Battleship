@@ -14,13 +14,15 @@ class GameEvents:
     ])
 
     def show_welcome(self):
-        self.terminal.printWelcome()
+        """Display a welcome screen to the user via the GUI."""
         self.window.full_screen_text(self.welcome_message, title='Welcome to Battleship!')
 
     def prompt_player_name(self):
+        """Prompt the player to enter their name and return it."""
         return self.window.get_input('Enter player name:')
 
     def choose_number_of_ships(self):
+        """Prompt the player to enter a valid number of ships (1 to 5) and return it."""
         first = True
         while True:
             text = 'Enter number of ships to play with (1 to 5)'
@@ -42,6 +44,11 @@ class GameEvents:
                 pass
 
     def switch_to_player(self, player):
+        """Prompt the user to switch to the given player.
+
+        Args:
+            player: a Player
+        """
         if isinstance(player, AIPlayer):
             self.window.full_screen_text('It is now the computer\'s turn.', title='Switch Players')
             return
@@ -50,6 +57,11 @@ class GameEvents:
         return
 
     def place_ships(self, player):
+        """Walk the given player through the process of placing their ships.
+
+        Args:
+            player: a Player
+        """
         if isinstance(player, AIPlayer):
             player.generate_placed_ships()
             return
@@ -103,9 +115,15 @@ class GameEvents:
         return
 
     def choose_if_ai(self):
+        """Prompt the user to choose whether they want to add a second player or play against the computer."""
         return self.window.two_button_prompt('You can play the game against the computer, or another player.\n \nHow would you like to continue?', yes='Play against computer', no='Add another player')
 
     def get_fire_coordinates(self, current_player):
+        """Walk the given player through the process of choosing a coordinate to fire upon.
+
+        Args:
+            current_player: a Player
+        """
         if isinstance(current_player, AIPlayer):
             return current_player.get_fire_coordinates()
 
@@ -116,6 +134,11 @@ class GameEvents:
         return coords_to_loc(fire_coords[0], fire_coords[1])
 
     def show_player_hit(self, current_player):
+        """Show a message to the given player saying that they hit their target.
+
+        Args:
+            current_player: a Player
+        """
         if isinstance(current_player, AIPlayer):
             self.window.full_screen_text('The computer hit one of your ships!', 'Uh, oh!')
             return
@@ -125,6 +148,11 @@ class GameEvents:
         self.window.get_click_event()
 
     def show_player_miss(self, current_player):
+        """Show a message to the given player saying that they missed their target.
+
+        Args:
+            current_player: a Player
+        """
         if isinstance(current_player, AIPlayer):
             self.window.full_screen_text('It looks like the computer\'s missile fire missed.', 'Phew!')
             return
@@ -134,6 +162,11 @@ class GameEvents:
         self.window.get_click_event()
 
     def show_player_victory(self, victorious_player):
+        """Show the victory screen, and the given player as the winner.
+
+        Args:
+            victorious_player: a Player
+        """
         self.window.render_board_for_player(victorious_player)
 
         if isinstance(victorious_player, AIPlayer):
