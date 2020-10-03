@@ -127,7 +127,6 @@ class Window:
         pygame.display.set_caption('Battleship - EECS 448')
 
     def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top):
-        # TODO colors
         for row in range(9):
             for col in range(9):
                 rect = pygame.Rect(
@@ -144,20 +143,34 @@ class Window:
 
     def render_board_for_player(self, player):
         self.clear(update=False)
+        font = pygame.font.Font(None, 24)
 
         block_size = 40
         pixel_gap = 2
         offset_left = 50
-        offset_top = 50
+        offset_top = 70
 
         # Render the left board (the opponent)
         self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
+
+        # Render the label for the grid
+        opponent_text = font.render(str(player.other_player.name) + '\'s Fleet', 1, text_color)
+        opponent_text_offset_left = (offset_left + (block_size * 4.5)) - (opponent_text.get_rect().width / 2)
+        opponent_text_rect = opponent_text.get_rect(left=opponent_text_offset_left, top=offset_top - 30)
+        self._screen.blit(opponent_text, opponent_text_rect)
 
         # Render the right board (the player)
         offset_left = width - (offset_left + (9 * (block_size + pixel_gap)))  # Recalculate how far from the left
         self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top)
 
+        # Render the label for the grid
+        player_text = font.render('Your Fleet', 1, text_color)
+        player_text_offset_left = (offset_left + (block_size * 4.5)) - (player_text.get_rect().width / 2)
+        player_text_rect = player_text.get_rect(left=player_text_offset_left, top=offset_top - 30)
+        self._screen.blit(player_text, player_text_rect)
+
         self.update()
+        self.show_message('Click a cell to start placing ships.')
         self.get_click_event()
         return
 
