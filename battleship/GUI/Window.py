@@ -127,6 +127,16 @@ class Window:
         pygame.display.set_caption('Battleship - EECS 448')
 
     def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top):
+        """Render the given board to the screen using the offset and gap info.
+
+            Args:
+                board: a Board object
+                block_size: number of pixels square for each cell
+                pixel_gap: how many pixels between cells
+                offset_left: left-most position of the grid
+                offset_top: top-most position of the grid
+        """
+        rect_coords = []
         for row in range(9):
             for col in range(9):
                 rect = pygame.Rect(
@@ -139,9 +149,17 @@ class Window:
                 surf = pygame.Surface((rect.width, rect.height))
                 surf.fill(board_cell_state_to_render_color(board.board[row][col]))
 
+                rect_coords.append((rect, (row, col)))
                 self._screen.blit(surf, rect)
+        return rect_coords
 
     def render_board_for_player(self, player):
+        """Given a player, render the play screen for them, showing their grid and their opponent's.
+
+        Args:
+            player: the Player instance
+
+        """
         self.clear(update=False)
         font = pygame.font.Font(None, 24)
 
@@ -151,7 +169,7 @@ class Window:
         offset_top = 70
 
         # Render the left board (the opponent)
-        self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
+        opponent_rects = self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
 
         # Render the label for the grid
         opponent_text = font.render(str(player.other_player.name) + '\'s Fleet', 1, text_color)
@@ -161,7 +179,7 @@ class Window:
 
         # Render the right board (the player)
         offset_left = width - (offset_left + (9 * (block_size + pixel_gap)))  # Recalculate how far from the left
-        self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top)
+        player_rects = self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top)
 
         # Render the label for the grid
         player_text = font.render('Your Fleet', 1, text_color)
@@ -170,9 +188,23 @@ class Window:
         self._screen.blit(player_text, player_text_rect)
 
         self.update()
-        self.show_message('Click a cell to start placing ships.')
-        self.get_click_event()
-        return
+        return player_rects, opponent_rects
+
+    def get_grid_click_event(self, rect_coords):
+        """Wait for a click event, then return the coordinates of the cell that was clicked.
+
+        Args:
+            rect_coords: array of (pygame.Rect, (row, col))
+        Returns:
+            (row, col)
+        """
+        while True:
+            event = self.get_click_event()
+            for rect_coord in rect_coords:
+                rect = rect_coord[0]
+                coords = rect_coord[1]
+                if rect.collidepoint(event.pos):
+                    return coords
 
     def clear(self, update=True):
         """Clear the screen and fill it with the default color."""
