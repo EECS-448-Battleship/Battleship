@@ -116,11 +116,19 @@ class GameEvents:
         return coords_to_loc(fire_coords[0], fire_coords[1])
 
     def show_player_hit(self, current_player):
+        if isinstance(current_player, AIPlayer):
+            self.window.full_screen_text('The computer hit one of your ships!', 'Uh, oh!')
+            return
+
         self.window.render_board_for_player(current_player)
         self.window.show_message('Success! You hit one of ' + current_player.other_player.name + '\'s ships. Click anywhere to continue...')
         self.window.get_click_event()
 
     def show_player_miss(self, current_player):
+        if isinstance(current_player, AIPlayer):
+            self.window.full_screen_text('It looks like the computer\'s missile fire missed.', 'Phew!')
+            return
+
         self.window.render_board_for_player(current_player)
         self.window.show_message('Uh, oh! It looks like the missile didn\'t hit anything. Click anywhere to continue...')
         self.window.get_click_event()
