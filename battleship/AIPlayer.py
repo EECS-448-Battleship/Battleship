@@ -1,6 +1,7 @@
 import random
 from .Player import Player
 from .enum import AIDifficulty
+from .Board import convert_loc, coords_to_loc
 
 
 class AIPlayer(Player):
@@ -23,7 +24,20 @@ class AIPlayer(Player):
         return str(random.choice(cols)) + str(random.choice(rows))
 
     def generate_placed_ships(self):
-        return  # TODO implement this
+        for index, ship in enumerate(self.ships):
+            # generate a random placement
+            front_loc = self.get_random_coord()
+            idx = convert_loc(front_loc)
+            coords = (idx[0], idx[1])
+
+            # get the valid other locations
+            other_locs = self.board.get_valid_placement_cells_for_ship(coords[0], coords[1], index + 1)
+
+            # randomly choose one of them
+            back_coords = random.choice(other_locs)
+            back_loc = coords_to_loc(back_coords[0], back_coords[1])
+
+            self.place_ship(index, front_loc, back_loc)
 
     def get_fire_coordinates_easy(self):
         while True:

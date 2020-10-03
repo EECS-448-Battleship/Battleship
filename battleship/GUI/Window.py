@@ -1,5 +1,5 @@
 from .const import pygame, width, height, fill_color, text_color, text_bkg_color, button_bkg_color
-from ..enum import board_cell_state_to_render_color
+from ..enum import board_cell_state_to_render_color, BoardCellState
 
 
 class TextRectException:
@@ -126,7 +126,7 @@ class Window:
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
-    def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top, override_statuses=None):
+    def _render_board(self, board, block_size, pixel_gap, offset_left, offset_top, override_statuses=None, masks=None):
         """Render the given board to the screen using the offset and gap info.
 
             Args:
@@ -139,6 +139,9 @@ class Window:
         """
         if override_statuses is None:
             override_statuses = []
+
+        if masks is None:
+            masks = []
 
         rect_coords = []
         for row in range(9):
@@ -153,6 +156,10 @@ class Window:
                 surf = pygame.Surface((rect.width, rect.height))
 
                 status = board.board[row][col]
+
+                if status in masks:
+                    status = BoardCellState.Empty
+
                 for status_group in override_statuses:
                     coord = status_group[0]
                     override = status_group[1]
@@ -166,8 +173,7 @@ class Window:
 
         return rect_coords
 
-    def render_board_for_player(self, player, override_statuses=None):
-        # TODO hide ships on opponent's board
+    def render_board_for_player(self, player, override_statuses=None, mask_opponent=True, victor=False):
         """Given a player, render the play screen for them, showing their grid and their opponent's.
 
         Args:
@@ -190,7 +196,11 @@ class Window:
         offset_top = 70
 
         # Render the left board (the opponent)
-        opponent_rects = self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top)
+        masks = []
+        if mask_opponent:
+            masks = [BoardCellState.Ship]
+
+        opponent_rects = self._render_board(player.other_player.board, block_size, pixel_gap, offset_left, offset_top, masks=masks)
 
         # Render the label for the grid
         opponent_text = font.render(str(player.other_player.name) + '\'s Fleet', 1, text_color)
@@ -203,7 +213,7 @@ class Window:
         player_rects = self._render_board(player.board, block_size, pixel_gap, offset_left, offset_top, override_statuses)
 
         # Render the label for the grid
-        player_text = font.render('Your Fleet', 1, text_color)
+        player_text = font.render(player.name + '\'s Fleet'+(' (winner)' if victor else ''), 1, text_color)
         player_text_offset_left = (offset_left + (block_size * 4.5)) - (player_text.get_rect().width / 2)
         player_text_rect = player_text.get_rect(left=player_text_offset_left, top=offset_top - 30)
         self._screen.blit(player_text, player_text_rect)
