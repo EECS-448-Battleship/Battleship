@@ -65,26 +65,10 @@ class GameEvents:
                 self.window.show_message('Click a cell on your grid to place the 1x' + str(index + 1) + ' ship.')
                 row_1, col_1 = self.window.get_grid_click_event(player_grid)
 
-                # Generate possible other coordinates - TODO move to Board class
-                valid_coords = []
-                ship_length_offset = index
+                # TODO make sure row_1, col_1 doesn't have a ship
 
-                # Vertical upward
-                if row_1 - ship_length_offset >= 0:
-                    valid_coords.append((row_1 - ship_length_offset, col_1))
-
-                # Vertical downward
-                if row_1 + ship_length_offset < 9:
-                    valid_coords.append((row_1 + ship_length_offset, col_1))
-
-                # Horizontal leftward
-                if col_1 - ship_length_offset >= 0:
-                    valid_coords.append((row_1, col_1 - ship_length_offset))
-
-                # Horizontal rightward
-                if col_1 + ship_length_offset < 9:
-                    valid_coords.append((row_1, col_1 + ship_length_offset))
-
+                # Generate possible other coordinates
+                valid_coords = player.board.get_valid_placement_cells_for_ship(row_1, col_1, index + 1)
                 overrides = [(x, BoardCellState.Placement) for x in valid_coords]
 
                 done = False

@@ -95,6 +95,52 @@ class Board:
 
         return self.board[loc[0]][loc[1]]
 
+    def get_valid_placement_cells_for_ship(self, placed_row, placed_col, ship_length):
+        valid_coords = []
+        ship_length_offset = ship_length - 1
+
+        # Vertical upward
+        if placed_row - ship_length_offset >= 0:
+            coord = (placed_row - ship_length_offset, placed_col)
+            intermediates = [coord]
+            for row_idx in range(coord[0], placed_row):
+                intermediates.append((row_idx, placed_col))
+
+            if self.no_cell_as_ship(intermediates):
+                valid_coords.append(coord)
+
+        # Vertical downward
+        if placed_row + ship_length_offset < 9:
+            coord = (placed_row + ship_length_offset, placed_col)
+            intermediates = [coord]
+            for row_idx in range(placed_row, coord[0]):
+                intermediates.append((row_idx, placed_col))
+
+            if self.no_cell_as_ship(intermediates):
+                valid_coords.append(coord)
+
+        # Horizontal leftward
+        if placed_col - ship_length_offset >= 0:
+            coord = (placed_row, placed_col - ship_length_offset)
+            intermediates = [coord]
+            for col_idx in range(coord[1], placed_col):
+                intermediates.append((placed_row, col_idx))
+
+            if self.no_cell_as_ship(intermediates):
+                valid_coords.append(coord)
+
+        # Horizontal rightward
+        if placed_col + ship_length_offset < 9:
+            coord = (placed_row, placed_col + ship_length_offset)
+            intermediates = [coord]
+            for col_idx in range(placed_col, coord[1]):
+                intermediates.append((placed_row, col_idx))
+
+            if self.no_cell_as_ship(intermediates):
+                valid_coords.append(coord)
+
+        return valid_coords
+
     def cell_has_ship(self, loc_str):
         """returns true if the given cell has a ship, sunk or otherwise
 
@@ -108,6 +154,13 @@ class Board:
 
         state = self.board[loc[0]][loc[1]]
         return state == BoardCellState.Ship or state == BoardCellState.Hit
+
+    def no_cell_as_ship(self, coords):
+        has_ship = False
+        for coord in coords:
+            state = self.board[coord[1]][coord[0]]
+            has_ship = has_ship or (state == BoardCellState.Ship or state == BoardCellState.Hit)
+        return not has_ship
 
     def cell_can_be_fired_upon(self, loc_str):
         """returns true if the given cell can be fired upon
