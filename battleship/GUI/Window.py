@@ -125,6 +125,10 @@ class Window:
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
+    def render_board_for_player(self, player):
+        # TODO implement
+        return
+
     def clear(self, update=True):
         """Clear the screen and fill it with the default color."""
         self._screen.fill(fill_color)

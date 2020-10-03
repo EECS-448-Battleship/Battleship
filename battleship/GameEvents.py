@@ -44,6 +44,7 @@ class GameEvents:
 
     def switch_to_player(self, player):
         # TODO - connect with GUI to prompt to switch to the given player
+        self.window.full_screen_text('It is now ' + str(player.name) + '\'s turn. Switch players before the board is revealed.', title='Switch Players')
         return
 
     def place_ships(self, player):
