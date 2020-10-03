@@ -26,11 +26,15 @@ class AIPlayer(Player):
         return  # TODO implement this
 
     def get_fire_coordinates_easy(self):
-        # TODO implement this
-        return 'A1'
+        while True:
+            rand = self.get_random_coord()
+            for record self.missile_fire_history_record():
+                if rand != self.missile_fire_history_record():
+                    return rand
+        continue
 
     def get_fire_coordinates_medium(self):
-        # TODO implement this
+        
         return 'A1'
 
     def get_fire_coordinates_hard(self):
