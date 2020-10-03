@@ -54,7 +54,7 @@
 #Ship_Ex.get_location()
 #--------------------------END OF EXAMPLES
 
-class Ship:program
+class Ship:
     """Ship class which is used when building a ship from player class.
 
     Ship object is instantiated when the player class calls on an object to be
