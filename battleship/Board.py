@@ -156,10 +156,12 @@ class Board:
         return state == BoardCellState.Ship or state == BoardCellState.Hit
 
     def no_cell_as_ship(self, coords):
+        """Returns true if no cell for the given [(row, col), ...] coordinates contains a ship.
+        """
         has_ship = False
         for coord in coords:
-            state = self.board[coord[1]][coord[0]]
-            has_ship = has_ship or (state == BoardCellState.Ship or state == BoardCellState.Hit)
+            has_ship = has_ship or self.cell_has_ship(coords_to_loc(coord[0], coord[1]))
+
         return not has_ship
 
     def cell_can_be_fired_upon(self, loc_str):
@@ -185,6 +187,35 @@ def loc_string_is_valid(loc_str):
     """
 
     return convert_loc(loc_str) != (99, 99)
+
+
+def coords_to_loc(row, col):
+    """Convert row, col coordinates to a location string "A1"
+    Args:
+        row: the row index
+        col: the col index
+    """
+    letter = ''
+    if col == 0:
+        letter = 'A'
+    elif col == 1:
+        letter = 'B'
+    elif col == 2:
+        letter = 'C'
+    elif col == 3:
+        letter = 'D'
+    elif col == 4:
+        letter = 'E'
+    elif col == 5:
+        letter = 'F'
+    elif col == 6:
+        letter = 'G'
+    elif col == 7:
+        letter = 'H'
+    elif col == 8:
+        letter = 'I'
+
+    return str(letter) + str(row + 1)
 
 
 def convert_loc(loc):
