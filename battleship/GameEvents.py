@@ -14,18 +14,33 @@ class GameEvents:
     ])
 
     def show_welcome(self):
-        # TODO - replace with GUI welcome
         self.terminal.printWelcome()
         self.window.full_screen_text(self.welcome_message, title='Welcome to Battleship!')
 
     def prompt_player_name(self):
-        import random
-        # TODO - connect with GUI to return real value
-        return 'fake player ' + str(random.randint(0, 100))
+        return self.window.get_input('Enter player name:')
 
     def choose_number_of_ships(self):
-        # TODO - connect with GUI to prompt user for number of ships 1 to 5
-        return 2
+        first = True
+        while True:
+            text = 'Enter number of ships to play with (1 to 5)'
+            if not first:
+                text += '. (Invalid. Please try again.)'
+            else:
+                text += ':'
+
+            input = self.window.get_input(text)
+
+            if first:
+                first = False
+
+            try:
+                input_int = int(input)
+                if 6 > input_int > 0:
+                    return input_int
+            except:
+                pass
+
 
     def switch_to_player(self, player):
         # TODO - connect with GUI to prompt to switch to the given player

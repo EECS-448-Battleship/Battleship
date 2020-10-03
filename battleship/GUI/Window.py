@@ -178,7 +178,7 @@ class Window:
         while True:
             for evt in pygame.event.get():
                 if evt.type == pygame.KEYDOWN:
-                    if evt.unicode.isalpha():
+                    if evt.unicode.isalnum():
                         text += evt.unicode
                     elif evt.key == pygame.K_BACKSPACE:
                         text = text[:-1]
