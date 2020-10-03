@@ -125,26 +125,36 @@ class Window:
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
+    def _render_player_board(self, player, block_size, pixel_gap, offset_left, offset_top):
+        # TODO colors
+        for row in range(9):
+            for col in range(9):
+                rect = pygame.Rect(
+                    offset_left + (col * (block_size + pixel_gap)),
+                    offset_top + (row * (block_size + pixel_gap)),
+                    block_size,
+                    block_size
+                )
+
+                surf = pygame.Surface((rect.width, rect.height))
+                surf.fill(text_bkg_color)
+
+                self._screen.blit(surf, rect)
+
     def render_board_for_player(self, player):
-        # TODO implement
         self.clear(update=False)
 
         block_size = 40
+        pixel_gap = 2
         offset_left = 50
         offset_top = 50
 
         # Render the left board (the opponent)
-        for row in range(9):
-            for col in range(9):
-                rect = pygame.Rect(offset_left + (col * (block_size + 1)), offset_top + (row * (block_size + 1)), block_size, block_size)
-                pygame.draw.rect(self._screen, text_bkg_color, rect, 1)
+        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
 
         # Render the right board (the player)
-        offset_left = width - ((offset_left + 10) + (9 * block_size))
-        for row in range(9):
-            for col in range(9):
-                rect = pygame.Rect(offset_left + (col * (block_size + 1)), offset_top + (row * (block_size + 1)), block_size, block_size)
-                pygame.draw.rect(self._screen, text_bkg_color, rect, 1)
+        offset_left = width - (offset_left + (9 * (block_size + pixel_gap)))  # Recalculate how far from the left
+        self._render_player_board(player, block_size, pixel_gap, offset_left, offset_top)
 
         self.update()
         self.get_click_event()
