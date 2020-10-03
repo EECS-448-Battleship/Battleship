@@ -70,6 +70,6 @@ class AIPlayer(Player):
     def shoot_right(self):
 
     def shoot_down(self):
-        
+
     def shoot_left(self):
 
