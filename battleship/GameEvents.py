@@ -1,13 +1,22 @@
 from .Terminal import Terminal
 from .AIPlayer import AIPlayer
+from .GUI.Window import Window
+
+import time
 
 
 class GameEvents:
     terminal = Terminal()
+    window = Window()
+
+    welcome_message = '\n \n'.join([
+        'You will get started by choosing the number of ships you want to play with.',
+    ])
 
     def show_welcome(self):
         # TODO - replace with GUI welcome
         self.terminal.printWelcome()
+        self.window.full_screen_text(self.welcome_message, title='Welcome to Battleship!')
 
     def prompt_player_name(self):
         import random
