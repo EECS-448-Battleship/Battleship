@@ -117,17 +117,23 @@ def create_multi_line_surface(string, font, big_font, rect, font_color, backgrou
 
 
 class Window:
+    """
+    A basic wrapper class for a GUI window written in PyGame.
+    """
+
     def __init__(self):
         self._screen = pygame.display.set_mode((width, height), 0, 32)
         pygame.display.set_caption('Battleship - EECS 448')
 
     def clear(self, update=True):
+        """Clear the screen and fill it with the default color."""
         self._screen.fill(fill_color)
         if update:
             self.update()
         return
 
     def show_message(self, message):
+        """Show a pop-up message at the bottom of the screen."""
         font = pygame.font.Font(None, 24)
         text = font.render(message, 1, text_color)
         rectangle = text.get_rect(center=(width / 2, height - 50))
@@ -141,6 +147,7 @@ class Window:
         self.update()
 
     def full_screen_text(self, text, title=None, continue_text='Click anywhere to continue...'):
+        """Show a full-screen message with a title and some unicode body-text."""
         self.clear(update=False)
         title_font = pygame.font.Font(None, 48)
         font = pygame.font.Font(None, 24)
@@ -161,6 +168,11 @@ class Window:
         self.get_click_event()
 
     def get_input(self, prompt):
+        """Prompt the user for input using the prompt text.
+
+        Args:
+            prompt: the message to be shown to the user as a prompt
+        """
         font = pygame.font.Font(None, 50)
         text = ''
         while True:
@@ -204,6 +216,7 @@ class Window:
             pygame.display.flip()
 
     def get_click_event(self):
+        """Wait for the user to click anywhere on the screen and return the event."""
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
