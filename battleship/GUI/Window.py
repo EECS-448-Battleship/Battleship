@@ -154,6 +154,7 @@ class Window:
         return rect_coords
 
     def render_board_for_player(self, player):
+        # TODO hide ships on opponent's board
         """Given a player, render the play screen for them, showing their grid and their opponent's.
 
         Args:
@@ -217,14 +218,14 @@ class Window:
         """Show a pop-up message at the bottom of the screen."""
         font = pygame.font.Font(None, 24)
         text = font.render(message, 1, text_color)
-        rectangle = text.get_rect(center=(width / 2, height - 50))
+        rectangle = text.get_rect(center=(width / 2, height - 75))
 
         surf = pygame.Surface((rectangle.width + 30, rectangle.height + 30))
         surf.fill(text_bkg_color)
         surf.blit(text, rectangle.inflate(30, 30))
 
-        self._screen.blit(surf, rectangle)
-        self._screen.blit(text, rectangle.move(15, 15))
+        self._screen.blit(surf, rectangle.move(-15, -15))
+        self._screen.blit(text, rectangle)
         self.update()
 
     def full_screen_text(self, text, title=None, continue_text='Click anywhere to continue...'):

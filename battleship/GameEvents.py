@@ -52,6 +52,23 @@ class GameEvents:
             player.generate_placed_ships()
             return
 
+        generated_ships = []
+        for index, ship in enumerate(player.ships):
+            player_grid, opponent_grid = self.window.render_board_for_player(player)
+            if index == 0:
+                self.window.show_message('Click a cell on your grid to place the 1x1 ship.')
+                row, col = self.window.get_grid_click_event(player_grid)
+                print((row, col))
+            else:
+                player_grid, opponent_grid = self.window.render_board_for_player(player)
+                self.window.show_message('Click a cell on your grid to place the 1x' + str(index + 1) + ' ship.')
+                row_1, col_1 = self.window.get_grid_click_event(player_grid)
+
+                player_grid, opponent_grid = self.window.render_board_for_player(player)
+                self.window.show_message('Now, click the cell where the other end of the 1x' + str(index + 1) + ' ship should be located.')
+                row_2, col_2 = self.window.get_grid_click_event(player_grid)
+
+
         # TODO - connect with GUI to prompt player to place their ships
         self.window.render_board_for_player(player)
         return
