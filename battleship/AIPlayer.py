@@ -36,8 +36,18 @@ class AIPlayer(Player):
                 return rand
 
     def get_fire_coordinates_medium(self):
-        
-        return 'A1'
+        ship_found = False
+
+        if ship_found == False
+            while True:
+                rand = self.get_random_coord()
+                found = False
+                for record in self.missile_fire_history:
+                    if record["location"] == rand:
+                        found = True
+                if not found:
+                    return rand
+        if ship_found == True
 
     def get_fire_coordinates_hard(self):
         # TODO implement this
@@ -54,3 +64,12 @@ class AIPlayer(Player):
             return self.get_fire_coordinates_medium()
         else:
             return self.get_fire_coordinates_hard()
+
+    def shoot_top(self):
+
+    def shoot_right(self):
+
+    def shoot_down(self):
+        
+    def shoot_left(self):
+
