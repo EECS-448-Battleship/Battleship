@@ -179,6 +179,8 @@ class Window:
         Args:
             player: the Player instance
             override_statuses: array of ((row, col), BoardCellState) to override from the player's Board
+            mask_opponent: if true, the opponent's ships will be hidden
+            victor: if true, will show the given player as the winner of the game
 
         Returns:
             player_rects: array of rectangle, coordinate pairs placed

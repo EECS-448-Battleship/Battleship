@@ -39,14 +39,16 @@ class AIPlayer(Player):
 
             self.place_ship(index, front_loc, back_loc)
 
+    def loc_already_attempted(self, loc):
+        for record in self.missile_fire_history:
+            if record['location'] == loc:
+                return True
+        return False
+
     def get_fire_coordinates_easy(self):
         while True:
             rand = self.get_random_coord()
-            found = False
-            for record in self.missile_fire_history:
-                if record["location"] == rand:
-                    found = True
-            if not found:
+            if not self.loc_already_attempted(rand):
                 return rand
 
     def get_fire_coordinates_medium(self):
@@ -55,22 +57,16 @@ class AIPlayer(Player):
         if not ship_found:
             while True:
                 rand = self.get_random_coord()
-                found = False
-                for record in self.missile_fire_history:
-                    if record["location"] == rand:
-                        found = True
-                if not found:
+                if not self.loc_already_attempted(rand):
                     return rand
-        if ship_found == True:
-            return self.get_random_coord() # TODO finish implementing this - just fixed syntax
+
+        if ship_found:
+            return self.get_random_coord()  # TODO finish implementing this - just fixed syntax
 
     def get_fire_coordinates_hard(self):
-        # TODO implement this
-        aimbot = self.get_ship_locations()
-        for x in aimbot:
-            for y in self.missile_fire_history:
-                if x != y:
-                    return x     
+        for ship_loc in self.get_ship_locations():
+            if not self.loc_already_attempted(ship_loc):
+                return ship_loc
 
     def get_fire_coordinates(self):
         if self.ai_difficulty == AIDifficulty.Easy:
