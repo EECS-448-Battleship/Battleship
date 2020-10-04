@@ -135,7 +135,7 @@ class AIPlayer(Player):
                     return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_hard(self):
-        for ship_loc in self.get_ship_locations():
+        for ship_loc in self.other_player.get_ship_locations():
             if not self.loc_already_attempted(ship_loc):
                 return ship_loc
 
