@@ -169,10 +169,9 @@ class AIPlayer(Player):
         else:
             return 'left'
 
-    # TODO modify the should_try_* to check if the target cell has been hit already
     def should_try_up(self, history_record):
         idx = convert_loc(history_record['location'])
-        return idx[1] > 0
+        return idx[1] > 0 and not self.loc_already_attempted(self.translate_up(history_record['location']))
 
     def translate_up(self, loc):
         idx = convert_loc(loc)
@@ -180,7 +179,7 @@ class AIPlayer(Player):
 
     def should_try_right(self, history_record):
         idx = convert_loc(history_record['location'])
-        return idx[0] < 8
+        return idx[0] < 8 and not self.loc_already_attempted(self.translate_right(history_record['location']))
 
     def translate_right(self, loc):
         idx = convert_loc(loc)
@@ -188,15 +187,15 @@ class AIPlayer(Player):
 
     def should_try_down(self, history_record):
         idx = convert_loc(history_record['location'])
-        return idx[1] < 8
+        return idx[1] < 8 and not self.loc_already_attempted(self.translate_down(history_record['location']))
 
     def translate_down(self, loc):
         idx = convert_loc(loc)
         return coords_to_loc(idx[1] + 1, idx[0])
 
-    def should_try_left(self, loc):
-        idx = convert_loc(loc)
-        return idx[0] > 0
+    def should_try_left(self, history_record):
+        idx = convert_loc(history_record)
+        return idx[0] > 0 and not self.loc_already_attempted(self.translate_left(history_record['location']))
 
     def translate_left(self, loc):
         idx = convert_loc(loc)
