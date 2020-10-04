@@ -1,1 +1,6 @@
-We utilized the "Colorama" package to help with the coloring on mac/linux and windows. Other than that, our code is our original work. 
+We utilized the "Colorama" package to help with the coloring on mac/linux and windows. Other than that, our code is our original work.
+
+Project 2:
+- PyGame was added as a dependency and used to draw the GUI.
+- Also, the create_multi_line_surface method in Window.py was adapted from code provided here:
+    - https://stackoverflow.com/questions/32590131/pygame-blitting-text-with-an-escape-character-or-newline

@@ -27,9 +27,15 @@ class Player:
         return locations
 
     def set_other_player(self, player2):
+        """Set the other player.
+
+        Args:
+            player2: Player
+        """
         self.other_player = player2
 
     def is_floating(self):
+        """Returns true if any ship cells are still floating."""
         for ship in self.ships:
             for spot in ship.is_hit_array:
                 if not spot:

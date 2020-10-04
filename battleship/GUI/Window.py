@@ -308,6 +308,17 @@ class Window:
         self.get_click_event()
 
     def three_button_prompt(self, text, option1='Yes', option2='No', option3='Other'):
+        """Show a three button prompt to the user.
+
+        Args:
+            text: the prompt text
+            option1: the value of option 1
+            option2: the value of option 2
+            option3: the value of option 3
+
+        Returns:
+            the selected option
+        """
         self.clear(update=False)
 
         # Draw the full-screen text
@@ -502,4 +513,5 @@ class Window:
                     return event
 
     def update(self):
+        """Update the window display."""
         pygame.display.update()

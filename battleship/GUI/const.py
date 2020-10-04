@@ -8,10 +8,13 @@ from pygame.locals import *
 pg.init()
 
 pygame = pg
+
+# Window properties
 width = 1000
 height = 600
 fps = 30
 
+# Commonly used colors
 fill_color = (66, 123, 181)
 text_color = (255, 255, 255)
 text_bkg_color = (29, 58, 87)

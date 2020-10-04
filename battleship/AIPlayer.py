@@ -11,6 +11,11 @@ class AIPlayer(Player):
         self.ai_difficulty = AIDifficulty.Medium
 
     def set_difficulty(self, difficulty):
+        """Set the difficulty of the AI.
+
+        Args:
+            difficulty: AIDifficulty
+        """
         if not isinstance(difficulty, AIDifficulty):
             raise Exception('Invalid difficulty! Must be an AIDifficulty.')
 

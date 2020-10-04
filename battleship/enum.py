@@ -2,6 +2,7 @@ import enum
 
 
 class BoardCellState(enum.Enum):
+    """Enum of all possible board cell states."""
     Empty = 'O'
     Miss = '*'
     Ship = 'S'
@@ -11,6 +12,7 @@ class BoardCellState(enum.Enum):
 
 
 def board_cell_state_to_render_color(state):
+    """Converts the given BoardCellState to an RGB color."""
     if not isinstance(state, BoardCellState):
         return 255, 0, 0
     elif state == BoardCellState.Empty:
@@ -28,6 +30,7 @@ def board_cell_state_to_render_color(state):
 
 
 class AIDifficulty(enum.Enum):
+    """Enum of all possible AI difficulty levels."""
     Easy = 'easy'
     Medium = 'medium'
     Hard = 'hard'

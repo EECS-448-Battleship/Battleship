@@ -96,6 +96,16 @@ class Board:
         return self.board[loc[0]][loc[1]]
 
     def get_valid_placement_cells_for_ship(self, placed_row, placed_col, ship_length):
+        """Get an array of valid coordinates where the second end of a ship of the given length might be placed.
+
+        Args:
+            placed_row: the row index of the first point
+            placed_col: the col index of the first point
+            ship_length: the number of cells long the ship is
+
+        Returns:
+            [(row, col)]
+        """
         valid_coords = []
         ship_length_offset = ship_length - 1
 
