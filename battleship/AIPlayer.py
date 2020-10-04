@@ -52,7 +52,7 @@ class AIPlayer(Player):
     def get_fire_coordinates_medium(self):
         ship_found = False
 
-        if ship_found == False
+        if not ship_found:
             while True:
                 rand = self.get_random_coord()
                 found = False
@@ -61,7 +61,8 @@ class AIPlayer(Player):
                         found = True
                 if not found:
                     return rand
-        if ship_found == True
+        if ship_found == True:
+            return self.get_random_coord() # TODO finish implementing this - just fixed syntax
 
     def get_fire_coordinates_hard(self):
         # TODO implement this
@@ -79,37 +80,37 @@ class AIPlayer(Player):
         else:
             return self.get_fire_coordinates_hard()
 
-    def shoot_top(self):
-
-    def shoot_right(self):
-
-    def shoot_down(self):
-
-    def shoot_left(self):
+    # def shoot_top(self):
+    #
+    # def shoot_right(self):
+    #
+    # def shoot_down(self):
+    #
+    # def shoot_left(self):
 
     #potential helper functions
-    def translate_up(loc):
+    def translate_up(self, loc):
         up_loc = self.convert_loc(loc)
         #we should assume this never is possible with the way it is called?????
         if up_loc.col != 0:
             up_loc.col -= 1
         return ( self.coords_to_loc(up_loc.row, up_loc.col) )
 
-    def translate_right(loc):
+    def translate_right(self, loc):
         right_loc = self.convert_loc(loc)
 
         if right_loc.row != 8:
             right_loc.row =+ 1
         return( self.coords_to_loc(right_loc.row, right_loc.col) )
 
-    def translate_down(loc):
+    def translate_down(self, loc):
         down_loc = self.convert_loc(loc)
 
         if down_loc.col != 8:
             down_loc.col += 1
         return( self.coords_to_loc(down_loc.row, down_loc.col))
 
-    def translate_lef(loc):
+    def translate_lef(self, loc):
         left_loc = self.convert_loc(loc)
 
         if left_loc.row != 0:
