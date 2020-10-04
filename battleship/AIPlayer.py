@@ -64,12 +64,9 @@ class AIPlayer(Player):
             # we have not hit anything yet, so continue firing
             return self.get_fire_coordinates_easy()
 
-        # We've hit at least one ship successfully
-        last_success_and_later = self.missile_fire_history[last_success_index:]
+        successful_attempts = [x for x in enumerate(self.missile_fire_history) if x[1]['successful']]
 
-        # Order of attempts: translate up, right, down, left
-
-        if len(last_success_and_later) < 2:
+        if len(successful_attempts) < 2:
             # This is the first shot after a successful fire. Start trying the algorithm
             if self.should_try_up(last_success_record):
                 return self.translate_up(last_success_record['location'])
@@ -82,6 +79,34 @@ class AIPlayer(Player):
             else:
                 # This shouldn't be possible, but provide a safe value just in case
                 return self.get_fire_coordinates_easy()
+
+        direction = self.determine_attempt_direction(successful_attempts)
+        if direction == 'up':
+            # We're in an upward firing pattern
+            if self.should_try_up(last_success_record):
+                # We can still fire upward
+                return self.translate_up(last_success_record['location'])
+            else:
+                # We were in an upward pattern, but it failed, so let's try a downward pattern from the origin
+                origin = self.determine_algorithm_origin(successful_attempts, 'up')
+                if self.should_try_down(origin):
+                    return self.translate_down(origin['location'])
+                else:
+                    # Give up
+                    return self.get_fire_coordinates_easy()
+        elif direction == 'down':
+            # We're in a downward firing pattern
+            if self.should_try_down(last_success_record):
+                # We can still fire downward
+                return self.translate_down(last_success_record['location'])
+            else:
+                # We were in a downward pattern, but it failed, so let's try an upward pattern from the origin
+                origin = self.determine_algorithm_origin(successful_attempts, 'down')
+                if self.should_try_up(origin):
+                    return self.translate_up(origin['location'])
+                else:
+                    # Give up
+                    return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_hard(self):
         for ship_loc in self.get_ship_locations():
@@ -96,6 +121,55 @@ class AIPlayer(Player):
         else:
             return self.get_fire_coordinates_hard()
 
+    def determine_algorithm_origin(self, successful_attempts, direction):
+        clone = [x for x in successful_attempts]
+        clone.reverse()
+
+        last = clone[0]
+        last_col_i, last_row_i = convert_loc(last['location'])
+
+        for index, record in enumerate(clone):
+            if index == 0:
+                continue
+
+            col_i, row_i = convert_loc(record['location'])
+            if direction == 'up' and last_row_i == row_i - 1:
+                last = record
+                last_col_i = col_i
+                last_row_i = row_i
+                continue
+            elif direction == 'down' and last_row_i == row_i + 1:
+                last = record
+                last_col_i = col_i
+                last_row_i = row_i
+            elif direction == 'left' and last_col_i == col_i - 1:
+                last = record
+                last_col_i = col_i
+                last_row_i = row_i
+            elif direction == 'right' and last_col_i == col_i + 1:
+                last = record
+                last_col_i = col_i
+                last_row_i = row_i
+            else:
+                return last
+
+    def determine_attempt_direction(self, successful_attempts):
+        last_idx, last_attempt = successful_attempts[-1]
+        second_to_idx, second_to_attempt = successful_attempts[-2]
+
+        last_col_i, last_row_i = convert_loc(last_attempt['location'])
+        second_col_i, second_row_i = convert_loc(second_to_attempt['location'])
+
+        if second_col_i == last_col_i and last_row_i == (second_row_i + 1):
+            return 'down'
+        elif second_col_i == last_col_i and last_row_i == (second_row_i - 1):
+            return 'up'
+        elif second_row_i == last_row_i and last_col_i == (second_col_i + 1):
+            return 'right'
+        else:
+            return 'left'
+
+    # TODO modify the should_try_* to check if the target cell has been hit already
     def should_try_up(self, history_record):
         idx = convert_loc(history_record['location'])
         return idx[1] > 0
