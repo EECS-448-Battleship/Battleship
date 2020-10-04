@@ -33,6 +33,7 @@ class Game:
 		# Set up player 2 and their board (ai or otherwise)
 		if is_ai:
 			self.p2 = AIPlayer('Computer')
+			self.p2.ai_difficulty = self.events.choose_ai_difficulty()
 		else:
 			player_two_name = self.events.prompt_player_name()
 			self.p2 = Player(player_two_name)

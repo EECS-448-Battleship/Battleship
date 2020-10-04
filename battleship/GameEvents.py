@@ -1,7 +1,7 @@
 from .Terminal import Terminal
 from .AIPlayer import AIPlayer
 from .GUI.Window import Window
-from .enum import BoardCellState
+from .enum import BoardCellState, AIDifficulty
 from .Board import coords_to_loc
 
 
@@ -12,6 +12,10 @@ class GameEvents:
     welcome_message = '\n \n'.join([
         'You will get started by choosing the number of ships you want to play with.',
     ])
+
+    def choose_ai_difficulty(self):
+        # TODO hook up to GUI to show 3-button prompt
+        return AIDifficulty.Easy
 
     def show_welcome(self):
         """Display a welcome screen to the user via the GUI."""
