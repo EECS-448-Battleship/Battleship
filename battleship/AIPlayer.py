@@ -107,6 +107,32 @@ class AIPlayer(Player):
                 else:
                     # Give up
                     return self.get_fire_coordinates_easy()
+        elif direction == 'left':
+            # We're in a leftward firing pattern
+            if self.should_try_left(last_success_record):
+                # We can still fire leftward
+                return self.translate_left(last_success_record['location'])
+            else:
+                # We were in a leftward pattern, but it failed, so let's try a rightward pattern from the origin
+                origin = self.determine_algorithm_origin(successful_attempts, 'left')
+                if self.should_try_right(origin):
+                    return self.translate_right(origin['location'])
+                else:
+                    # Give up
+                    return self.get_fire_coordinates_easy()
+        else:
+            # We're in a rightward firing pattern
+            if self.should_try_right(last_success_record):
+                # We can still fire rightward
+                return self.translate_right(last_success_record['location'])
+            else:
+                # We were in a rightward pattern, but it failed, so let's try a leftward pattern from the origin
+                origin = self.determine_algorithm_origin(successful_attempts, 'right')
+                if self.should_try_left(origin):
+                    return self.translate_left(origin['location'])
+                else:
+                    # Give up
+                    return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_hard(self):
         for ship_loc in self.get_ship_locations():
