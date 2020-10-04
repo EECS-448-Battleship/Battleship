@@ -195,8 +195,6 @@ class Window:
         offset_left = 50
         offset_top = 70
 
-       
-
         # Render the left board (the opponent)
         masks = []
         if mask_opponent:
@@ -220,14 +218,13 @@ class Window:
         player_text_rect = player_text.get_rect(left=player_text_offset_left, top=offset_top - 30)
         self._screen.blit(player_text, player_text_rect)
 
-
         # Render labels for y axis of board
         row_coordinates = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
         yposition = 40
         opponent_x = 30
         player_x = 550
         for i in range(len(row_coordinates)):                
-            row_coordinates_text = font.render(str(row_coordinates[i]),1, text_color)
+            row_coordinates_text = font.render(str(row_coordinates[i]), 1, text_color)
             yposition += 42
             opponent_label = (opponent_x, yposition)
             player_label = (player_x, yposition)
@@ -239,14 +236,13 @@ class Window:
         opponent_x = 21
         player_x = 545
         for i in range(9):                
-            col_coordinates_text = font.render(str(i),1, text_color)
+            col_coordinates_text = font.render(str(i + 1), 1, text_color)
             player_x += 42
             opponent_x += 42
             opponent_label = (opponent_x, yposition)
             player_label = (player_x, yposition)
             self._screen.blit(col_coordinates_text, opponent_label)
             self._screen.blit(col_coordinates_text, player_label)
-            
 
         self.update()
         return player_rects, opponent_rects
