@@ -76,47 +76,18 @@ class AIPlayer(Player):
         else:
             return self.get_fire_coordinates_hard()
 
-    # def shoot_top(self):
-    #
-    # def shoot_right(self):
-    #
-    # def shoot_down(self):
-    #
-    # def shoot_left(self):
-
-    #potential helper functions
     def translate_up(self, loc):
-        up_loc = self.convert_loc(loc)
-        #we should assume this never is possible with the way it is called?????
-        if up_loc.col != 0:
-            up_loc.col -= 1
-        return ( self.coords_to_loc(up_loc.row, up_loc.col) )
+        idx = convert_loc(loc)
+        return idx[1] - 1, idx[0]
 
     def translate_right(self, loc):
-        right_loc = self.convert_loc(loc)
-
-        if right_loc.row != 8:
-            right_loc.row =+ 1
-        return( self.coords_to_loc(right_loc.row, right_loc.col) )
+        idx = convert_loc(loc)
+        return idx[1], idx[0] + 1
 
     def translate_down(self, loc):
-        down_loc = self.convert_loc(loc)
+        idx = convert_loc(loc)
+        return idx[1] + 1, idx[0]
 
-        if down_loc.col != 8:
-            down_loc.col += 1
-        return( self.coords_to_loc(down_loc.row, down_loc.col))
-
-    def translate_lef(self, loc):
-        left_loc = self.convert_loc(loc)
-
-        if left_loc.row != 0:
-            left_loc -= 1
-        return( self.coords_to_loc(left_loc.row, left_loc.col))
-
-
-
-
-        
-
-
-
+    def translate_left(self, loc):
+        idx = convert_loc(loc)
+        return idx[1], idx[0] - 1
