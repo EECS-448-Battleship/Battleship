@@ -226,7 +226,7 @@ class Window:
         opponent_x = 30
         player_x = 550
         for i in range(len(row_coordinates)):                
-            row_coordinates_text = font.render(str(row_coordinates[i]), 1, text_color)
+            row_coordinates_text = font.render(str(i + 1), 1, text_color)
             yposition += 42
             opponent_label = (opponent_x, yposition)
             player_label = (player_x, yposition)
@@ -238,7 +238,7 @@ class Window:
         opponent_x = 21
         player_x = 545
         for i in range(9):                
-            col_coordinates_text = font.render(str(i + 1), 1, text_color)
+            col_coordinates_text = font.render(str(row_coordinates[i]), 1, text_color)
             player_x += 42
             opponent_x += 42
             opponent_label = (opponent_x, yposition)
