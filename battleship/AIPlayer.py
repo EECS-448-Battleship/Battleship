@@ -51,17 +51,37 @@ class AIPlayer(Player):
             if not self.loc_already_attempted(rand):
                 return rand
 
+    def get_last_successful_fire(self):
+        for index, record in enumerate(self.missile_fire_history):
+            if record['successful']:
+                return index, record
+
+        return -1, None
+
     def get_fire_coordinates_medium(self):
-        ship_found = False
+        last_success_index, last_success_record = self.get_last_successful_fire()
+        if last_success_index < 0:
+            # we have not hit anything yet, so continue firing
+            return self.get_fire_coordinates_easy()
 
-        if not ship_found:
-            while True:
-                rand = self.get_random_coord()
-                if not self.loc_already_attempted(rand):
-                    return rand
+        # We've hit at least one ship successfully
+        last_success_and_later = self.missile_fire_history[last_success_index:]
 
-        if ship_found:
-            return self.get_random_coord()  # TODO finish implementing this - just fixed syntax
+        # Order of attempts: translate up, right, down, left
+
+        if len(last_success_and_later) < 2:
+            # This is the first shot after a successful fire. Start trying the algorithm
+            if self.should_try_up(last_success_record):
+                return self.translate_up(last_success_record['location'])
+            elif self.should_try_right(last_success_record):
+                return self.translate_right(last_success_record['location'])
+            elif self.should_try_down(last_success_record):
+                return self.translate_down(last_success_record['location'])
+            elif self.should_try_left(last_success_record):
+                return self.translate_left(last_success_record['location'])
+            else:
+                # This shouldn't be possible, but provide a safe value just in case
+                return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_hard(self):
         for ship_loc in self.get_ship_locations():
@@ -76,18 +96,34 @@ class AIPlayer(Player):
         else:
             return self.get_fire_coordinates_hard()
 
+    def should_try_up(self, history_record):
+        idx = convert_loc(history_record['location'])
+        return idx[1] > 0
+
     def translate_up(self, loc):
         idx = convert_loc(loc)
-        return idx[1] - 1, idx[0]
+        return coords_to_loc(idx[1] - 1, idx[0])
+
+    def should_try_right(self, history_record):
+        idx = convert_loc(history_record['location'])
+        return idx[0] < 8
 
     def translate_right(self, loc):
         idx = convert_loc(loc)
-        return idx[1], idx[0] + 1
+        return coords_to_loc(idx[1], idx[0] + 1)
+
+    def should_try_down(self, history_record):
+        idx = convert_loc(history_record['location'])
+        return idx[1] < 8
 
     def translate_down(self, loc):
         idx = convert_loc(loc)
-        return idx[1] + 1, idx[0]
+        return coords_to_loc(idx[1] + 1, idx[0])
+
+    def should_try_left(self, loc):
+        idx = convert_loc(loc)
+        return idx[0] > 0
 
     def translate_left(self, loc):
         idx = convert_loc(loc)
-        return idx[1], idx[0] - 1
+        return coords_to_loc(idx[1], idx[0] - 1)
