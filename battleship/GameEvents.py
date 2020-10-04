@@ -14,8 +14,18 @@ class GameEvents:
     ])
 
     def choose_ai_difficulty(self):
-        # TODO hook up to GUI to show 3-button prompt
-        return AIDifficulty.Easy
+        """Prompt the user to choose the AI's level of difficulty."""
+        chosen_difficulty = self.window.three_button_prompt('How hard should the AI be to beat?', option1='Easy', option2='Medium', option3='Hard')
+
+        if chosen_difficulty == 'Easy':
+            return AIDifficulty.Easy
+        elif chosen_difficulty == 'Medium':
+            return AIDifficulty.Medium
+        elif chosen_difficulty == 'Hard':
+            return AIDifficulty.Hard
+        else:
+            # Just in case
+            return AIDifficulty.Easy
 
     def show_welcome(self):
         """Display a welcome screen to the user via the GUI."""

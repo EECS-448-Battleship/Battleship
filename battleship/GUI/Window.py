@@ -307,6 +307,74 @@ class Window:
         self.update()
         self.get_click_event()
 
+    def three_button_prompt(self, text, option1='Yes', option2='No', option3='Other'):
+        self.clear(update=False)
+
+        # Draw the full-screen text
+        title_font = pygame.font.Font(None, 48)
+        font = pygame.font.Font(None, 24)
+
+        rect_width = width * (2 / 3)
+        rect_height = height * (2 / 3)
+        offset_width = (width - rect_width) / 2
+        offset_height = (height - rect_height) / 2
+
+        rect = pygame.Rect(offset_width, offset_height, rect_width, rect_height)
+        surface = create_multi_line_surface(' \n' + text + '\n \n \n ', font, title_font, rect, text_color, text_bkg_color, 1)
+
+        self._screen.blit(surface, rect)
+
+        # Draw the buttons
+        option1_text = font.render(option1, 1, text_color)
+        option1_rect = option1_text.get_rect(center=(width / 2, height - 150))
+        option1_surf = pygame.Surface((option1_rect.width + 30, option1_rect.height + 30))
+        option1_surf.fill(button_bkg_color)
+        option1_surf.blit(option1_text, option1_rect.inflate(30, 30))
+
+        option2_text = font.render(option2, 1, text_color)
+        option2_rect = option2_text.get_rect(center=(width / 2, height - 150))
+        option2_surf = pygame.Surface((option2_rect.width + 30, option2_rect.height + 30))
+        option2_surf.fill(button_bkg_color)
+        option2_surf.blit(option2_text, option2_rect.inflate(30, 30))
+
+        option3_text = font.render(option3, 1, text_color)
+        option3_rect = option3_text.get_rect(center=(width / 2, height - 150))
+        option3_surf = pygame.Surface((option3_rect.width + 30, option3_rect.height + 30))
+        option3_surf.fill(button_bkg_color)
+        option3_surf.blit(option3_text, option3_rect.inflate(30, 30))
+
+        # Move the buttons to their appropriate places
+        option1_half_width = (option1_rect.width / 2) + 30
+        option2_half_width = (option2_rect.width / 2) + 30
+        option3_half_width = (option3_rect.width / 2) + 30
+
+        option1_rect.move_ip(-(option1_half_width + option2_half_width), 0)
+        option3_rect.move_ip(option3_half_width + option2_half_width, 0)
+
+        self._screen.blit(option1_surf, option1_rect)
+        option1_rect.move_ip(15, 15)
+        self._screen.blit(option1_text, option1_rect)
+
+        self._screen.blit(option2_surf, option2_rect)
+        option2_rect.move_ip(15, 15)
+        self._screen.blit(option2_text, option2_rect)
+
+        self._screen.blit(option3_surf, option3_rect)
+        option3_rect.move_ip(15, 15)
+        self._screen.blit(option3_text, option3_rect)
+
+        self.update()
+
+        # Wait for a valid click event
+        while True:
+            event = self.get_click_event()
+            if option1_rect.inflate(30, 30).collidepoint(event.pos):
+                return option1
+            elif option2_rect.inflate(30, 30).collidepoint(event.pos):
+                return option2
+            elif option3_rect.inflate(30, 30).collidepoint(event.pos):
+                return option3
+
     def two_button_prompt(self, text, yes='Yes', no='No'):
         """Draw a full-screen message as a prompt with two buttons.
 
