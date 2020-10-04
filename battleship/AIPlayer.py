@@ -24,6 +24,7 @@ class AIPlayer(Player):
         return str(random.choice(cols)) + str(random.choice(rows))
 
     def generate_placed_ships(self):
+        """Place the ships on the board by randomly generating placement points."""
         for index, ship in enumerate(self.ships):
             done = False
             while not done:
@@ -45,6 +46,7 @@ class AIPlayer(Player):
                 done = True
 
     def loc_already_attempted(self, loc):
+        """Returns true if we've already fired upon the given location string."""
         for record in self.missile_fire_history:
             if record['location'] == loc:
                 return True
@@ -52,12 +54,18 @@ class AIPlayer(Player):
         return False
 
     def get_fire_coordinates_easy(self):
+        """Returns a random coordinate for easy mode."""
         while True:
             rand = self.get_random_coord()
             if not self.loc_already_attempted(rand):
                 return rand
 
     def get_last_successful_fire(self):
+        """Returns the missile fire history index and record of the last successful fire.
+        Returns:
+            index: index of the last successful attempt (-1 if none)
+            record: the missile_fire_history record (None if none)
+        """
         clone = [x for x in self.missile_fire_history]
         clone.reverse()
 
@@ -68,6 +76,7 @@ class AIPlayer(Player):
         return -1, None
 
     def get_second_strike_coordinates(self, history_record):
+        """Given a successful missile fire, get the location of the cell which should be fired upon next for medium."""
         if self.should_try_up(history_record):
             return self.translate_up(history_record['location'])
         elif self.should_try_right(history_record):
@@ -81,6 +90,7 @@ class AIPlayer(Player):
             return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_medium(self):
+        """Get the coordinates to fire on in medium mode by intelligently determining where the last ships were hit."""
         last_success_index, last_success_record = self.get_last_successful_fire()
         if last_success_index < 0:
             # we have not hit anything yet, so continue firing
@@ -151,11 +161,13 @@ class AIPlayer(Player):
                     return self.get_fire_coordinates_easy()
 
     def get_fire_coordinates_hard(self):
+        """Get the coordinates in hard mode by cheating."""
         for ship_loc in self.other_player.get_ship_locations():
             if not self.loc_already_attempted(ship_loc):
                 return ship_loc
 
     def get_fire_coordinates(self):
+        """Get the coordinate to fire only based on the appropriate difficulty level."""
         if self.ai_difficulty == AIDifficulty.Easy:
             return self.get_fire_coordinates_easy()
         elif self.ai_difficulty == AIDifficulty.Medium:
@@ -164,6 +176,7 @@ class AIPlayer(Player):
             return self.get_fire_coordinates_hard()
 
     def determine_algorithm_origin(self, successful_attempts, direction):
+        """Determine the origin cell of the successful missile fire history records in the given direction."""
         clone = [x for x in successful_attempts]
 
         last = clone[0]
@@ -196,6 +209,7 @@ class AIPlayer(Player):
         return last[1]
 
     def determine_attempt_direction(self, successful_attempts):
+        """Given some successful attempts, return the direction the algorithm was trying based on the records."""
         last_idx, last_attempt = successful_attempts[-1]
         second_to_idx, second_to_attempt = successful_attempts[-2]
 
@@ -212,33 +226,41 @@ class AIPlayer(Player):
             return 'left'
 
     def should_try_up(self, history_record):
+        """Return true if we should fire on the cell above the history record."""
         idx = convert_loc(history_record['location'])
         return idx[0] > 0 and not self.loc_already_attempted(self.translate_up(history_record['location']))
 
     def translate_up(self, loc):
+        """Translate the location string one cell upward."""
         idx = convert_loc(loc)
         return coords_to_loc(idx[0] - 1, idx[1])
 
     def should_try_right(self, history_record):
+        """Return true if we should fire on the cell to the right of the history record."""
         idx = convert_loc(history_record['location'])
         return idx[1] < 8 and not self.loc_already_attempted(self.translate_right(history_record['location']))
 
     def translate_right(self, loc):
+        """Translate the location string one cell rightward."""
         idx = convert_loc(loc)
         return coords_to_loc(idx[0], idx[1] + 1)
 
     def should_try_down(self, history_record):
+        """Return true if we should fire on the cell below the history record."""
         idx = convert_loc(history_record['location'])
         return idx[0] < 8 and not self.loc_already_attempted(self.translate_down(history_record['location']))
 
     def translate_down(self, loc):
+        """Translate the location string one cell downward."""
         idx = convert_loc(loc)
         return coords_to_loc(idx[0] + 1, idx[1])
 
     def should_try_left(self, history_record):
+        """Return true if we should fire on the cell to the left of the history record."""
         idx = convert_loc(history_record['location'])
         return idx[1] > 0 and not self.loc_already_attempted(self.translate_left(history_record['location']))
 
     def translate_left(self, loc):
+        """Translate the location string one cell leftward."""
         idx = convert_loc(loc)
         return coords_to_loc(idx[0], idx[1] - 1)
